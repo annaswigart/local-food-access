@@ -10,8 +10,10 @@ var projection = d3.geo.albersUsa()
 var path = d3.geo.path()
 .projection(projection);
 
-var colour = d3.scale.category20c();
-
+var colour = d3.scale.linear()
+.domain([0, 5000])
+.range(["rgb(217,95,14)","rgb(254,196,79)",
+"rgb(255,247,188)"]);
 
 d3.json("_json/us.json", function(us) {
 	console.log(us)
@@ -20,6 +22,5 @@ d3.json("_json/us.json", function(us) {
 	.enter()
 	.append("path")
 	.attr("d", path)
-	.attr('class', 'states')
 	.attr("fill", function(d, i) { return colour(i); });
 });
