@@ -3,45 +3,45 @@
 // http://synthesis.sbecker.net/articles/2012/07/18/learning-d3-part-7-choropleth-maps
 // topojson: https://github.com/mbostock/topojson/wiki/API-Reference
 
-$(document).ready(function() {
+// $(document).ready(function() {
 
-  var width = 960,
-    height = 500;
+//   var width = 960,
+//     height = 500;
 
-  var fill = d3.scale.log()
-    .domain([10, 500])
-    .range(["brown", "steelblue"]);
+//   var fill = d3.scale.log()
+//     .domain([10, 500])
+//     .range(["brown", "steelblue"]);
 
-  var path = d3.geo.path();
+//   var path = d3.geo.path();
 
-  var svg = d3.select("body").append("svg")
-    .attr("width", width)
-    .attr("height", height);
+//   var svg = d3.select("body").append("svg")
+//     .attr("width", width)
+//     .attr("height", height);
 
-  d3.csv("_data/food_atlas_local.csv", function(error, us) {
-    var local = d3.nest()
-      .key(function(d) {return d.FIPS})
-      .sortKeys(d3.ascending)
-      .entries(us);
+//   d3.csv("_data/food_atlas_local.csv", function(error, us) {
+//     var local = d3.nest()
+//       .key(function(d) {return d.FIPS})
+//       .sortKeys(d3.ascending)
+//       .entries(us);
 
-    console.log(local);
+//     console.log(local);
 
-    svg.append("g")
-        .attr("class", "counties")
-      .selectAll("path")
-        .data(topojson.feature(us, us.objects.Counties).features)
-      .enter().append("path")
-        .attr("d", path)
-        .style("fill", function(d) { return fill(path.area(d)); });
+//     svg.append("g")
+//         .attr("class", "counties")
+//       .selectAll("path")
+//         .data(topojson.feature(us, us.objects.Counties).features)
+//       .enter().append("path")
+//         .attr("d", path)
+//         .style("fill", function(d) { return fill(path.area(d)); });
 
-  svg.append("path")
-    .datum(topojson.mesh(us, us.objects.States, function(a, b) { return a.id !== b.id; }))
-    .attr("class", "states")
-    .attr("d", path);
-});
+//   svg.append("path")
+//     .datum(topojson.mesh(us, us.objects.States, function(a, b) { return a.id !== b.id; }))
+//     .attr("class", "states")
+//     .attr("d", path);
+// });
 
 
-});
+// });
 
 
 //   var width = 800,
