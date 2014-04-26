@@ -2,7 +2,7 @@
 
 var w = 1000;
 var h = 500;
-var svg = d3.select("#container").append("svg")
+var svg = d3.select("#counties").append("svg")
 .attr("width", w)
 .attr("height", h);
 
@@ -15,12 +15,11 @@ var colour = d3.scale.linear()
 .range(["rgb(217,95,14)","rgb(254,196,79)",
 "rgb(255,247,188)"]);
 
-d3.json("_json/us.json", function(us) {
-	console.log(us)
-	svg.selectAll("append")
-	.data(topojson.feature(us, us.objects.counties).features)
-	.enter()
-	.append("path")
-	.attr("d", path)
-	.attr("fill", function(d, i) { return colour(i); });
+d3.json("_json/counties.json", function(json) {
+	console.log(json)
+	svg.selectAll("path")
+           .data(json)
+           .enter()
+           .append("path")
+           .attr("d", path);
 });
