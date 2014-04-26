@@ -3,12 +3,10 @@ import csv
 import json
 import itertools
 
-
-
-variables = ['Education', 'Age']
+variables = ['Age', 'Education', 'Income', 'Race', 'Area']
 
 for variable in variables:
-	file_name = 'income_by_' + variable.lower()
+	file_name = 'expenditures_by_' + variable.lower()
 	people = {}
 
 	f = open(os.path.join(os.path.dirname(__file__), file_name + '.csv'), 'r')
