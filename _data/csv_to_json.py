@@ -3,7 +3,7 @@ import csv
 import json
 import itertools
 
-variables = ['Age', 'Education', 'Income', 'Race', 'Area']
+variables = ['Age', 'Education', 'Income', 'Race', 'Area', 'Region']
 
 for variable in variables:
 	file_name = 'expenditures_by_' + variable.lower()
