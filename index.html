@@ -3,13 +3,24 @@
 <head>
 <meta charset="utf-8">
 <script src="_js/d3.min.js"></script>
+<script src="http://d3js.org/queue.v1.min.js"></script>
 <script src="_js/topojson.v1.min.js"></script>
 <script src="_js/underscore-1.6.0.min.js"></script>
 <script src="_js/jquery-1.10.2.min.js"></script>
-<style></style>
+<script src="_js/jquery-ui-1.10.4.min.js"></script>
+<link rel="stylesheet" media="screen" href="_css/map.css">
 </head>
 <body>
 <div id='container'></div>
+	<h1>Local Food Access</h1>
+	<div id="searchfield">
+   	 <form><input type="text" name="county" class="biginput" id="autocomplete"></form>
+  	</div><!-- @end #searchfield -->
+   
+  <div id="outputbox">
+    <p id="outputcontent">(Search not functional yet)</p>
+  </div>
+
 </body>
-<script src="/_js/map.js"></script>
+<script src="/_js/script.js"></script>
 </html>
