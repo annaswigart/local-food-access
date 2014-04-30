@@ -10,10 +10,17 @@ $(document).ready(function() {
 
   // Setting color domains(intervals of values) for our map
 
-  var color_domain = [0, 1, 100, 500, 1000, 3000, 5000, 9000, 18000]
+  var color_domain = [0, 10, 20, 50, 100, 150, 200, 350]
   var color = d3.scale.threshold()
   .domain(color_domain)
   .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
+
+  var fmarket_color_domain = [0, 1, 5, 10, 15, 20, 25, 30, 35]
+  var fmarket_color = d3.scale.threshold()
+  .domain(fmarket_color_domain)
+  .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
+
+
 
   var div = d3.select("body").append("div")   
   .attr("class", "tooltip")               
@@ -31,6 +38,7 @@ $(document).ready(function() {
   queue()
   .defer(d3.json, "_json/us.json")
   .defer(d3.csv, "_data/food_atlas_local.csv")
+  //.defer(d3.csv, "_data/food_atlas_ses.csv")
   .await(ready);
 
   //Start of Choropleth drawing
@@ -39,33 +47,41 @@ $(document).ready(function() {
     var rateById = {};
     var countyById = {};
     var stateById = {};
+    var medIncomeById = {};
 
-    var DirSale07 = []
-    var FmrktPTh13 = []
+    var DirSaleFarms07 = []
+    var Fmrkt13 = []
 
     data.forEach(function(d) {
-      rateById[d.id] = +d.DIRSALES07;
+      rateById[d.id] = +d.DIRSALES_FARMS07;
       countyById[d.id] = d.County;
       stateById[d.id] = d.State;
+    //  medIncomeById[d.id] = +d.MEDHHINC10;
 
-      DirSale07.push(+d.DIRSALES07); // num farms with direct sales in 2007
-      FmrktPTh13.push(+d.FMRKTPTH13); // num farmer's markets per 1,000 people
+      DirSaleFarms07.push(+d.DIRSALES_FARMS07); // num farms with direct sales in 2007
+      Fmrkt13.push(+d.FMRKT13); // num farmer's markets per 1,000 people
     });
-    
+
     //chain is a method from the underscore.js library
-    var top10 = _.chain(data)
-      .sortBy(function(data){return -1 * data.DIRSALES07;})
+    var top10Fmarkets = _.chain(data)
+      .sortBy(function(data){return -1 * data.FMRKT13;})
+      .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
+          rateById[data.id] + " farmers markets";})
+      .first(10)
+      .value();
+
+    var top10DirSales = _.chain(data)
+      .sortBy(function(data){return -1 * data.DIRSALES_FARMS07;})
       .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
           rateById[data.id] + " farms";})
       .first(10)
-      .value(); 
+      .value();  
 
-    var med_DirSale07 = d3.median(DirSale07);
+    var med_DirSale07 = d3.median(DirSaleFarms07);
     
-    top10.forEach(function(county) {
+    top10DirSales.forEach(function(county) {
       console.log(county);
     });  
-
 
     console.log("median " + med_DirSale07 + " farms");
 
@@ -80,13 +96,14 @@ $(document).ready(function() {
   .style("opacity", 0.8)
   .attr("stroke-dasharray", "round")
   .attr("stroke", "black")
-  .attr("stroke-width", "0.1px")
+  .attr("stroke-width", "0.2px")
 
   //Adding mouseevents
   .on("mouseover", function(d) {
     d3.select(this).transition().duration(300).style("opacity", 1);
     div.transition().duration(300)
     .style("opacity", 1)
+    .attr("stroke-width", "0.2px")
     div.text(countyById[d.id] + " County, " + stateById[d.id] + 
         " direct sale farms : " + rateById[d.id])
     .style("background-color", "#deebf7")
@@ -97,6 +114,7 @@ $(document).ready(function() {
     d3.select(this)
     .transition().duration(300)
     .style("opacity", 0.8);
+
     div.transition().duration(300)
     .style("opacity", 0);
   })
@@ -112,6 +130,7 @@ $(document).ready(function() {
     .attr("d", path);
 
   }; 
+
 
   // $('#autocomplete').autocomplete({
   //   lookup: counties,
