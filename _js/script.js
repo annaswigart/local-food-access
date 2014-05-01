@@ -40,6 +40,8 @@ $(document).ready(function() {
   //Start of Choropleth drawing
 
   function ready(error, us, data) {
+    console.log(data);
+
     var rateById = {};
     var countyById = {};
     var stateById = {};
@@ -70,7 +72,6 @@ $(document).ready(function() {
       $('#top-list ul').append("<li>" + county + "</li>");
     });  
 
-
     console.log("median " + med_DirSale07 + " farms");
 
   //Drawing Choropleth
@@ -88,14 +89,21 @@ $(document).ready(function() {
 
   //Adding mouseevents
   .on("mouseover", function(d) {
-    d3.select(this).transition().duration(300).style("opacity", 1);
+    d3.select(this)
+      .transition().duration(300)
+      .style("opacity", 1)
+      .style('cursor', 'move');
+
     div.transition().duration(300)
     .style("opacity", 1)
     div.text(countyById[d.id] + " County, " + stateById[d.id] + 
-        " direct sale farms : " + rateById[d.id])
+        " Direct Sale Farms : " + rateById[d.id])
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY -30) + "px");
+
+    var county_name = countyById[d.id] + " County, " + stateById[d.id]
+    $('#left-county input').val(county_name);
   })
   .on("mouseout", function() {
     d3.select(this)
