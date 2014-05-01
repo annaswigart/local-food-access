@@ -8,18 +8,77 @@
 <script src="_js/underscore-1.6.0.min.js"></script>
 <script src="_js/jquery-1.10.2.min.js"></script>
 <script src="_js/jquery-ui-1.10.4.min.js"></script>
+<link rel="stylesheet" media="screen" href="_css/grid.css">
+<link rel="stylesheet" media="screen" href="_css/layout.css">
 <link rel="stylesheet" media="screen" href="_css/map.css">
+<link rel="stylesheet" media="screen" href="_css/normalize.css">
+<link rel="stylesheet" media="screen" href="_css/typography.css">
 </head>
-<div id='container'></div>
-	<h1>Local Food Access</h1>
-	<div id="searchfield">
-   	 <form><input type="text" name="county" class="biginput" id="autocomplete"></form>
-  	</div><!-- @end #searchfield -->
-   
-  <div id="outputbox">
-    <p id="outputcontent">(Search not functional yet)</p>
-  </div>
 
+
+<body>
+	<div id='wrapper'>
+		<!-- any kind of menu here -->
+		<div class='container'>
+			<section id='direct-farm-sales'>
+				<div class='content-container'>
+					<div class='section group'>
+						<div id='title' class='col span_12_of_12'>
+							<h1>Local Food Access in the U.S.</h1>
+							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque ligula, at dapibus libero. Aliquam semper suscipit volutpat. Cras vitae augue pellentesque, dapibus mi at, egestas quam. </p>
+						</div>
+					</div>
+					<div class='section group'>
+						<div id='map-container' class='col span_9_of_12'>
+							<!-- D3 Map -->
+							<!-- Move it up or down with margins based on svg#map -->
+						</div>
+						<div id='legend' class='col span_3_of_12'>
+							<div class='content-container'>
+								<div id='switch-indicator'>
+									<h2>Indicator</h2>
+									<form name="" action="" method="">
+										<input checked type="radio" name="indicator" value="direct-farm-sales">Direct Farm Sales <br>
+										<input type="radio" name="indicator" value="farmers-markets">Farmer's Markets
+									</form>
+								</div>							
+								<div id='top-list'>
+									<h2>Top 5 Counties</h2>
+									<ul>
+									</ul>
+								</div>
+								<div id='state-profile'>
+									<h2>State Name</h2>
+									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque ligula, at dapibus libero.</p>
+									<ul>
+										<li>Fresno, CA: 17170 farms</li>
+										<li>Merced, CA: 14245 farms</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<section id='county-comparison'>
+				<div class='content-container'>
+					<div class='section group'>
+						<div id='left-county' class='col span_6_of_12'>
+							<input type="search" name="left-county">
+						</div>
+						<div id='right-county' class='col span_6_of_12'>
+							<input type="search" name="right-county">
+						</div>
+					</div>
+				</div>
+			</section>
+		</div>
+	</div>
 </body>
+
+
+
+
+
 <script src="/_js/script.js"></script>
 </html>

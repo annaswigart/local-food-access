@@ -3,10 +3,13 @@
 // http://synthesis.sbecker.net/articles/2012/07/18/learning-d3-part-7-choropleth-maps
 // topojson: https://github.com/mbostock/topojson/wiki/API-Reference
 
-$(document).ready(function() {
 
-  var width = 960,
-  height = 500;
+
+$(document).ready(function() {
+  
+
+  var width = $('#map-container').width(),
+  height = 490;
 
   // Setting color domains(intervals of values) for our map
 
@@ -15,14 +18,15 @@ $(document).ready(function() {
   .domain(color_domain)
   .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
 
-  var div = d3.select("body").append("div")   
+  var div = d3.select("#map-container").append("div")   
   .attr("class", "tooltip")               
   .style("opacity", 0);
 
-  var svg = d3.select("body").append("svg")
+  var svg = d3.select("#map-container").append("svg")
+  .attr('id', 'map')
   .attr("width", width)
   .attr("height", height)
-  .style("margin", "10px auto");
+  .attr("viewBox", "90 10 " + width + " " + height);
 
   var path = d3.geo.path()
 
@@ -53,17 +57,17 @@ $(document).ready(function() {
     });
     
     //chain is a method from the underscore.js library
-    var top10 = _.chain(data)
+    var top_list = _.chain(data)
       .sortBy(function(data){return -1 * data.DIRSALES07;})
       .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
           rateById[data.id] + " farms";})
-      .first(10)
+      .first(5)
       .value(); 
 
     var med_DirSale07 = d3.median(DirSale07);
     
-    top10.forEach(function(county) {
-      console.log(county);
+    top_list.forEach(function(county) {
+      $('#top-list ul').append("<li>" + county + "</li>");
     });  
 
 
