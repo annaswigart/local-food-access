@@ -29,25 +29,26 @@ var removeable_county = function(county) {
 }
 
 var not_duplicate = function(el) {
-  if (!el.hasClass('held')) {
+  if (el.attr('class') == 'holdable') {
     return true
   }
-  else {
+  else if(el.hasClass('held')) {
     return false
   }
 }
 
 var hold_county = function(county, el) {
-  $('#held-counties').append(removeable_county(county)); // Add to held box
-  el.removeClass('holdable').addClass('held').children().remove(); // Change status to held
-  el.append(check_icon()); // Change icon to checked
+  $('#held-counties').append(removeable_county(county)); // Add county name to held box
+  el.attr("class", "held") // Change origin's status to held
+  .children().removeClass('fa-plus-circle') 
+             .addClass('fa-check-circle'); // Change origin's icon to checked
 }
 
-var remove_county = function(el, id) {
+var remove_county = function(el) {
+  id = el.attr('id')
   el.remove(); // Remove from box
-  $("#" + id + ".held")
-    .removeClass('held')
-    .addClass('holdable')
+  $("#" + id)
+    .attr('class', 'holdable')
     .children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
 }
 
@@ -60,6 +61,7 @@ var find_county = function(data, id) {
   });
   return wanted_county
 }
+
 
 $(document).ready(function() {
 
@@ -138,9 +140,13 @@ $(document).ready(function() {
       }
       
       $('.removeable').on('click', function(){
-        remove_county($(this), id)
+        remove_county($(this))
       })
 
+    })
+
+    $('#top-list ul li span.holdable').on('mouseover', function(){
+      
     })
 
     console.log("median " + med_DirSale07 + " farms");
@@ -149,31 +155,53 @@ $(document).ready(function() {
   svg.append("g")
   .attr("class", "counties")
   .selectAll("path")
-  .data(topojson.feature(us, us.objects.counties).features)
-  .enter().append("path")
-  .attr("d", path)
-  .style ( "fill" , function (d) {return color (rateById[d.id]);})
-  .style("opacity", 0.8)
-  .attr("stroke-dasharray", "round")
-  .attr("stroke", "black")
-  .attr("stroke-width", "0.1px")
+    .data(topojson.feature(us, us.objects.counties).features)
+    .enter().append("path")
+    .attr("d", path)
+    .style ( "fill" , function (d) {return color (rateById[d.id]);})
+    .style("opacity", 0.8)
+    .attr("stroke-dasharray", "round")
+    .attr("stroke", "black")
+    .attr("stroke-width", "0.1px")
+    .attr('class', 'holdable')
+    .attr("id", function(d, i){ return 'county-' + d.id })
 
   // Saving counties for comparison
-
-  
   .on('click', function(clicked_county) { 
-    
-    // Find clicked county from data set
-    wanted_county = {}
-    data.forEach(function(d) {
-      if (clicked_county.id == d.id){
-        wanted_county = d
-      }
-    });
+    id = clicked_county.id
+    county = find_county(data, id)
 
-    // Add county to save box
-    // var remove = "<span class='remove-county'><i class='fa fa-times-circle'></i></span>"
-    // $('#county-saver').append(held_county(wanted_county).append(remove_county));
+    if(not_duplicate($(this))) {
+      hold_county(county, $(this))
+      d3.select(this)
+        .transition().duration(300)
+        .style("fill", '#0000ff')
+        .attr('class', 'removeable');
+    }
+
+    $('.removeable').on('click', function(){
+      county_id=""
+      map_el = ""
+      if($(this).is('path')) {
+        county_id = parseInt($(this).attr('id').split('-')[1])
+        map_el = $('#county-'+county_id)
+
+        $('#held-counties #'+county_id).remove()
+        map_el.attr('class', 'holdable')
+      }
+      else {
+        county_id = $(this).attr('id')
+        map_el = $('#county-' + county_id)
+
+        $('#held-counties #' + county_id).remove() // remove county from held county box
+      }
+      console.log(map_el)
+      d3.select('#county-'+county_id)
+        .transition().duration(300)
+        .style('fill', function (d) {return color (rateById[county_id]);}) // change county color back to green
+
+    })
+
 
     // if($('#left-county-content').text() == "") {
     //   $.each(wanted_county, function(i, val) {
