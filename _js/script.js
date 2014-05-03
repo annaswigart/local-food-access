@@ -184,38 +184,29 @@ $(document).ready(function() {
 
   // Saving counties for comparison
   .on('click', function(clicked_county) { 
-    id = clicked_county.id
-    county = find_county(data, id)
+    county_id = parseInt($(this).attr('id').split('-')[1])
+    county = find_county(data, county_id)
 
-    if(not_duplicate($(this))) {
-      hold_county(county, $(this))
+    if($(this).attr('class') == 'holdable'){
+      $('#held-counties').append(removeable_county(county))
       d3.select(this)
         .transition().duration(300)
-        .style("fill", '#0000ff')
+        .style("fill", 'blue')
         .attr('class', 'removeable');
     }
 
     $('.removeable').on('click', function(){
-      county_id=""
-      map_el = ""
-      if($(this).is('path')) {
+      county_id = ''
+      if($(this).is('path')){
         county_id = parseInt($(this).attr('id').split('-')[1])
-        map_el = $('#county-'+county_id)
-
-        $('#held-counties #'+county_id).remove()
-        map_el.attr('class', 'holdable')
       }
-      else {
+      else{
         county_id = $(this).attr('id')
-        map_el = $('#county-' + county_id)
-
-        $('#held-counties #' + county_id).remove() // remove county from held county box
       }
-      console.log(map_el)
+      $('#held-counties #'+county_id).remove()
       d3.select('#county-'+county_id)
-        .transition().duration(300)
-        .style('fill', function (d) {return color (rateById[county_id]);}) // change county color back to green
-
+        .style ( "fill" , function (d) {return color (rateById[d.id]);})
+        .attr('class', 'holdable')
     })
 
 
