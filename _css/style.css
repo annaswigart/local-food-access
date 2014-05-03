@@ -8,7 +8,9 @@
 	margin: 0 1em 0 0;
 	display: inline-block;
 }
-
+#held-counties .removeable {
+	cursor: move;
+}
 .move-county {
 	margin: 0 0 0 .5em;
 }

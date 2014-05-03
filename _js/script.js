@@ -94,6 +94,7 @@ $(document).ready(function() {
   .defer(d3.csv, "_data/food_atlas_local.csv")
   .await(ready);
 
+
   //Start of Choropleth drawing
 
   function ready(error, us, data) {
@@ -214,7 +215,6 @@ $(document).ready(function() {
         .attr('class', 'holdable')
     })
 
-
     // if($('#left-county-content').text() == "") {
     //   $.each(wanted_county, function(i, val) {
     //     $('#left-county-content').append(i + ": " + val + "<br>")
@@ -226,6 +226,8 @@ $(document).ready(function() {
       
 
   })
+
+  $( ".removeable" ).draggable()
 
   //Tooltip + mousevents
   .on("mouseover", function(d) {
