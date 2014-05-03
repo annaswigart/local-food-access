@@ -131,22 +131,38 @@ $(document).ready(function() {
     });
 
     // Click to add top counties to save box
+
+    $('#top-list ul li span.holdable').on('mouseover', function(){
+      county_id = $(this).attr('id')
+      d3.select('#county-'+county_id)
+        .style('fill', 'blue')
+    })
+
+    $('#top-list ul li span.holdable').on('mouseout', function(){
+      county_id = $(this).attr('id')
+      d3.select('#county-'+county_id)
+        .style ( "fill" , function (d) {return color (rateById[d.id]);})
+    })
+
     $('#top-list ul li span.holdable').on('click', function(){
-      id = $(this).attr('id')
-      county = find_county(data, id)
+      county_id = $(this).attr('id')
+      county = find_county(data, county_id)
 
       if(not_duplicate($(this))) {
         hold_county(county, $(this))
+        $(this).on('mouseout', function(){
+          d3.select('#county-'+county_id)
+            .style('fill', 'blue')          
+          })
       }
       
       $('.removeable').on('click', function(){
+        county_id = $(this).attr('id')
         remove_county($(this))
+        d3.select('#county-'+county_id)
+          .style ( "fill" , function (d) {return color (rateById[d.id]);})
       })
 
-    })
-
-    $('#top-list ul li span.holdable').on('mouseover', function(){
-      
     })
 
     console.log("median " + med_DirSale07 + " farms");
