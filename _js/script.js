@@ -6,63 +6,6 @@
 
 // County Comparison Interactions
 
-var holdable_county = function(county) {
-  var icon = "<i class='fa fa-plus-circle move-county'></i>"
-  var el = "<span class='holdable' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
-  return el
-}
-
-var check_icon = function() {
-  var icon = "<i class='fa fa-check-circle move-county'></i>"
-  return icon
-}
-var held_county = function(county) {
-  icon = check_icon()
-  var el = "<span class='held' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
-  return el
-}
-
-var removeable_county = function(county) {
-  var icon = "<i class='fa fa-times-circle move-county'></i>"
-  var el = "<span class='removeable' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
-  return el
-}
-
-var not_duplicate = function(el) {
-  if (el.attr('class') == 'holdable') {
-    return true
-  }
-  else if(el.hasClass('held')) {
-    return false
-  }
-}
-
-var hold_county = function(county, el) {
-  $('#held-counties').append(removeable_county(county)); // Add county name to held box
-  el.attr("class", "held") // Change origin's status to held
-  .children().removeClass('fa-plus-circle') 
-             .addClass('fa-check-circle'); // Change origin's icon to checked
-}
-
-var remove_county = function(el) {
-  id = el.attr('id')
-  el.remove(); // Remove from box
-  $("#" + id)
-    .attr('class', 'holdable')
-    .children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
-}
-
-var find_county = function(data, id) {
-  wanted_county = {}
-  data.forEach(function(d) {
-    if (id == d.id){
-      wanted_county = d
-    }
-  });
-  return wanted_county
-}
-
-
 $(document).ready(function() {
   // ******** START D3 **********
   var width = $('#map-container').width(),
@@ -93,7 +36,6 @@ $(document).ready(function() {
   .defer(d3.json, "_json/us.json")
   .defer(d3.csv, "_data/food_atlas_local.csv")
   .await(ready);
-
 
   //Start of Choropleth drawing
 
@@ -127,52 +69,13 @@ $(document).ready(function() {
 
     // Append top counties to DOM
     top_list.forEach(function(county) {
-      $('#top-list ul').append("<li>" + holdable_county(county) + "</li>");
+      $('#top-list ul').append("<li class='holdable' id='#county-" + county.id + "'>" + county.id + plus_icon() + "</li>");
     });
 
-    // Click to add top counties to save box
-
-    $('#top-list ul li span.holdable').on('mouseover', function(){ // highlight top counties on mouseover
-      county_id = $(this).attr('id')
-      d3.select('#county-'+county_id)
-        .style('fill', 'blue')
-    })
-
-    $('#top-list ul li span.holdable').on('mouseout', function(){ // revert to green on mouseout
-      county_id = $(this).attr('id')
-      d3.select('#county-'+county_id)
-        .style ( "fill" , function (d) {return color (rateById[d.id]);})
-    })
-
-    $('#top-list ul li span.holdable').on('click', function(){
-        county_id = $(this).attr('id')
-        county = find_county(data, county_id)
-        // check for duplicates
-        if ($(this).attr('class') == 'holdable'){ 
-          // Change icon
-          $('#top-list #'+county_id).attr('class', 'holdable').children().attr('class', 'fa fa-check-circle move-county')
-          // Change class
-          $(this).attr('class', 'held')
-          // Change county color on map
-          $(this).on('mouseout', function(){
-            d3.select('#county-'+county_id)
-              .style ( "fill" , 'blue')
-              .attr('class', 'removeable')
-          })
-          // Add county name to box
-          $('#held-counties').append(removeable_county(county))
-        }
-      
-      $('.removeable').on('click', function(){
-        county = find_county(data, county_id)
-        county_id = $(this).attr('id')
-        $('#held-counties #' + county_id).remove()
-        d3.select('#county-'+county_id)
-          .style ( "fill" , function (d) {return color (rateById[county_id]);})
-          .attr('class', 'holdable')
-        $('#top-list #'+county_id).attr('class', 'holdable').children().attr('class', 'fa fa-plus-circle move-county')
-      })
-
+    $('#top-list .holdable').on('click', function(){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(data, id)
+      hold_county(county);
     })
 
     console.log("median " + med_DirSale07 + " farms");
@@ -192,43 +95,6 @@ $(document).ready(function() {
     .attr('class', 'holdable')
     .attr("id", function(d, i){ return 'county-' + d.id })
 
-  // Saving counties for comparison
-  .on('click', function(clicked_county) { 
-    county_id = parseInt($(this).attr('id').split('-')[1])
-    county = find_county(data, county_id)
-
-    if($(this).attr('class') == 'holdable'){
-      $('#held-counties').append(removeable_county(county))
-      d3.select(this)
-        .transition().duration(300)
-        .style("fill", 'blue')
-        .attr('class', 'removeable');
-    }
-
-    $('.removeable').on('click', function(){
-      county_id = $(this).attr('id')
-
-      $('#held-counties #'+county_id).remove()
-      
-      d3.select('#county-'+county_id)
-        .style ( "fill" , function (d) {return color (rateById[d.id]);})
-        .attr('class', 'holdable')
-    })
-
-    // if($('#left-county-content').text() == "") {
-    //   $.each(wanted_county, function(i, val) {
-    //     $('#left-county-content').append(i + ": " + val + "<br>")
-    //   });
-    // }
-    // else {
-
-    // }
-      
-
-  })
-
-  $( ".removeable" ).draggable()
-
   //Tooltip + mousevents
   .on("mouseover", function(d) {
     d3.select(this)
@@ -242,9 +108,6 @@ $(document).ready(function() {
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY -30) + "px");
-
-    // var county_name = countyById[d.id] + " County, " + stateById[d.id]
-    // $('#left-county input').val(county_name);
   })
   .on("mouseout", function() {
     d3.select(this)
@@ -263,7 +126,6 @@ $(document).ready(function() {
     .attr("stroke", "#fff")
     .attr("stroke-linejoin", "round")
     .attr("d", path);
-
   }; 
 
   // $('#autocomplete').autocomplete({
