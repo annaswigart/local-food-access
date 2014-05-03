@@ -28,6 +28,29 @@ var removeable_county = function(county) {
   return el
 }
 
+var not_duplicate = function(el) {
+  if (!el.hasClass('held')) {
+    return true
+  }
+  else {
+    return false
+  }
+}
+
+var hold_county = function(county, el) {
+  $('#held-counties').append(removeable_county(county)); // Add to held box
+  el.removeClass('holdable').addClass('held').children().remove(); // Change status to held
+  el.append(check_icon()); // Change icon to checked
+}
+
+var remove_county = function(el, id) {
+  el.remove(); // Remove from box
+  $("#" + id + ".held")
+    .removeClass('held')
+    .addClass('holdable')
+    .children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
+}
+
 var find_county = function(data, id) {
   wanted_county = {}
   data.forEach(function(d) {
@@ -110,19 +133,12 @@ $(document).ready(function() {
       id = $(this).attr('id')
       county = find_county(data, id)
 
-      if(!$(this).hasClass('held')) { // No duplicates
-        $('#held-counties').append(removeable_county(county));
+      if(not_duplicate($(this))) {
+        hold_county(county, $(this))
       }
-
-      $(this).removeClass('holdable').addClass('held').children().remove(); // Change status to held
-      $(this).append(check_icon()); // Change icon to checked
       
       $('.removeable').on('click', function(){
-        $(this).remove(); // Remove from box
-        $("#" + $(this).attr('id') + ".held")
-          .removeClass('held')
-          .addClass('holdable')
-          .children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
+        remove_county($(this), id)
       })
 
     })
