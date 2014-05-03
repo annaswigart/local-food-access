@@ -8,10 +8,13 @@
 <script src="_js/underscore-1.6.0.min.js"></script>
 <script src="_js/jquery-1.10.2.min.js"></script>
 <script src="_js/jquery-ui-1.10.4.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" media="screen" href="_css/grid.css">
+<link rel="stylesheet" media="screen" href="_css/font-awesome.min.css">
 <link rel="stylesheet" media="screen" href="_css/layout.css">
 <link rel="stylesheet" media="screen" href="_css/map.css">
 <link rel="stylesheet" media="screen" href="_css/normalize.css">
+<link rel="stylesheet" media="screen" href="_css/style.css">
 <link rel="stylesheet" media="screen" href="_css/typography.css">
 </head>
 
@@ -47,13 +50,9 @@
 									<ul>
 									</ul>
 								</div>
-								<div id='state-profile'>
-									<h2>State Name</h2>
-									<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque ligula, at dapibus libero.</p>
-									<ul>
-										<li>Fresno, CA: 17170 farms</li>
-										<li>Merced, CA: 14245 farms</li>
-									</ul>
+								<div id='county-holder'>
+									<h2>Counties to Compare</h2>
+									<div id='held-counties'></div>
 								</div>
 							</div>
 						</div>
@@ -63,11 +62,13 @@
 			<section id='county-comparison'>
 				<div class='content-container'>
 					<div class='section group'>
-						<div id='left-county' class='col span_6_of_12'>
-							<input type="search" name="left-county">
+						<div id='left-county-wrapper' class='col span_6_of_12'>
+							<input type="search" name="left-county-search">
+							<div id='left-county-content'></div>
 						</div>
-						<div id='right-county' class='col span_6_of_12'>
-							<input type="search" name="right-county">
+						<div id='right-county-wrapper' class='col span_6_of_12'>
+							<input type="search" name="right-county-search">
+							<div id='right-county-content'></div>
 						</div>
 					</div>
 				</div>

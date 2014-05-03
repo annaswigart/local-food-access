@@ -4,10 +4,43 @@
 // topojson: https://github.com/mbostock/topojson/wiki/API-Reference
 
 
+// County Comparison Interactions
+var check_icon = function() {
+  var icon = "<i class='fa fa-check-circle move-county'></i>"
+  return icon
+}
+
+var holdable_county = function(county) {
+  var icon = "<i class='fa fa-plus-circle move-county'></i>"
+  var el = "<span class='holdable' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
+  return el
+}
+
+var held_county = function(county) {
+  icon = check_icon()
+  var el = "<span class='held' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
+  return el
+}
+
+var removeable_county = function(county) {
+  var icon = "<i class='fa fa-times-circle move-county'></i>"
+  var el = "<span class='removeable' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
+  return el
+}
+
+var find_county = function(data, id) {
+  wanted_county = {}
+  data.forEach(function(d) {
+    if (id == d.id){
+      wanted_county = d
+    }
+  });
+  return wanted_county
+}
 
 $(document).ready(function() {
-  
 
+  // ******** START D3 **********
   var width = $('#map-container').width(),
   height = 490;
 
@@ -40,8 +73,7 @@ $(document).ready(function() {
   //Start of Choropleth drawing
 
   function ready(error, us, data) {
-    console.log(data);
-
+    // Data to sortable form
     var rateById = {};
     var countyById = {};
     var stateById = {};
@@ -58,19 +90,34 @@ $(document).ready(function() {
       FmrktPTh13.push(+d.FMRKTPTH13); // num farmer's markets per 1,000 people
     });
     
-    //chain is a method from the underscore.js library
+    //Get Top County Objects
     var top_list = _.chain(data)
       .sortBy(function(data){return -1 * data.DIRSALES07;})
-      .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
-          rateById[data.id] + " farms";})
+      // .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
+      //     rateById[data.id] + " farms";})
       .first(5)
       .value(); 
 
     var med_DirSale07 = d3.median(DirSale07);
-    
+
+    // Append top counties to DOM
     top_list.forEach(function(county) {
-      $('#top-list ul').append("<li>" + county + "</li>");
-    });  
+      $('#top-list ul').append("<li>" + holdable_county(county) + "</li>");
+    });
+
+    // Click to add top counties to save box
+    $('#top-list ul li span.holdable').on('click', function(){
+      county = find_county(data, $(this).attr('id'));
+      $('#held-counties').append(removeable_county(county));
+
+      $(this).removeClass('holdable').addClass('held').children().remove();
+      $(this).append(check_icon());
+      
+      $('.removeable').on('click', function(){
+        $(this).remove(); // Remove from box
+        $("#" + $(this).attr('id') + ".held").children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
+      })
+    })
 
     console.log("median " + med_DirSale07 + " farms");
 
@@ -87,12 +134,40 @@ $(document).ready(function() {
   .attr("stroke", "black")
   .attr("stroke-width", "0.1px")
 
-  //Adding mouseevents
+  // Saving counties for comparison
+
+  
+  .on('click', function(clicked_county) { 
+    
+    // Find clicked county from data set
+    wanted_county = {}
+    data.forEach(function(d) {
+      if (clicked_county.id == d.id){
+        wanted_county = d
+      }
+    });
+
+    // Add county to save box
+    // var remove = "<span class='remove-county'><i class='fa fa-times-circle'></i></span>"
+    // $('#county-saver').append(held_county(wanted_county).append(remove_county));
+
+    // if($('#left-county-content').text() == "") {
+    //   $.each(wanted_county, function(i, val) {
+    //     $('#left-county-content').append(i + ": " + val + "<br>")
+    //   });
+    // }
+    // else {
+
+    // }
+      
+
+  })
+
+  //Tooltip + mousevents
   .on("mouseover", function(d) {
     d3.select(this)
       .transition().duration(300)
-      .style("opacity", 1)
-      .style('cursor', 'move');
+      .style("opacity", 1);
 
     div.transition().duration(300)
     .style("opacity", 1)
@@ -102,8 +177,8 @@ $(document).ready(function() {
     .style("left", (d3.event.pageX) + "px")
     .style("top", (d3.event.pageY -30) + "px");
 
-    var county_name = countyById[d.id] + " County, " + stateById[d.id]
-    $('#left-county input').val(county_name);
+    // var county_name = countyById[d.id] + " County, " + stateById[d.id]
+    // $('#left-county input').val(county_name);
   })
   .on("mouseout", function() {
     d3.select(this)
