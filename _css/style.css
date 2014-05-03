@@ -9,15 +9,16 @@
 
 .move-county {
 	margin: 0 0 0 .5em;
-	cursor: pointer;
 }
 
 .fa-plus-circle {
 	color: green;
+	cursor: pointer;
 }
 
 .fa-times-circle {
 	color: red;
+	cursor: pointer;
 }
 
 .fa-check-circle {

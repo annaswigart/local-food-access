@@ -5,10 +5,6 @@
 
 
 // County Comparison Interactions
-var check_icon = function() {
-  var icon = "<i class='fa fa-check-circle move-county'></i>"
-  return icon
-}
 
 var holdable_county = function(county) {
   var icon = "<i class='fa fa-plus-circle move-county'></i>"
@@ -16,6 +12,10 @@ var holdable_county = function(county) {
   return el
 }
 
+var check_icon = function() {
+  var icon = "<i class='fa fa-check-circle move-county'></i>"
+  return icon
+}
 var held_county = function(county) {
   icon = check_icon()
   var el = "<span class='held' id=" + county.id + ">" + county.County + ", " + county.State + icon + "</span>"
@@ -107,16 +107,24 @@ $(document).ready(function() {
 
     // Click to add top counties to save box
     $('#top-list ul li span.holdable').on('click', function(){
-      county = find_county(data, $(this).attr('id'));
-      $('#held-counties').append(removeable_county(county));
+      id = $(this).attr('id')
+      county = find_county(data, id)
 
-      $(this).removeClass('holdable').addClass('held').children().remove();
-      $(this).append(check_icon());
+      if(!$(this).hasClass('held')) { // No duplicates
+        $('#held-counties').append(removeable_county(county));
+      }
+
+      $(this).removeClass('holdable').addClass('held').children().remove(); // Change status to held
+      $(this).append(check_icon()); // Change icon to checked
       
       $('.removeable').on('click', function(){
         $(this).remove(); // Remove from box
-        $("#" + $(this).attr('id') + ".held").children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
+        $("#" + $(this).attr('id') + ".held")
+          .removeClass('held')
+          .addClass('holdable')
+          .children().removeClass('fa-check-circle').addClass('fa-plus-circle') // Change checkbox to plus sign
       })
+
     })
 
     console.log("median " + med_DirSale07 + " farms");
