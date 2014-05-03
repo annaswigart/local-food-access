@@ -64,7 +64,6 @@ var find_county = function(data, id) {
 
 
 $(document).ready(function() {
-
   // ******** START D3 **********
   var width = $('#map-container').width(),
   height = 490;
@@ -132,35 +131,45 @@ $(document).ready(function() {
 
     // Click to add top counties to save box
 
-    $('#top-list ul li span.holdable').on('mouseover', function(){
+    $('#top-list ul li span.holdable').on('mouseover', function(){ // highlight top counties on mouseover
       county_id = $(this).attr('id')
       d3.select('#county-'+county_id)
         .style('fill', 'blue')
     })
 
-    $('#top-list ul li span.holdable').on('mouseout', function(){
+    $('#top-list ul li span.holdable').on('mouseout', function(){ // revert to green on mouseout
       county_id = $(this).attr('id')
       d3.select('#county-'+county_id)
         .style ( "fill" , function (d) {return color (rateById[d.id]);})
     })
 
     $('#top-list ul li span.holdable').on('click', function(){
-      county_id = $(this).attr('id')
-      county = find_county(data, county_id)
-
-      if(not_duplicate($(this))) {
-        hold_county(county, $(this))
-        $(this).on('mouseout', function(){
-          d3.select('#county-'+county_id)
-            .style('fill', 'blue')          
+        county_id = $(this).attr('id')
+        county = find_county(data, county_id)
+        // check for duplicates
+        if ($(this).attr('class') == 'holdable'){ 
+          // Change icon
+          $('#top-list #'+county_id).attr('class', 'holdable').children().attr('class', 'fa fa-check-circle move-county')
+          // Change class
+          $(this).attr('class', 'held')
+          // Change county color on map
+          $(this).on('mouseout', function(){
+            d3.select('#county-'+county_id)
+              .style ( "fill" , 'blue')
+              .attr('class', 'removeable')
           })
-      }
+          // Add county name to box
+          $('#held-counties').append(removeable_county(county))
+        }
       
       $('.removeable').on('click', function(){
+        county = find_county(data, county_id)
         county_id = $(this).attr('id')
-        remove_county($(this))
+        $('#held-counties #' + county_id).remove()
         d3.select('#county-'+county_id)
-          .style ( "fill" , function (d) {return color (rateById[d.id]);})
+          .style ( "fill" , function (d) {return color (rateById[county_id]);})
+          .attr('class', 'holdable')
+        $('#top-list #'+county_id).attr('class', 'holdable').children().attr('class', 'fa fa-plus-circle move-county')
       })
 
     })
@@ -196,14 +205,10 @@ $(document).ready(function() {
     }
 
     $('.removeable').on('click', function(){
-      county_id = ''
-      if($(this).is('path')){
-        county_id = parseInt($(this).attr('id').split('-')[1])
-      }
-      else{
-        county_id = $(this).attr('id')
-      }
+      county_id = $(this).attr('id')
+
       $('#held-counties #'+county_id).remove()
+      
       d3.select('#county-'+county_id)
         .style ( "fill" , function (d) {return color (rateById[d.id]);})
         .attr('class', 'holdable')

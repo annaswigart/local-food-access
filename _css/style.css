@@ -1,6 +1,9 @@
 #left-county input, #right-county input{
 	display: block;
 }
+.holdable{
+	cursor: pointer;
+}
 .removeable {
 	margin: 0 1em 0 0;
 	display: inline-block;
