@@ -9,6 +9,7 @@
 <script src="_js/jquery-1.10.2.min.js"></script>
 <script src="_js/jquery-ui-1.10.4.min.js"></script>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" media="screen" href="_css/county_comparison.css">
 <link rel="stylesheet" media="screen" href="_css/grid.css">
 <link rel="stylesheet" media="screen" href="_css/font-awesome.min.css">
 <link rel="stylesheet" media="screen" href="_css/layout.css">
@@ -36,39 +37,49 @@
 							<!-- D3 Map -->
 							<!-- Move it up or down with margins based on svg#map -->
 						</div>
-						<div id='legend' class='col span_3_of_12'>
+						<div id='map-interaction' class='col span_3_of_12'>
 							<div class='content-container'>
-								<div id='switch-indicator'>
+								<div id='switch-data'>
 									<h2>Indicator</h2>
 									<form name="" action="" method="">
-										<input checked type="radio" name="indicator" value="direct-farm-sales">Direct Farm Sales <br>
-										<input type="radio" name="indicator" value="farmers-markets">Farmer's Markets
+										<input checked type="radio" name="indicator" value="direct-farm-sales">Direct Farm Sales
 									</form>
+								</div>
+								<div id='food-search'>
+									<input type="search" name="food-search" value='Search by Food'>
 								</div>							
 								<div id='top-list'>
-									<h2>Top 5 Counties</h2>
+									<h2>Top 10 Counties</h2>
 									<ul>
 									</ul>
-								</div>
-								<div id='county-holder'>
-									<h2>Counties to Compare</h2>
-									<div id='held-counties'></div>
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 			</section>
-			<section id='county-comparison'>
+			<section id='county-drilldown'>
 				<div class='content-container'>
 					<div class='section group'>
-						<div id='left-county-wrapper' class='col span_6_of_12'>
-							<input type="search" name="left-county-search">
-							<div id='left-county-content'></div>
+						<div id='county-holder' class='col span_2_of_12'>
+							<h2>Dock</h2>
+							<div id='held-counties'></div>
 						</div>
-						<div id='right-county-wrapper' class='col span_6_of_12'>
-							<input type="search" name="right-county-search">
-							<div id='right-county-content'></div>
+						<div id='left-county-wrapper' class='col span_3_of_12'>
+							<div id='left-county-content'>
+								<input type="search" name="left-county-search" value='Left County'>
+								
+							</div>
+						</div>
+						<div id='middle-county-compare' class='col span_3_of_12'>
+							<div id='middle-county-content'>
+								<h2>vs.</h2>
+							</div>
+						</div>
+						<div id='right-county-wrapper' class='col span_3_of_12'>
+							<div id='right-county-content'>
+								<input type="search" name="right-county-search" value='Right County'>
+							</div>
 						</div>
 					</div>
 				</div>

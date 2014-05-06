@@ -62,7 +62,7 @@ $(document).ready(function() {
       .sortBy(function(data){return -1 * data.DIRSALES07;})
       // .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
       //     rateById[data.id] + " farms";})
-      .first(5)
+      .first(10)
       .value(); 
 
     var med_DirSale07 = d3.median(DirSale07);

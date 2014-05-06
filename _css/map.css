@@ -1,25 +1,36 @@
-body {
-  font-family: Arial, sans-serif;
+#direct-farm-sales .content-container {
+	padding: 1.45em 0 0 0;
 }
 
-.city {
-  font: 10px sans-serif;
-  font-weight: bold;
+#food-search input {
+	font-size: 1.25em;
 }
 
-.legend {
-  font-size: 12px;
+/*Add county interaction style*/
+.holdable{
+	cursor: pointer;
+}
+.removeable {
+	margin: 0 1em 0 0;
+	display: inline-block;
+}
+#held-counties .removeable {
+	cursor: move;
+}
+.move-county {
+	margin: 0 0 0 .5em;
 }
 
-div.tooltip {   
-  position: absolute;           
-  text-align: center;           
-  width: 150px;                  
-  height: 25px;                 
-  padding: 2px;             
-  font-size: 10px;     
-  background: #FFFFE0;
-  border: 1px;      
-  border-radius: 8px;           
-  pointer-events: none;         
-} 
+.fa-plus-circle {
+	color: green;
+	cursor: pointer;
+}
+
+.fa-times-circle {
+	color: red;
+	cursor: pointer;
+}
+
+.fa-check-circle {
+	color: blue;
+}

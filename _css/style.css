@@ -1,30 +1,9 @@
-#left-county input, #right-county input{
+input[type=search] {
+	-webkit-appearance: none;
 	display: block;
-}
-.holdable{
-	cursor: pointer;
-}
-.removeable {
-	margin: 0 1em 0 0;
-	display: inline-block;
-}
-#held-counties .removeable {
-	cursor: move;
-}
-.move-county {
-	margin: 0 0 0 .5em;
-}
-
-.fa-plus-circle {
-	color: green;
-	cursor: pointer;
-}
-
-.fa-times-circle {
-	color: red;
-	cursor: pointer;
-}
-
-.fa-check-circle {
-	color: blue;
+	padding: .2em 0 .2em .2em;
+	width: 100%;
+	border-radius: 2px;
+	border: 1px solid #999;
+	margin: 1.4em 0 0 0;
 }

@@ -1,0 +1,15 @@
+/*Bottom Style*/
+#county-drilldown {
+	margin-bottom: -1.45em;
+}
+#county-drilldown .content-container {
+	padding-top: 0;
+}
+
+#left-county-wrapper input, #right-county-wrapper input{
+	font-size: 1.563em;
+}
+
+#middle-county-compare h2 {
+	text-align: center;
+}
