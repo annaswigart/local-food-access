@@ -82,7 +82,7 @@ $(document).ready(function() {
 
     // Append top counties to DOM
     top_list.forEach(function(county) {
-      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.id + plus_icon() + "</li>");
+      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.County +", " + county.State + plus_icon() + "</li>");
     });
 
     $('#top-list').on('click', '.holdable', function(){
@@ -141,6 +141,13 @@ $(document).ready(function() {
       change_map_county_status(county);
       change_map_county_color(county).style('fill', 'blue');
     }
+
+    // Change top list if the county clicked on is in it
+    if(county_in_top(county)){
+      change_top_county_status(county);
+      change_icon(county);
+    }
+
   })
 
 

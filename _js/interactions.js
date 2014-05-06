@@ -74,6 +74,17 @@ var change_map_county_color = function(county){
       return d3.select(el_html)
 }
 
+var county_in_top = function(county){
+	top_list_id = 'county-'+county.id
+	var check = false
+	$('#top-list .holdable').each(function(index, item){
+		if ($(item).attr('id') == top_list_id){
+			check = true
+		}
+	})
+	return check
+}
+
 var change_icon = function(county){
 	el = $('#top-list #county-'+county.id)
 	icon = el.children().children()
