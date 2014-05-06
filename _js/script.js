@@ -62,21 +62,19 @@ $(document).ready(function() {
       id = county_id($(this).attr('id'))
       county = find_county_obj(data, id)
       remove_county(county)
+
+      // Change list
       change_top_county_status(county);
       change_icon(county);
-      change_map_county_status(county);
 
-      el_html = '#map #county-'+county.id
-      el = $(el_html)
-      d3.select(el_html)
-        .style ( "fill" , function (d) {return color (rateById[d.id]);})
+      // Change map
+      change_map_county_status(county);
+      change_map_county_color(county).style ( "fill" , function (d) {return color (rateById[d.id]);})
     })
     
     //Get Top County Objects
     var top_list = _.chain(data)
       .sortBy(function(data){return -1 * data.DIRSALES07;})
-      // .map(function(data) {return countyById[data.id] + ", " + stateById[data.id] + ": " + 
-      //     rateById[data.id] + " farms";})
       .first(10)
       .value(); 
 
@@ -91,8 +89,26 @@ $(document).ready(function() {
       id = county_id($(this).attr('id'))
       county = find_county_obj(data, id)
       hold_county(county);
+      
+      // Top list
       change_top_county_status(county);
       change_icon(county);
+      
+      // Map
+      change_map_county_status(county);
+      change_map_county_color(county).style('fill', 'blue')
+    })
+
+    $('#top-list').on('mouseover', '.holdable', function(){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(data, id)
+      change_map_county_color(county).style('fill', 'blue')
+    })
+
+    $('#top-list').on('mouseout', '.holdable', function(){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(data, id)
+      change_map_county_color(county).style ( "fill" , function (d) {return color (rateById[d.id]);})
     })
 
     console.log("median " + med_DirSale07 + " farms");
@@ -118,16 +134,15 @@ $(document).ready(function() {
     id = county_id($(this).attr('id'))
     county = find_county_obj(data, id)
     
-    // Change map color
     el_html = '#map #county-'+county.id
     el = $(el_html)
     if (el.attr('class') == 'holdable') {
-      hold_county(county)
+      hold_county(county);
       change_map_county_status(county);
-      d3.select(el_html)
-        .style('fill', 'blue');
+      change_map_county_color(county).style('fill', 'blue');
     }
   })
+
 
   //Tooltip + mousevents
   .on("mouseover", function(d) {

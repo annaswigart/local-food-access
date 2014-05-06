@@ -68,6 +68,12 @@ var change_map_county_status = function(county){
 	}
 }
 
+var change_map_county_color = function(county){
+      el_html = '#map #county-'+county.id
+      el = $(el_html)
+      return d3.select(el_html)
+}
+
 var change_icon = function(county){
 	el = $('#top-list #county-'+county.id)
 	icon = el.children().children()
