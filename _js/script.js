@@ -78,6 +78,12 @@ $(document).ready(function() {
       hold_county(county);
     })
 
+    $('#top-list .removeable').on('click', function(){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(data, id)
+      remove_county(county)
+    })
+
     console.log("median " + med_DirSale07 + " farms");
 
   //Drawing Choropleth

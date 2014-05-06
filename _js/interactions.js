@@ -40,8 +40,11 @@ var removeable_county = function(county) {
 
 var hold_county = function(county){
 	county_el = removeable_county(county)
-	console.log(county_el)
 	return $('#held-counties').append(county_el)
+}
+
+var remove_county = function(county){
+	return $('#held-counties #'+id).remove()
 }
 
 
