@@ -10,6 +10,9 @@
 .holdable{
 	cursor: pointer;
 }
+.held{
+	cursor: default;
+}
 .removeable {
 	margin: 0 1em 0 0;
 	display: inline-block;

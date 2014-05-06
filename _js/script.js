@@ -56,6 +56,15 @@ $(document).ready(function() {
       DirSale07.push(+d.DIRSALES07); // num farms with direct sales in 2007
       FmrktPTh13.push(+d.FMRKTPTH13); // num farmer's markets per 1,000 people
     });
+
+    // Remove County names from Dock
+    $('#county-holder').on('click', '.removeable', function(){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(data, id)
+      remove_county(county)
+      change_top_county_status(county);
+      change_icon(county);
+    })
     
     //Get Top County Objects
     var top_list = _.chain(data)
@@ -69,19 +78,15 @@ $(document).ready(function() {
 
     // Append top counties to DOM
     top_list.forEach(function(county) {
-      $('#top-list ul').append("<li class='holdable' id='#county-" + county.id + "'>" + county.id + plus_icon() + "</li>");
+      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.id + plus_icon() + "</li>");
     });
 
-    $('#top-list .holdable').on('click', function(){
+    $('#top-list').on('click', '.holdable', function(){
       id = county_id($(this).attr('id'))
       county = find_county_obj(data, id)
       hold_county(county);
-    })
-
-    $('#top-list .removeable').on('click', function(){
-      id = county_id($(this).attr('id'))
-      county = find_county_obj(data, id)
-      remove_county(county)
+      change_top_county_status(county);
+      change_icon(county);
     })
 
     console.log("median " + med_DirSale07 + " farms");
