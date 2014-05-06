@@ -64,6 +64,12 @@ $(document).ready(function() {
       remove_county(county)
       change_top_county_status(county);
       change_icon(county);
+      change_map_county_status(county);
+
+      el_html = '#map #county-'+county.id
+      el = $(el_html)
+      d3.select(el_html)
+        .style ( "fill" , function (d) {return color (rateById[d.id]);})
     })
     
     //Get Top County Objects
@@ -105,6 +111,23 @@ $(document).ready(function() {
     .attr("stroke-width", "0.1px")
     .attr('class', 'holdable')
     .attr("id", function(d, i){ return 'county-' + d.id })
+
+  // Add county from map
+
+  .on('click', function(){
+    id = county_id($(this).attr('id'))
+    county = find_county_obj(data, id)
+    
+    // Change map color
+    el_html = '#map #county-'+county.id
+    el = $(el_html)
+    if (el.attr('class') == 'holdable') {
+      hold_county(county)
+      change_map_county_status(county);
+      d3.select(el_html)
+        .style('fill', 'blue');
+    }
+  })
 
   //Tooltip + mousevents
   .on("mouseover", function(d) {

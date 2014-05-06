@@ -13,17 +13,20 @@
 .held{
 	cursor: default;
 }
+
 .removeable {
 	margin: 0 1em 0 0;
 	display: inline-block;
 }
-#held-counties .removeable {
-	cursor: move;
-}
+
 .move-county {
 	margin: 0 0 0 .5em;
 }
 
+/*Held counties*/
+#held-counties .removeable {
+	cursor: move;
+}
 .fa-plus-circle {
 	color: green;
 	cursor: pointer;

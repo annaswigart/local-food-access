@@ -39,22 +39,12 @@ var removeable_county = function(county) {
 	return el
 }
 
-var dock_has = function(county){
-	id = '#county-'+county.id
-	held_counties = $('#held-counties .removeable')
-	return held_counties
-	// held_counties.each(function(index, item){
-	// 	console.log($(item).attr('id'))
-	// })
-}
-
 var hold_county = function(county){
 	county_el = removeable_county(county)
 	$('#held-counties').append(county_el)
 }
 
 var remove_county = function(county){
-	console.log(county)
 	return $('#held-counties #county-'+county.id).remove()
 }
 
@@ -68,10 +58,19 @@ var change_top_county_status = function(county){
 	}
 }
 
+var change_map_county_status = function(county){
+	el = $('#map #county-'+county.id)
+	if (el.attr('class') == 'holdable') {
+		el.attr('class', 'held')
+	}
+	else if (el.attr('class') == 'held') {
+		el.attr('class', 'holdable')
+	}
+}
+
 var change_icon = function(county){
 	el = $('#top-list #county-'+county.id)
 	icon = el.children().children()
-	console.log(icon)
 	if (icon.hasClass('fa-plus-circle')){
 		el.children().remove()
 		el.append(check_icon())
