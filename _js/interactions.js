@@ -1,3 +1,10 @@
+//Zoom
+  function zoomed() {
+    svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    svg.select(".state-border").style("stroke-width", 1.5 / d3.event.scale + "px");
+    svg.select(".county-border").style("stroke-width", .5 / d3.event.scale + "px");
+  }
+
 // Create icons in top list
 var check_icon = function(){
 	var icon = "<span><i class='fa fa-check-circle move-county'></i></span>"

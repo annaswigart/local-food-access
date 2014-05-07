@@ -1,3 +1,7 @@
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
 #direct-farm-sales .content-container {
 	padding: 1.45em 0 0 0;
 }

@@ -7,9 +7,6 @@
 // County Comparison Interactions
 
 $(document).ready(function() {
-  // ******** START D3 **********
-  var width = $('#map-container').width(),
-  height = 490;
 
   // Setting color domains(intervals of values) for our map
 
@@ -18,18 +15,44 @@ $(document).ready(function() {
   .domain(color_domain)
   .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
 
-  var div = d3.select("#map-container").append("div")   
+  // Tooltip
+
+  var tooltip = d3.select("#map-container").append("div")   
   .attr("class", "tooltip")               
   .style("opacity", 0);
+
+  //Zoom
+
+  var zoom = d3.behavior.zoom()
+    .translate([0, 0])
+    .scale(1)
+    .scaleExtent([1, 8])
+    .size([width, height])
+    .on("zoom", zoomed);
+  
+  // Map
+  var width = $('#map-container').width();
+  var height = 490;
+
+  var path = d3.geo.path()
 
   var svg = d3.select("#map-container").append("svg")
   .attr('id', 'map')
   .attr("width", width)
   .attr("height", height)
-  .attr("viewBox", "90 10 " + width + " " + height);
+  .attr("viewBox", "90 10 " + width + " " + height)
 
-  var path = d3.geo.path()
+  var features = svg.append("g");
 
+  svg.append("rect")
+    .attr("class", "overlay")
+    .attr("width", width)
+    .attr("height", height)
+    .call(zoom);
+  
+  function zoomed() {
+    features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+  }
   //Reading map file and data
 
   queue()
@@ -114,11 +137,12 @@ $(document).ready(function() {
     console.log("median " + med_DirSale07 + " farms");
 
   //Drawing Choropleth
-  svg.append("g")
-  .attr("class", "counties")
+
+  features
   .selectAll("path")
     .data(topojson.feature(us, us.objects.counties).features)
-    .enter().append("path")
+    .enter()
+    .append("path")
     .attr("d", path)
     .style ( "fill" , function (d) {return color (rateById[d.id]);})
     .style("opacity", 0.8)
@@ -157,9 +181,9 @@ $(document).ready(function() {
       .transition().duration(300)
       .style("opacity", 1);
 
-    div.transition().duration(300)
+    tooltip.transition().duration(300)
     .style("opacity", 1)
-    div.text(countyById[d.id] + " County, " + stateById[d.id] + "Direct Sale Farms : " + rateById[d.id])
+    tooltip.text(countyById[d.id] + " County, " + stateById[d.id] + "Direct Sale Farms : " + rateById[d.id])
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
@@ -168,11 +192,11 @@ $(document).ready(function() {
     d3.select(this)
     .transition().duration(300)
     .style("opacity", 0.8);
-    div.transition().duration(300)
+    tooltip.transition().duration(300)
     .style("opacity", 0);
   })
 
-  svg.append("g")
+  features
     .attr("class", "states")
     .selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
@@ -181,6 +205,8 @@ $(document).ready(function() {
     .attr("stroke", "#fff")
     .attr("stroke-linejoin", "round")
     .attr("d", path);
+
+
   }; 
 
   // $('#autocomplete').autocomplete({
@@ -189,6 +215,5 @@ $(document).ready(function() {
   // // some function here
   //   }
   // });
-
 
 });
