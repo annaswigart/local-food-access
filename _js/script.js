@@ -15,26 +15,9 @@ $(document).ready(function() {
   .domain(color_domain)
   .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
 
-  // Tooltip
-
-  var tooltip = d3.select("#map-container").append("div")   
-  .attr("class", "tooltip")               
-  .style("opacity", 0);
-
-  //Zoom
-
-  var zoom = d3.behavior.zoom()
-    .translate([0, 0])
-    .scale(1)
-    .scaleExtent([1, 8])
-    .size([width, height])
-    .on("zoom", zoomed);
-  
   // Map
   var width = $('#map-container').width();
   var height = 490;
-
-  var path = d3.geo.path()
 
   var svg = d3.select("#map-container").append("svg")
   .attr('id', 'map')
@@ -42,17 +25,28 @@ $(document).ready(function() {
   .attr("height", height)
   .attr("viewBox", "90 10 " + width + " " + height)
 
-  var features = svg.append("g");
+  var path = d3.geo.path()
 
-  svg.append("rect")
-    .attr("class", "overlay")
-    .attr("width", width)
-    .attr("height", height)
-    .call(zoom);
-  
+  // Tooltip
+
+  var tooltip = d3.select("#map-container").append("div")   
+  .attr("class", "tooltip")               
+  .style("opacity", 0);
+
+  //Zoom
   function zoomed() {
-    features.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
+    svg.select(".state-border").style("stroke-width", 1.5 / d3.event.scale + "px");
+    svg.select(".county-border").style("stroke-width", .5 / d3.event.scale + "px");
   }
+
+  var zoom = d3.behavior.zoom()
+    .translate([0, 0])
+    .scale(1)
+    .scaleExtent([1, 8])
+    .on("zoom", zoomed);
+  
+
   //Reading map file and data
 
   queue()
@@ -138,11 +132,11 @@ $(document).ready(function() {
 
   //Drawing Choropleth
 
-  features
+  svg.append("g")
+  .attr("class", "counties")
   .selectAll("path")
     .data(topojson.feature(us, us.objects.counties).features)
-    .enter()
-    .append("path")
+    .enter().append("path")
     .attr("d", path)
     .style ( "fill" , function (d) {return color (rateById[d.id]);})
     .style("opacity", 0.8)
@@ -196,7 +190,7 @@ $(document).ready(function() {
     .style("opacity", 0);
   })
 
-  features
+  svg.append("g")
     .attr("class", "states")
     .selectAll("path")
       .data(topojson.feature(us, us.objects.states).features)
@@ -205,8 +199,6 @@ $(document).ready(function() {
     .attr("stroke", "#fff")
     .attr("stroke-linejoin", "round")
     .attr("d", path);
-
-
   }; 
 
   // $('#autocomplete').autocomplete({
@@ -215,5 +207,6 @@ $(document).ready(function() {
   // // some function here
   //   }
   // });
+
 
 });
