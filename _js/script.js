@@ -159,10 +159,9 @@ $(document).ready(function() {
 
     div.transition().duration(300)
     .style("opacity", 1)
-    div.text(countyById[d.id] + " County, " + stateById[d.id] + 
-        " Direct Sale Farms : " + rateById[d.id])
+    div.text(countyById[d.id] + " County, " + stateById[d.id] + "Direct Sale Farms : " + rateById[d.id])
     .style("background-color", "#deebf7")
-    .style("left", (d3.event.pageX) + "px")
+    .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
   })
   .on("mouseout", function() {

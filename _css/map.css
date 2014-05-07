@@ -6,6 +6,18 @@
 	font-size: 1.25em;
 }
 
+/*Tooltip*/
+div.tooltip {   
+  position: absolute;           
+  width: 150px;                  
+  height: 25px;                 
+  padding: 1em 1em 2em 1em;         
+  font-size: 0.8em;
+  border: 1px;      
+  border-radius: 1px;           
+  pointer-events: none;         
+}
+
 /*Add county interaction style*/
 .holdable{
 	cursor: pointer;
