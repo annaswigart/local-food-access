@@ -1,18 +1,57 @@
-/*input[type=search] {
-	-webkit-appearance: none;
+input{
+	margin: 0;
+	font: inherit;
+	-webkit-rtl-ordering: logical;
+	-webkit-user-select: text;
+	cursor: auto;
+	letter-spacing: normal;
+	word-spacing: normal;
+	text-transform: none;
+	text-indent: 0px;
+	text-shadow: none;
+	display: inline-block;
+	text-align: start;
+	-webkit-writing-mode: horizontal-tb;
+}
+
+.form-group {
+	position: relative;
+	margin-bottom: 20px;
+}
+
+.form-control{
 	display: block;
-	padding: .2em 0 .2em .2em;
 	width: 100%;
-	border-radius: 2px;
-	border: 1px solid #999;
-	margin: 1.4em 0 0 0;
-}*/
+	background-color: #fff;
+	background-image: none;
+	border: 2px solid #bdc3c7;
+	color: #34495e;
+	font-family: "Lato", Helvetica, Arial, sans-serif;
+	font-size: 15px;
+	line-height: 1.467;
+	padding: 2px 12px;
+	height: 42px;
+		-webkit-appearance: none;
+	border-radius: 6px;
+		-webkit-box-shadow: none;
+	box-shadow: none;
+		-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
+	transition: border .25s linear, color .25s linear, background-color .25s linear;
+}
 
+	.form-control:focus {
+		border-color: #1abc9c;
+		outline: 0;
+		-webkit-box-shadow: none;
+		box-shadow: none;
+	}
 
-
-
-
-
-
-
-
+.form-control + .input-icon {
+	position: absolute;
+	right: 0;
+	line-height: 1em;
+	vertical-align: middle;
+	color: #bdc3c7;
+	top: 18px;
+	left: 97%;
+}
