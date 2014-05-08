@@ -19,11 +19,14 @@ $(document).ready(function() {
   var width = $('#map-container').width();
   var height = 490;
 
+  var viewBoxX = width - 67,
+      viewBoxY = height - 8;
+
   var svg = d3.select("#map-container").append("svg")
   .attr('id', 'map')
   .attr("width", width)
   .attr("height", height)
-  .attr("viewBox", "90 10 " + width + " " + height)
+  .attr("viewBox", "110 10 " + viewBoxX + " " + viewBoxY)
 
   var path = d3.geo.path()
 
@@ -172,10 +175,10 @@ $(document).ready(function() {
   //Tooltip + mousevents
   .on("mouseover", function(d) {
     d3.select(this)
-      .transition().duration(300)
+      .transition().duration(200)
       .style("opacity", 1);
 
-    tooltip.transition().duration(300)
+    tooltip.transition().duration(200)
     .style("opacity", 1)
     
     id = county_id($(this).attr('id'))
@@ -188,12 +191,8 @@ $(document).ready(function() {
       .style("top", (d3.event.pageY -30) + "px");
 
     // Highlight top list
-    id = county_id($(this).attr('id'))
-    console.log($('#county-'+id))
-    
-    if ($(this).attr('class') == 'holdable'){
-      $('#top-list #county-' + id).css('background-color', '#3498db')
-    }
+    // id = county_id($(this).attr('id'))
+    // $('#top-list #county-' + id).css('background-color', '#3498db')
   })
   .on("mouseout", function() {
     d3.select(this)
@@ -203,8 +202,14 @@ $(document).ready(function() {
     .style("opacity", 0);
 
     // Un-highlight top list
-    id = county_id($(this).attr('id'))
-    $('#top-list #county-' + id).css('background-color', '#1abc9c')
+    // id = county_id($(this).attr('id'))
+    // top_county = $('#top-list #county-' + id)
+    // if(top_county.hasClass('held')){
+    //   // top_county.css('background-color', '#3498db')
+    // }
+    // else if{
+    //   top_county.css('background-color', '#1abc9c')
+    // }
   })
 
   svg.append("g")

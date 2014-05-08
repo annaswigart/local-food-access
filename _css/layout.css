@@ -19,14 +19,31 @@ body {
 }
 
 .content-container {
-	width: 90%;
+	width: 96%;
 	max-width: 92.3em;
 	margin: 0 auto;
-	padding:.725em 0 .725em 0;
+	padding:0 0 .725em 0;
 	vertical-align: baseline;
 }
 
-/*Other*/
+/*Top*/
 #direct-farm-sales{
 	padding-top: 1em;
+}
+
+/*Bottom*/
+
+
+/*Bottom Style*/
+#county-drilldown {
+	margin-bottom: -1.45em;
+	height: auto;
+	min-height: 500px;
+}
+#county-drilldown .content-container {
+	padding-top: 0;
+}
+
+#middle-county-compare h2 {
+	text-align: center;
 }

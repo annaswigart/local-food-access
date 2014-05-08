@@ -1,3 +1,15 @@
+// Tooltip
+
+$('#switch-data').on('mouseover', '.more-info', function(){
+	var tooltip = $(this).children('.tooltip')
+	tooltip.fadeIn(100)
+})
+
+$('#switch-data').on('mouseout', '.more-info', function(){
+	var tooltip = $(this).children('.tooltip')
+	tooltip.fadeOut(100)
+})
+
 // Forms
 
 $('input[type=search]').on('focusin', function(){
@@ -72,11 +84,11 @@ var fade = 300
 
 var hold_county = function(county){
 	county_el = removeable_county(county)
-	$('#held-counties').append(county_el.hide().fadeIn(fade))
+	$('#held-counties').append(county_el)
 }
 
 var remove_county = function(county){
-	return $('#held-counties #county-'+county.id).fadeOut(fade)
+	$('#held-counties #county-'+county.id).remove()
 }
 
 var change_top_county_status = function(county){

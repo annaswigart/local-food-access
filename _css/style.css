@@ -1,3 +1,43 @@
+/*General*/
+i {
+	margin: 0 0 0 .5em;
+}
+
+/*Tooltip*/
+.tooltip { 
+	background-color: #34495e;  
+	position: absolute;           
+	width: 150px;                  
+	height: auto;
+	min-height: 25px;
+	padding: .725em;         
+	font-size: 0.8em;
+	border: 1px;      
+	border-radius: 6px;           
+	pointer-events: none;    
+	color: #ffffff;    
+	z-index: 9999; 
+}
+
+.more-info{
+	cursor: pointer;
+}
+
+	.more-info .tooltip{
+
+	}
+
+	.checked .more-info:hover{
+		color: #5BAFE7;
+	}
+	.more-info:hover{
+		color: #5B6F83;
+	}
+
+	.more-info .tooltip{
+		display: none;
+	}
+
 input{
 	margin: 0;
 	font: inherit;
@@ -14,6 +54,8 @@ input{
 	-webkit-writing-mode: horizontal-tb;
 }
 
+/*Input style*/
+
 .form-group {
 	position: relative;
 	margin-bottom: 20px;
@@ -26,7 +68,6 @@ input{
 	background-image: none;
 	border: 2px solid #bdc3c7;
 	color: #34495e;
-	font-family: "Lato", Helvetica, Arial, sans-serif;
 	font-size: 15px;
 	line-height: 1.467;
 	padding: 2px 12px;
@@ -38,6 +79,10 @@ input{
 		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
 	transition: border .1 linear, color .1 linear, background-color .1 linear;
 }
+
+	#food-search .form-control{
+		width: 92%;
+	}
 
 	.form-control:focus {
 		border-color: #3498DB;
@@ -51,7 +96,7 @@ input{
 	vertical-align: middle;
 	right: 0;
 	top: 0;
-	left:92%;
+	left:83%;
 	width: 20%;
 	height: auto;
 	min-height: 49px;
@@ -70,4 +115,107 @@ input{
 	left: 32%;
 		-webkit-transition: color 0.1 linear;
 	transition: color 0.1 linear;
+}
+
+
+/*Indicator*/
+.radio{
+	margin-bottom: 1em;
+	padding-left: 2em;
+	position: relative;
+	-webkit-transition: color 0.1s linear;
+	transition: color 0.1s linear;
+	line-height: 1em;
+	display: block;
+	min-height: 20px;
+}
+
+.radio input {
+  outline: none !important;
+  display: none;
+}
+
+
+.radio .icons .first-icon,
+.radio .icons .second-icon {
+  display: inline-table;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background-color: transparent;
+  margin: 0;
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.radio .icons .second-icon {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.radio:hover {
+  -webkit-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+}
+
+.radio:hover .first-icon {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.radio:hover .second-icon {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+
+.radio.checked {
+  color: #3498DB;
+}
+
+.radio.checked .first-icon {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.radio.checked .second-icon {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  color: #3498DB;
+  -webkit-transition: color 0.1s linear;
+  transition: color 0.1s linear;
+}
+
+.radio.disabled {
+  cursor: default;
+  color: #e6e8ea;
+}
+
+.radio.disabled .icons {
+  color: #e6e8ea;
+}
+
+.radio.disabled .first-icon {
+  opacity: 1;
+  filter: alpha(opacity=100);
+}
+
+.radio.disabled .second-icon {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.radio.disabled.checked .icons {
+  color: #e6e8ea;
+}
+
+.radio.disabled.checked .first-icon {
+  opacity: 0;
+  filter: alpha(opacity=0);
+}
+
+.radio.disabled.checked .second-icon {
+  opacity: 1;
+  filter: alpha(opacity=100);
+  color: #e6e8ea;
 }

@@ -8,6 +8,7 @@
 <script src="_js/underscore-1.6.0.min.js"></script>
 <script src="_js/jquery-1.10.2.min.js"></script>
 <script src="_js/jquery-ui-1.10.4.min.js"></script>
+<link href='http://fonts.googleapis.com/css?family=Arvo:400,700|PT+Sans+Caption' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" media="screen" href="_css/county_comparison.css">
 <link rel="stylesheet" media="screen" href="_css/grid.css">
@@ -24,54 +25,61 @@
 	<div id='wrapper'>
 		<!-- any kind of menu here -->
 		<div class='container'>
-			<section id='direct-farm-sales'>
-				<div class='content-container'>
-					<div class='section group'>
-						<div id='title' class='col span_12_of_12'>
-							<h1>Local Food Access in the U.S.</h1>
-							<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque ligula, at dapibus libero. </p>
-						</div>
+			<section id='direct-farm-sales' class='font_small'>
+					<div class='content-container'>
+						<h1>Local Food Access in the U.S.</h1>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam et scelerisque ligula, at dapibus libero. </p>
 					</div>
-					<div class='section group'>
-						<div id='map-container' class='col span_9_of_12'>
-							<!-- D3 Map -->
-							<!-- Move it up or down with margins based on svg#map -->
-						</div>
-						<div id='map-interaction' class='col span_3_of_12'>
-							<div class='content-container'>
-								<div id='switch-data'>
-									<h2>Indicators</h2>
+					<div id='map-wrapper' class='content-container'>
+	 					<div class='section group'>
+							<div id='map-container' class='col span_9_of_12'>
+								<!-- D3 Map -->
+								<!-- Move it up or down with margins based on svg#map -->
+							</div>
+							<div id='map-interaction' class='col span_3_of_12'>
+								<div class='content-container'>
+									<div id='switch-data'>
+										<h2>Indicators</h2>
 
-									<label class="radio">
-										<span class='icons'>
-											<i class="first-icon radio-unchecked fa fa-circle-o"></i>
-											<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
-										</span>
-										<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio"  checked="">
-									Direct Farm Sales
-									</label>
-									<label class="radio">
-										<span class='icons'>
-											<i class="first-icon radio-unchecked fa fa-circle-o"></i>
-											<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
-										</span>
-										<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" data-toggle="radio">
-									Just in case
-									</label>
-								</div>
-								<div id='food-search'>
-									<div class='form-group'>
-										<input type="search" class='form-control' name="food-search" placeholder='Search by food'>
-										<div class='input-icon'><i class="fa fa-search"></i></div>
+										<label class="radio">
+											<span class='icons'>
+												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
+												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
+											</span>
+											<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio"  checked="">
+											Direct Farm Sales
+											<span class='more-info'>
+												<div class='tooltip'>Any caveats about the data. Or, why we care.</div>
+												<i class="fa fa-info-circle">
+												</i>
+											</span>
+										</label>
+										<label class="radio">
+											<span class='icons'>
+												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
+												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
+											</span>
+											<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" data-toggle="radio">
+											Just in case
+											<span class='more-info'>
+												<div class='tooltip'>Just in case.</div>
+												<i class="fa fa-info-circle"></i>
+											</span>
+										</label>
 									</div>
-								</div>
-								<div id='top-list'>
-									<h2>Top 10 Counties</h2>
+									<div id='food-search'>
+										<div class='form-group'>
+											<input type="search" class='form-control' name="food-search" placeholder='Search by food'>
+											<div class='input-icon'><i class="fa fa-search"></i></div>
+										</div>
+									</div>
+									<div id='top-list'>
+										<h2>Top 10 Counties</h2>
+									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				</div>
 			</section>
 			<section id='county-drilldown'>
 				<div class='content-container'>
@@ -83,7 +91,7 @@
 						<div id='left-county-wrapper' class='col span_3_of_12'>
 							<div id='left-county-content'>
 								<div class='form-group'>
-									<input type="search" class='form-control' name="food-search" placeholder='Search by food'>
+									<input type="search" class='form-control' name="county-search" placeholder='Search by county'>
 									<div class='input-icon'><i class="fa fa-search"></i></div>
 								</div>
 								
@@ -97,7 +105,7 @@
 						<div id='right-county-wrapper' class='col span_3_of_12'>
 							<div id='right-county-content'>
 								<div class='form-group'>
-									<input type="search" class='form-control' name="food-search" placeholder='Search by food'>
+									<input type="search" class='form-control' name="county-search" placeholder='Search by county'>
 									<div class='input-icon'><i class="fa fa-search"></i></div>
 								</div>
 							</div>

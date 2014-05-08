@@ -21,7 +21,6 @@
 }
 
 .move-county {
-	margin: 0 0 0 .5em;
 	color: #ffffff;
 /*	bottom: 0;
 	font-size: 12px;
@@ -64,21 +63,8 @@
 	cursor: move;
 }
 .removeable:active{
-	background-color: black;
+	background-color: #C0392B;
 }
 .removeable:hover{
 	background-color: #ec7063;
-}
-
-
-/*Bottom Style*/
-#county-drilldown {
-	margin-bottom: -1.45em;
-}
-#county-drilldown .content-container {
-	padding-top: 0;
-}
-
-#middle-county-compare h2 {
-	text-align: center;
 }
