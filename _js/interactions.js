@@ -1,3 +1,14 @@
+// Forms
+
+$('input[type=search]').on('focusin', function(){
+	$($(this).next()).fadeOut(100)
+})
+
+$('input[type=search]').on('focusout', function(){
+	$(this).next().fadeIn(100)
+})
+
+// background-color: #3498DB;
 //Zoom
 function zoomed() {
 	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");

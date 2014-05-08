@@ -11,8 +11,8 @@
 	padding: 6px 13px 8px 19px;
 	position: relative;
 	vertical-align: middle;
-	-webkit-transition: 0.25s linear;
-	transition: 0.25s linear;
+	-webkit-transition: 0.1s linear;
+	transition: 0.1s linear;
 }
 
 .tag:hover{
@@ -55,7 +55,7 @@
 	}
 
 .held{
-	background-color: #2ecc71;
+	background-color: #3498DB;
 	cursor: default;
 }
 

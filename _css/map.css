@@ -11,8 +11,8 @@
 	margin-bottom: 1em;
 	padding-left: 2em;
 	position: relative;
-	-webkit-transition: color 0.25s linear;
-	transition: color 0.25s linear;
+	-webkit-transition: color 0.1s linear;
+	transition: color 0.1s linear;
 	line-height: 1em;
 	display: block;
 	min-height: 20px;
@@ -42,8 +42,8 @@
 }
 
 .radio:hover {
-  -webkit-transition: color 0.25s linear;
-  transition: color 0.25s linear;
+  -webkit-transition: color 0.1s linear;
+  transition: color 0.1s linear;
 }
 
 .radio:hover .first-icon {
@@ -58,7 +58,7 @@
 
 
 .radio.checked {
-  color: #1abc9c;
+  color: #3498DB;
 }
 
 .radio.checked .first-icon {
@@ -69,9 +69,9 @@
 .radio.checked .second-icon {
   opacity: 1;
   filter: alpha(opacity=100);
-  color: #1abc9c;
-  -webkit-transition: color 0.25s linear;
-  transition: color 0.25s linear;
+  color: #3498DB;
+  -webkit-transition: color 0.1s linear;
+  transition: color 0.1s linear;
 }
 
 .radio.disabled {

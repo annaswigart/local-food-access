@@ -35,12 +35,12 @@ input{
 	border-radius: 6px;
 		-webkit-box-shadow: none;
 	box-shadow: none;
-		-webkit-transition: border .25s linear, color .25s linear, background-color .25s linear;
-	transition: border .25s linear, color .25s linear, background-color .25s linear;
+		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
+	transition: border .1 linear, color .1 linear, background-color .1 linear;
 }
 
 	.form-control:focus {
-		border-color: #1abc9c;
+		border-color: #3498DB;
 		outline: 0;
 		-webkit-box-shadow: none;
 		box-shadow: none;
@@ -48,10 +48,26 @@ input{
 
 .form-control + .input-icon {
 	position: absolute;
-	right: 0;
-	line-height: 1em;
 	vertical-align: middle;
+	right: 0;
+	top: 0;
+	left:92%;
+	width: 20%;
+	height: auto;
+	min-height: 49px;
+	line-height: 1em;
 	color: #bdc3c7;
-	top: 18px;
-	left: 97%;
+	border-top-right-radius: 6px;
+	border-bottom-right-radius: 6px;
+		-webkit-transition: background-color 0.1 linear;
+	transition: background-color 0.1 linear;
+	cursor: pointer;
+}
+
+.input-icon i {
+	position: absolute;
+	top: 32%;
+	left: 32%;
+		-webkit-transition: color 0.1 linear;
+	transition: color 0.1 linear;
 }

@@ -113,13 +113,13 @@ $(document).ready(function() {
       
       // Map
       change_map_county_status(county);
-      change_map_county_color(county).style('fill', '#2b8fcf')
+      change_map_county_color(county).style('fill', '#3498DB')
     })
 
     $('#top-list').on('mouseover', '.holdable', function(){
       id = county_id($(this).attr('id'))
       county = find_county_obj(data, id)
-      change_map_county_color(county).style('fill', '#2b8fcf')
+      change_map_county_color(county).style('fill', '#3498DB')
     })
 
     $('#top-list').on('mouseout', '.holdable', function(){
@@ -157,7 +157,7 @@ $(document).ready(function() {
     if (el.attr('class') == 'holdable') {
       hold_county(county);
       change_map_county_status(county);
-      change_map_county_color(county).style('fill', '#2b8fcf');
+      change_map_county_color(county).style('fill', '#3498DB');
     }
 
     // Change top list if the county clicked on is in it
