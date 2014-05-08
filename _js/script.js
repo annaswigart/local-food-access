@@ -189,7 +189,11 @@ $(document).ready(function() {
 
     // Highlight top list
     id = county_id($(this).attr('id'))
-    $('#top-list #county-' + id).css('background-color', '#3498db')
+    console.log($('#county-'+id))
+    
+    if ($(this).attr('class') == 'holdable'){
+      $('#top-list #county-' + id).css('background-color', '#3498db')
+    }
   })
   .on("mouseout", function() {
     d3.select(this)

@@ -119,20 +119,8 @@
   border: 1px;      
   border-radius: 1px;           
   pointer-events: none;    
-  color: #ffffff;     
-}
-
-.tooltip-arrow{
-	border-top-color: #34495e;
-	border-width: 9px 9px 0;
-	bottom: 0;
-	margin-left: -9px;
-	left: 50%;
-	position: absolute;
-	width: 0;
-	height: 0;
-	border-color: transparent;
-	border-style: solid;
+  color: #ffffff;    
+  z-index: 9999; 
 }
 
 
