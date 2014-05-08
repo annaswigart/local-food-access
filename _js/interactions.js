@@ -51,30 +51,36 @@ var holdable_county = function(county){
 }
 
 var removeable_county = function(county) {
-	el = $(county_tag(county)).addClass('removeable').append(remove_icon())
+	el = $($(county_tag(county)).addClass('removeable').append(remove_icon()))
 	return el
 }
 
+// Actions of holding and removing a county
+
+var fade = 300
+
 var hold_county = function(county){
 	county_el = removeable_county(county)
-	$('#held-counties').append(county_el)
+	$('#held-counties').append(county_el.hide().fadeIn(fade))
 }
 
 var remove_county = function(county){
-	return $('#held-counties #county-'+county.id).remove()
+	return $('#held-counties #county-'+county.id).fadeOut(fade)
 }
 
 var change_top_county_status = function(county){
 	el = $('#top-list #county-'+county.id)
 	if (el.hasClass('holdable')){
-		el.removeClass('holdable')
-		el.addClass('held')
+		el.removeClass('holdable', fade)
+		el.addClass('held', fade)
 	}
 	else if(el.hasClass('held')){
-		el.removeClass('held')
-		el.addClass('holdable')
+		el.removeClass('held', fade)
+		el.addClass('holdable', fade)
 	}
 }
+
+// Signal holding and removing county
 
 var change_map_county_status = function(county){
 	el = $('#map #county-'+county.id)
@@ -116,5 +122,3 @@ var change_icon = function(county){
 		el.append(plus_icon())
 	}
 }
-
-
