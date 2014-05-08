@@ -63,7 +63,9 @@
 	background-color: #e74c3c;
 	cursor: move;
 }
-
+.removeable:active{
+	background-color: black;
+}
 .removeable:hover{
 	background-color: #ec7063;
 }

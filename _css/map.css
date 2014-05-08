@@ -109,14 +109,31 @@
 }
 
 /*Tooltip*/
-div.tooltip {   
+.tooltip {   
   position: absolute;           
   width: 150px;                  
-  height: 25px;                 
-  padding: 1em 1em 2em 1em;         
+  height: auto;
+  min-height: 25px;
+  padding: .725em;         
   font-size: 0.8em;
   border: 1px;      
   border-radius: 1px;           
-  pointer-events: none;         
+  pointer-events: none;    
+  color: #ffffff;     
 }
+
+.tooltip-arrow{
+	border-top-color: #34495e;
+	border-width: 9px 9px 0;
+	bottom: 0;
+	margin-left: -9px;
+	left: 50%;
+	position: absolute;
+	width: 0;
+	height: 0;
+	border-color: transparent;
+	border-style: solid;
+}
+
+
 

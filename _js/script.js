@@ -30,8 +30,8 @@ $(document).ready(function() {
   // Tooltip
 
   var tooltip = d3.select("#map-container").append("div")   
-  .attr("class", "tooltip")               
-  .style("opacity", 0);
+    .attr("class", "tooltip")               
+    .style("opacity", 0);
 
   //Zoom
   function zoomed() {
@@ -76,7 +76,6 @@ $(document).ready(function() {
 
     // Remove County names from Dock
     $('#county-holder').on('click', '.remove-county', function(){
-      console.log(this)
       id = county_id($(this).parent().attr('id'))
       county = find_county_obj(data, id)
       remove_county(county)
@@ -178,10 +177,15 @@ $(document).ready(function() {
 
     tooltip.transition().duration(300)
     .style("opacity", 1)
-    tooltip.text(countyById[d.id] + " County, " + stateById[d.id] + "Direct Sale Farms : " + rateById[d.id])
-    .style("background-color", "#deebf7")
-    .style("left", (d3.event.pageX + 10) + "px")
-    .style("top", (d3.event.pageY -30) + "px");
+    
+    id = county_id($(this).attr('id'))
+    county = find_county_obj(data, id)
+
+    tooltip
+      .text(county.County + " County, " + county.State + "          Direct Sale Farms : " + county.DIRSALES_FARMS07)
+      .style("background-color", "#34495e")
+      .style("left", (d3.event.pageX + 10) + "px")
+      .style("top", (d3.event.pageY -30) + "px");
 
     // Highlight top list
     id = county_id($(this).attr('id'))
