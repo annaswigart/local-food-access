@@ -39,16 +39,7 @@ $(document).ready(function() {
 
   //Start of Choropleth drawing
 
-  function ready(error, us, data) {
-
-    //console.log(Object.keys(data.County));
-    console.log(data.County['1001']);
-
-    // var countyById = {};
-    // var stateById = {};
-
-    // var DirSaleFarms07 = []
-    // var FmrktPTh13 = []
+  function ready(error, us, food) {
 
     var veggie_list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 
                       'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 
@@ -68,21 +59,13 @@ $(document).ready(function() {
     var totals_list = ['Vegetable Totals', 'Citrus Totals', 'Non-Citrus Totals', 'Tree Nut Totals'];
 
 
-    var current_selection = 'DIRSALES_FARMS07';
+    var current_selection = 'Avocados';
 
-    console.log(data[current_selection]);
-    // data.forEach(function(d) {
-    //   countyById[d] = d.County;
-    //   stateById[d] = d.State;
-
-    //   DirSaleFarms07.push(+d.DIRSALES_FARMS07); // num farms with direct sales in 2007
-    //   FmrktPTh13.push(+d.FMRKTPTH13); // num farmer's markets per 1,000 people
-    // });
 
     // Remove County names from Dock
     $('#county-holder').on('click', '.removeable', function(){
       id = county_id($(this).attr('id'));
-      county = find_county_obj(data, id);
+      county = find_county_obj(food, id);
       remove_county(county);
 
       // Change list
@@ -94,28 +77,26 @@ $(document).ready(function() {
       change_map_county_color(county).style ( "fill" , function (d) {return color (d[current_selection]);});
     });
 
-    console.log(_.values(data[current_selection]));
-
   //  var med_current_selection = d3.median(data[current_selection]);
 
   //  console.log(med_current_selection);
     
-   //  //Get Top County Objects
-   //  var top_list = _.chain(data)
-   //    .sortBy(function(data){return -1 * _.values(data[current_selection]);})
-   //    .first(10)
-   //    .value(); 
+    //Get Top County Objects
+    var top_list = _.chain(food)
+      .sortBy(function(d){return -1 * _.values(food[current_selection][d.id]);})
+      .first(10)
+      .value(); 
 
-   //  console.log(top_list);
+    console.log(top_list);
 
-   //  // Append top counties to DOM
-   //  top_list.forEach(function(county) {
-   //    $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.County +", " + county.State + plus_icon() + "</li>");
-   //  });
+    // Append top counties to DOM
+    top_list.forEach(function(county) {
+      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.County +", " + county.State + plus_icon() + "</li>");
+    });
 
    //  $('#top-list').on('click', '.holdable', function(){
    //    id = county_id($(this).attr('id'));
-   //    county = find_county_obj(data, id);
+   //    county = find_county_obj(food, id);
    //    hold_county(county);
       
    //    // Top list
@@ -129,38 +110,44 @@ $(document).ready(function() {
 
    //  $('#top-list').on('mouseover', '.holdable', function(){
    //    id = county_id($(this).attr('id'));
-   //    county = find_county_obj(data, id);
+   //    county = find_county_obj(food, id);
    //    change_map_county_color(county).style('fill', 'blue');
    //  });
 
    //  $('#top-list').on('mouseout', '.holdable', function(){
    //    id = county_id($(this).attr('id'));
-   //    county = find_county_obj(data, id);
+   //    county = find_county_obj(food, id);
    //    change_map_county_color(county).style ( "fill" , function (d) {return color (d[current_selection]);});
    //  });
 
    // console.log("median " + med_current_selection + " farms");
 
   //Drawing Choropleth
+
+  console.log(food)
   svg.append("g")
   .attr("class", "counties")
   .selectAll("path")
     .data(topojson.feature(us, us.objects.counties).features)
     .enter().append("path")
     .attr("d", path)
-    .style ( "fill" , function (d) {return color (d[current_selection]);})
+    .style ( "fill" , function (d) {return color (food[current_selection][d.id]);})
     .style("opacity", 0.8)
     .attr("stroke-dasharray", "round")
     .attr("stroke", "black")
     .attr("stroke-width", "0.1px")
     .attr('class', 'holdable')
-    .attr("id", function(d, i){ return 'county-' + Object.keys(data.County);})
+    .attr("id", function(d, i){ 
+        return 'county-' + d.id;
+    })
+
+
 
   // Add county from map
 
   .on('click', function(){
     id = county_id($(this).attr('id'));
-    county = find_county_obj(data, id);
+    county = find_county_obj(food, id);
     
     el_html = '#map #county-'+county.id;
     el = $(el_html);
@@ -187,7 +174,7 @@ $(document).ready(function() {
 
     div.transition().duration(300)
     .style("opacity", 1);
-    div.text(d.County + " County, " + d.State + "Direct Sale Farms : " + d[current_selection])
+    div.text(food['County'][d.id] + " County, " + food['State'][d.id] + "Farms: " + food[current_selection][d.id])
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
