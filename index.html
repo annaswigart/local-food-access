@@ -40,9 +40,26 @@
 						<div id='map-interaction' class='col span_3_of_12'>
 							<div class='content-container'>
 								<div id='switch-data'>
-									<h2>Indicator</h2>
+									<h2>Indicators</h2>
 									<form name="" action="" method="">
-										<input checked type="radio" name="indicator" value="direct-farm-sales">Direct Farm Sales
+
+										<label class='radio'>
+											<span class='icons'>
+												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
+												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
+											</span>
+											<input checked type="radio" name="indicators" id='direct-farm-sales' value="option1" data-toggle="radio">
+											Direct Farm Sales
+										</label>
+										<label class='radio'>
+											<span class='icons'>
+												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
+												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
+											</span>
+											<input checked type="radio" name="indicators" id='second-indicator' value="option1" data-toggle="radio">
+											Second Indicator
+										</label>
+										
 									</form>
 								</div>
 								<div id='food-search'>
@@ -86,5 +103,6 @@
 	</div>
 </body>
 <script src="/_js/interactions.js"></script>
+<script src="/_js/radio.js"></script>
 <script src="/_js/script.js"></script>
 </html>

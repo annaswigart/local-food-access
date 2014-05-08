@@ -1,3 +1,74 @@
+/*Hold counties*/
+.tag {
+	border-radius: 4px;
+	color: #ffffff;
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
+	line-height: 15px;
+	padding: 6px 13px 8px 19px;
+	position: relative;
+	vertical-align: middle;
+	-webkit-transition: 0.25s linear;
+	transition: 0.25s linear;
+}
+
+.tag:hover{
+/*	padding-left: 12px;
+	padding-right: 20px;*/
+}
+
+.move-county {
+	margin: 0 0 0 .5em;
+	color: #ffffff;
+/*	bottom: 0;
+	font-size: 12px;
+	opacity: 0;
+	padding: 7px 7px 5px 0;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	text-decoration: none;
+	top: 0;
+	width: 100%;
+	z-index: 2;*/
+	/*display: none\9;*/
+}
+
+.fa-plus-circle, .fa-times-circle {
+	cursor: pointer;
+}
+
+.holdable{
+	background-color: #1abc9c;
+	cursor: default;
+}
+
+	.holdable:hover{
+		background-color: #48c9b0;
+	}
+
+	#map .holdable{
+		cursor: pointer;
+	}
+
+.held{
+	background-color: #2ecc71;
+	cursor: default;
+}
+
+.removeable{
+	background-color: #e74c3c;
+	cursor: move;
+}
+
+.removeable:hover{
+	background-color: #ec7063;
+}
+
+
 /*Bottom Style*/
 #county-drilldown {
 	margin-bottom: -1.45em;
