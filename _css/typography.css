@@ -48,3 +48,8 @@ small, .font_small {font-size: 0.8em;}
 #held-counties {
   font-size: 0.8em;
 }
+
+.or-drag{
+  font-size: 0.8em;
+  color: #BDC3C7;
+}

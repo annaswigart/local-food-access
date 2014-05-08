@@ -13,7 +13,8 @@ $(document).ready(function() {
   var color_domain = [0, 1, 100, 500, 1000, 3000, 5000, 9000, 18000]
   var color = d3.scale.threshold()
   .domain(color_domain)
-  .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
+  // .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
+  .range(['#F1F9F7', '#BAE2DA', '#83CCBE', '#4CB6A1', '#16A085', '#127A66', '#0F5447', '#0C2F28'])
 
   // Map
   var width = $('#map-container').width();
