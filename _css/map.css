@@ -22,37 +22,3 @@ div.tooltip {
   pointer-events: none;         
 }
 
-/*Add county interaction style*/
-.holdable{
-	cursor: pointer;
-}
-.held{
-	cursor: default;
-}
-
-.removeable {
-	margin: 0 1em 0 0;
-	display: inline-block;
-}
-
-.move-county {
-	margin: 0 0 0 .5em;
-}
-
-/*Held counties*/
-#held-counties .removeable {
-	cursor: move;
-}
-.fa-plus-circle {
-	color: green;
-	cursor: pointer;
-}
-
-.fa-times-circle {
-	color: red;
-	cursor: pointer;
-}
-
-.fa-check-circle {
-	color: blue;
-}

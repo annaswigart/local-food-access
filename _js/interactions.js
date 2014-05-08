@@ -7,17 +7,17 @@
 
 // Create icons in top list
 var check_icon = function(){
-	var icon = "<span><i class='fa fa-check-circle move-county'></i></span>"
+	var icon = "<i class='fa fa-check-circle move-county'></i>"
 	return icon
 }
 
 var plus_icon = function(){
-	var icon = "<span><i class='fa fa-plus-circle move-county'></i></span>"
+	var icon = "<i class='fa fa-plus-circle hold-county move-county'></i>"
 	return icon
 }
 
 var remove_icon = function(){
-	var icon = "<span><i class='fa fa-times-circle move-county'></i></span>"
+	var icon = "<i class='fa fa-times-circle remove-county move-county'></i>"
 	return icon
 }
 
@@ -40,9 +40,18 @@ var find_county_obj = function(data, id) {
 }
 
 // Create and move county names as nodes
+var county_tag = function(county){
+	var el = "<span id='county-" + county.id + "'class='tag'><span>" + county.County + ", " + county.State + "</span>" + "</span>"
+	return el
+}
+
+var holdable_county = function(county){
+	el = $(county_tag(county)).addClass('holdable').append(plus_icon())
+	return el
+}
+
 var removeable_county = function(county) {
-	var icon = remove_icon()
-	var el = "<span class='removeable' id='county-" + county.id + "'>" + county.County + ", " + county.State + icon + "</span>"
+	el = $(county_tag(county)).addClass('removeable').append(remove_icon())
 	return el
 }
 
@@ -57,11 +66,13 @@ var remove_county = function(county){
 
 var change_top_county_status = function(county){
 	el = $('#top-list #county-'+county.id)
-	if (el.attr('class')=='holdable'){
-		el.attr('class', 'held')
+	if (el.hasClass('holdable')){
+		el.removeClass('holdable')
+		el.addClass('held')
 	}
-	else if(el.attr('class') == 'held'){
-		el.attr('class', 'holdable')
+	else if(el.hasClass('held')){
+		el.removeClass('held')
+		el.addClass('holdable')
 	}
 }
 
@@ -94,13 +105,14 @@ var county_in_top = function(county){
 
 var change_icon = function(county){
 	el = $('#top-list #county-'+county.id)
-	icon = el.children().children()
+	icon = el.children('i')
+
 	if (icon.hasClass('fa-plus-circle')){
-		el.children().remove()
+		icon.remove()
 		el.append(check_icon())
 	}
 	else if(icon.hasClass('fa-check-circle')){
-		el.children().remove()
+		icon.remove()
 		el.append(plus_icon())
 	}
 }

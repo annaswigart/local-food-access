@@ -1,15 +1,11 @@
 /*Typography*/
-* {
-	text-rendering: optimizeLegibility!important;
-	-webkit-font-smoothing: antialiased!important;
-}
 body {
   background-color: white;
   font-size: 1.125em;
   font-family: 'Libre Baskerville', serif;
   font-weight: 400;
   line-height: 1.45;
-  color: #333;
+  color: #34495e;
 }
 
 p {margin-bottom: 1.3em;}
@@ -27,9 +23,9 @@ h3 {font-size: 1.25em;}
 
 small, .font_small {font-size: 0.8em;}
 
-/* Exceptions */
+/* Exceptions 
 
 /*Preserve verticle space*/
-#direct-farm-sales{font-size: .8em}
-#title h1 {line-height: 0;}
-#title p {margin: 0}
+/*#direct-farm-sales{font-size: .8em}*/
+/*#title h1 {line-height: 0;}*/
+/*#title p {margin: 0}*/

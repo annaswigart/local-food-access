@@ -75,8 +75,9 @@ $(document).ready(function() {
     });
 
     // Remove County names from Dock
-    $('#county-holder').on('click', '.removeable', function(){
-      id = county_id($(this).attr('id'))
+    $('#county-holder').on('click', '.remove-county', function(){
+      console.log(this)
+      id = county_id($(this).parent().attr('id'))
       county = find_county_obj(data, id)
       remove_county(county)
 
@@ -99,11 +100,11 @@ $(document).ready(function() {
 
     // Append top counties to DOM
     top_list.forEach(function(county) {
-      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.County +", " + county.State + plus_icon() + "</li>");
+      $('#top-list').append(holdable_county(county));
     });
 
-    $('#top-list').on('click', '.holdable', function(){
-      id = county_id($(this).attr('id'))
+    $('#top-list').on('click', '.hold-county', function(){
+      id = county_id($(this).parent().attr('id'))
       county = find_county_obj(data, id)
       hold_county(county);
       
@@ -113,13 +114,13 @@ $(document).ready(function() {
       
       // Map
       change_map_county_status(county);
-      change_map_county_color(county).style('fill', 'blue')
+      change_map_county_color(county).style('fill', '#2b8fcf')
     })
 
     $('#top-list').on('mouseover', '.holdable', function(){
       id = county_id($(this).attr('id'))
       county = find_county_obj(data, id)
-      change_map_county_color(county).style('fill', 'blue')
+      change_map_county_color(county).style('fill', '#2b8fcf')
     })
 
     $('#top-list').on('mouseout', '.holdable', function(){
@@ -157,7 +158,7 @@ $(document).ready(function() {
     if (el.attr('class') == 'holdable') {
       hold_county(county);
       change_map_county_status(county);
-      change_map_county_color(county).style('fill', 'blue');
+      change_map_county_color(county).style('fill', '#2b8fcf');
     }
 
     // Change top list if the county clicked on is in it
@@ -181,6 +182,10 @@ $(document).ready(function() {
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
+
+    // Highlight top list
+    id = county_id($(this).attr('id'))
+    $('#top-list #county-' + id).css('background-color', '#3498db')
   })
   .on("mouseout", function() {
     d3.select(this)
@@ -188,6 +193,10 @@ $(document).ready(function() {
     .style("opacity", 0.8);
     tooltip.transition().duration(300)
     .style("opacity", 0);
+
+    // Un-highlight top list
+    id = county_id($(this).attr('id'))
+    $('#top-list #county-' + id).css('background-color', '#1abc9c')
   })
 
   svg.append("g")

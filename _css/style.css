@@ -1,4 +1,4 @@
-input[type=search] {
+/*input[type=search] {
 	-webkit-appearance: none;
 	display: block;
 	padding: .2em 0 .2em .2em;
@@ -6,4 +6,76 @@ input[type=search] {
 	border-radius: 2px;
 	border: 1px solid #999;
 	margin: 1.4em 0 0 0;
+}*/
+
+
+/*Add county interaction style*/
+.holdable{
+	cursor: pointer;
+}
+.held{
+	cursor: default;
+}
+
+.removeable {
+	margin: 0 1em 0 0;
+	display: inline-block;
+}
+
+
+
+/*Held counties*/
+.tag {
+	border-radius: 4px;
+	color: #ffffff;
+	cursor: pointer;
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 5px;
+	overflow: hidden;
+	line-height: 15px;
+	padding: 6px 13px 8px 19px;
+	position: relative;
+	vertical-align: middle;
+	-webkit-transition: 0.25s linear;
+	transition: 0.25s linear;
+}
+
+.move-county {
+	margin: 0 0 0 .5em;
+		/*bottom: 0;*/
+	color: #ffffff;
+/*	font-size: 12px;
+	opacity: 0;
+	padding: 7px 7px 5px 0;
+	position: absolute;
+	right: 0;
+	text-align: right;
+	text-decoration: none;
+	top: 0;
+	width: 100%;
+	z-index: 2;*/
+}
+
+.fa-plus-circle, .fa-times-circle {
+	cursor: pointer;
+}
+
+.holdable{
+	background-color: #1abc9c;
+	cursor: default;
+}
+
+	#map .holdable{
+		cursor: pointer;
+	}
+
+.held{
+	background-color: #3498db;
+	cursor: default;
+}
+
+.removeable{
+	background-color: #e74c3c;
+	cursor: move;
 }
