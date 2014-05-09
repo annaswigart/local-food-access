@@ -7,7 +7,6 @@
 // County Comparison Interactions
 
 $(document).ready(function() {
-  
 
   //Reading map file and data
 

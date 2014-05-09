@@ -67,8 +67,15 @@ var draw_map = function(us, all_counties){
     
     el_html = '#map #county-'+county.id;
     el = $(el_html);
+
+
     if (el.attr('class') == 'holdable') {
       hold_county(county);
+
+      // Make elements draggable
+      make_draggable()
+      
+      // Map
       change_map_county_status(county);
       change_map_county_color(county).style('fill', '#3498DB');
     }
@@ -78,6 +85,7 @@ var draw_map = function(us, all_counties){
       change_top_county_status(county);
       change_icon(county);
     }
+
 
   })
 
@@ -138,6 +146,12 @@ var top_list = function(all_counties, food_selection){
       id = county_id($(this).parent().attr('id'))
       county = find_county_obj(all_counties, id)
       hold_county(county)
+
+
+      // Make elements draggable
+      make_draggable()
+
+
       // Top list
       change_top_county_status(county);
       change_icon(county);
@@ -149,7 +163,6 @@ var top_list = function(all_counties, food_selection){
 
     // Remove County names from Dock
     $('#county-holder').on('click', '.remove-county', function(event){
-      event.stopPropagation();
       id = county_id($(this).parent().attr('id'));
       county = find_county_obj(all_counties, id);
       remove_county(county);
