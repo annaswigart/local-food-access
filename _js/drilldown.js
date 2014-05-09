@@ -117,6 +117,7 @@ $(document).ready(function() {
 			}
 			county_objects.push(county)
 		})
+	console.log(county_objects)
 	return county_objects
 	};
 });
