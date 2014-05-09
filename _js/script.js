@@ -17,7 +17,7 @@ $(document).ready(function() {
 
   //Start of Choropleth drawing
 
-  function ready(error, us, food, mine) {
+  function ready(error, us, food) {
     // *** Set Up - data_setup.js ****
 
     var veggie_list = get_veggie_list()
@@ -63,5 +63,90 @@ $(document).ready(function() {
           top_list(all_counties, food_selection)
       }
     });
-  }
+
+  //  var food_list = (get_veggie_list() + get_fruit_list() + get_nut_list()).split(',');
+    var food_list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 
+                      'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 
+                      'Eggplant', 'Escarole & Endive', 'Garlic', 'Ginseng', 'Greens', 'Herbs', 'Horseradish',
+                      'Lettuce', 'Melons', 'Okra', 'Onions', 'Parsley', 'Peas', 'Peppers', 'Potatoes', 
+                      'Pumpkins', 'Radishes', 'Rhubarb', 'Spinach', 'Squash', 'Sweet Corn', 'Sweet Potatoes', 
+                      'Tomatoes', 'Turnips', 'Watercress', 'Apples', 'Apricots', 'Avocados', 'Bananas', 'Cherries', 'Chestnuts', 
+                      'Dates', 'Figs', 'Grapefruit', 'Grapes', 'Guavas', 'Hazelnuts', 'Kiwifruit', 'Kumquats', 
+                      'Lemons', 'Limes', 'Mangoes', 'Olives', 'Oranges', 'Papayas', 
+                      'Passion Fruit', 'Peaches', 'Pears', 'Pecans', 'Persimmons', 'Plum-Apricot Hybrids', 
+                      'Plums', 'Pomegranates', 'Prunes', 'Tangelos', 'Tangerines', 'Temples', 'Almonds', 'Macadamias', 'Pistachios', 'Walnuts'];
+
+                     
+    var create_bar_chart = function(fips_value) {
+      fips = fips_value
+
+      var get_food_by_county = function() {
+        foods_by_county = []
+        for(var i=0; i < food_list.length; i++) { 
+          var value = food[food_list[i]][fips];
+          if (value > 0) {
+            foods_by_county.push({'item': food_list[i], 'value' : value});
+          }  
+        }
+
+        var topFoods = _.chain(foods_by_county)
+          .sortBy(function(foods_by_county){return -1 * foods_by_county.value;})
+          .value();  
+        console.log(topFoods);
+        return topFoods;
+      }
+
+      $(function() {
+
+        var names_list = function() {
+          names = []
+          food_array = get_food_by_county(fips);
+          for (var i=0; i < food_array.length; i++){
+            names.push(food_array[i].item)
+          }
+          return names;
+        }
+
+        var values_list = function() {
+          values = []
+          food_array = get_food_by_county(fips);
+          for (var i=0; i < food_array.length; i++){
+            values.push(food_array[i].value)
+          }
+
+          return values;
+        }
+
+        $(".bar-chart").highcharts({
+          chart: {
+            type: 'bar'
+          },
+          title: {
+            text: 'Top Foods'
+          },
+           xAxis: {
+            categories: names_list(fips),
+          },
+          yAxis: {
+            min: 0,
+            title: {
+                text: 'Number of Farms'
+            }
+          },
+          legend: {
+            enabled: false
+          },
+
+          series: [{
+            data: values_list(fips)
+          }],
+          credits: {
+              enabled: false
+          },
+        });
+      });  
+    }
+    create_bar_chart(1001); 
+
+  } 
 });
