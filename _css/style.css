@@ -14,7 +14,7 @@ i {
 	font-size: 0.8em;
 	border: 1px;      
 	border-radius: 6px;           
-	pointer-events: none;    
+	pointer-events: none;
 	color: #ffffff;    
 	z-index: 9999; 
 }

@@ -29,6 +29,7 @@ $(document).ready(function() {
     food_selection = 'DIRSALES_FARMS07'
 
     var all_counties = make_county_objects(food, food_selection)
+
     draw_map(us, all_counties)
     top_list(all_counties, food_selection)
   
