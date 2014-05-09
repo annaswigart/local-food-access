@@ -104,6 +104,11 @@ var getTop = function(all_counties, key){
   return top_counties
 }
 
+
+var clear_top_list = function(){
+  $('#top-list span').remove()
+}
+
 // Get county object from id
 var county_id = function(el_id){
   id = parseInt(el_id.split('-')[1])
