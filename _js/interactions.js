@@ -20,6 +20,33 @@ $('input[type=search]').on('focusout', function(){
 	$(this).next().fadeIn(100)
 })
 
+$.widget( "custom.catcomplete", $.ui.autocomplete, {
+    _renderMenu: function( ul, items ) {
+      var self = this,
+        currentCategory = "";
+      $.each( items, function( index, item ) {
+        if ( item.category != currentCategory ) {
+          ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
+          currentCategory = item.category;
+        }
+        self._renderItem( ul, item );
+      });
+    }
+});
+
+$(function() {
+  $( "#search" ).catcomplete({
+    delay: 0,
+    source: get_food_search_obj(),
+    minLength: 1,
+
+    select: function(event, ui) {
+      $("#search").val(ui.item.label);
+    }
+
+  });
+}); 
+
 // background-color: #3498DB;
 //Zoom
 function zoomed() {
