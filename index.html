@@ -41,28 +41,28 @@
 									<div id='switch-data'>
 										<h2>Indicators</h2>
 
-										<label class="radio">
+										<label class="radio" id="direct-farm">
 											<span class='icons'>
 												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
 												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
 											</span>
-											<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio"  checked="">
+											<input type="radio" name="optionsRadios" value="option1" data-toggle="radio"  checked="">
 											Direct Farm Sales
 											<span class='more-info'>
-												<div class='tooltip'>Any caveats about the data. Or, why we care.</div>
+												<div class='tooltip'>Number of farms with direct sales</div>
 												<i class="fa fa-info-circle">
 												</i>
 											</span>
 										</label>
-										<label class="radio">
+										<label class="radio" id="food">
 											<span class='icons'>
 												<i class="first-icon radio-unchecked fa fa-circle-o"></i>
 												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
 											</span>
-											<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" data-toggle="radio">
-											Just in case
+											<input type="radio" name="optionsRadios" value="option1" data-toggle="radio">
+											Food Production
 											<span class='more-info'>
-												<div class='tooltip'>Just in case.</div>
+												<div class='tooltip'>Number of operators per county</div>
 												<i class="fa fa-info-circle"></i>
 											</span>
 										</label>
@@ -74,7 +74,7 @@
 										</div>
 									</div>
 									<div id='top-list'>
-										<h2>Top 10 Counties</h2>
+										<h3>Top 10 Counties</h3>
 									</div>
 								</div>
 							</div>
@@ -122,8 +122,10 @@
 		</div>
 	</div>
 </body>
-<script src="/_js/data_setup.js"></script>
-<script src="/_js/interactions.js"></script>
+<script src="/_js/general.js"></script>
+<script src="/_js/map_setup.js"></script>
+<script src="/_js/compare.js"></script>
+<script src="/_js/drilldown.js"></script>
 <script src="/_js/radio.js"></script>
 <script src="/_js/script.js"></script>
 </html>

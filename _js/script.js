@@ -69,7 +69,9 @@ $(document).ready(function() {
     var nut_list = get_nut_list()
     var totals_list = get_totals_list()
 
-    var all_counties = make_county_objects(food)
+    // Decide which data
+    food_selection = 'Avocados'
+    var all_counties = make_county_objects(food, food_selection)
 
     // Append top counties to DOM - interactions.js
     var top_counties = getTop(all_counties, 'food_quant')
@@ -170,15 +172,6 @@ $(document).ready(function() {
     tooltip.transition().duration(300)
     .style("opacity", 0);
 
-    // Un-highlight top list
-    // id = county_id($(this).attr('id'))
-    // top_county = $('#top-list #county-' + id)
-    // if(top_county.hasClass('held')){
-    //   // top_county.css('background-color', '#3498db')
-    // }
-    // else if{
-    //   top_county.css('background-color', '#1abc9c')
-    // }
   })
 
   svg.append("g")
@@ -191,13 +184,5 @@ $(document).ready(function() {
     .attr("stroke-linejoin", "round")
     .attr("d", path);
   }
-
-  // $('#autocomplete').autocomplete({
-  //   lookup: counties,
-  //   onSelect: function (suggestion) {
-  // // some function here
-  //   }
-  // });
-
 
 });

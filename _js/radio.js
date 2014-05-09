@@ -122,7 +122,7 @@
  /* RADIO DATA-API
   * =============== */
 
-  $(document).on('click.radio.data-api', '[data-toggle^=radio], .radio', function (e) {
+  $(document).on('mousedown.radio.data-api', '[data-toggle^=radio], .radio', function (e) {
     var $radio = $(e.target);
     e && e.preventDefault() && e.stopPropagation();
     if (!$radio.hasClass('radio')) $radio = $radio.closest('.radio');
