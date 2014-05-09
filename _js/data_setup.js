@@ -75,11 +75,10 @@ var get_food_search_obj = function(){
     return obj;
 }
 
-var make_county_objects = function(food){
+var make_county_objects = function(food, food_selection){
     var master_counties = food['County']
     var master_states = food['State']
 
-    var food_selection = 'Vegetable Totals'
     var selected_counties = food[food_selection]
 
     county_objects = []
