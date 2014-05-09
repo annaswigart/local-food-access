@@ -48,7 +48,8 @@ var make_draggable = function(){
 	    var dragged = ui.draggable.detach()
 	    dragged.appendTo($(this))
 	    el_id = $( this ).find( "span" ).attr('id')
-	    id = county_id(el_id)
+	    id = county_id(el_id);
+	    set_current_bar_fips(id);
 
 	    // county = // Find county object
 
@@ -67,6 +68,7 @@ var make_draggable = function(){
 
 	    // Render chart here.
 
+	    // please(id)
 	    
 	  }
 	})

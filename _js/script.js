@@ -5,8 +5,20 @@
 
 
 // County Comparison Interactions
+var current_bar_fips = 0
+
+  function set_current_bar_fips(new_fips){
+    current_bar_fips=new_fips;
+  }
+
+  function get_current_bar_fips() {
+    return current_bar_fips;
+  }
+
 
 $(document).ready(function() {
+
+
 
   //Reading map file and data
 
@@ -32,22 +44,16 @@ $(document).ready(function() {
     draw_map(us, all_counties)
     top_list(all_counties, food_selection)
   
-
-    $('#food-search').hide()
     $('#switch-data').on('mousedown', '.radio', function(){
       food_selection = ''
       var toggle = $(this).attr('id')
       if(toggle == 'direct-farm'){
-        $('#food-search').slideUp(300)
+
         food_selection = 'DIRSALES_FARMS07'
         var all_counties = make_county_objects(food, food_selection)
         clear_top_list()
         draw_map(us, all_counties)
         top_list(all_counties, food_selection)
-      }
-      else if(toggle = 'food-switch'){
-        $('#food-search').slideDown(300)
-        clear_top_list()
       }
     })
 
@@ -146,7 +152,7 @@ $(document).ready(function() {
         });
       });  
     }
-    create_bar_chart(1001); 
+    create_bar_chart(6001); 
 
   } 
 });
