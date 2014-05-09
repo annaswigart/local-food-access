@@ -157,8 +157,8 @@ $(document).ready(function() {
 
     tooltip.transition().duration(200)
     .style("opacity", 1);
-    tooltip.text(county.id + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
-    .style("background-color", "#deebf7")
+    tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
+    .style("background-color", "#2C3E50")
     .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
 
