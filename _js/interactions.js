@@ -16,26 +16,10 @@ var remove_icon = function(){
 
 // Add county from top list
 
-// Get county object from id
-var county_id = function(el_id){
-	id = parseInt(el_id.split('-')[1])
-	return id
-}
-
-var find_county_obj = function(data, id) {
-  wanted_county = {}
-  data.forEach(function(d) {
-    if (id == d.id){
-      wanted_county = d
-    }
-  });
-  return wanted_county
-}
-
 // Create and move county names as nodes
 var removeable_county = function(county) {
 	var icon = remove_icon()
-	var el = "<span class='removeable' id='county-" + county.id + "'>" + county.County + ", " + county.State + icon + "</span>"
+	var el = "<span class='removeable' id='county-" + county.id + "'>" + county.county + ", " + county.state + icon + "</span>"
 	return el
 }
 

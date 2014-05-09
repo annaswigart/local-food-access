@@ -41,72 +41,38 @@ $(document).ready(function() {
 
   function ready(error, us, food) {
 
-    var veggie_list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 
-                      'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 
-                      'Eggplant', 'Escarole & Endive', 'Garlic', 'Ginseng', 'Greens', 'Herbs', 'Horseradish',
-                      'Lettuce', 'Melons', 'Okra', 'Onions', 'Parsley', 'Peas', 'Peppers', 'Potatoes', 
-                      'Pumpkins', 'Radishes', 'Rhubarb', 'Spinach', 'Squash', 'Sweet Corn', 'Sweet Potatoes', 
-                      'Tomatoes', 'Turnips', 'Vegetables- Other', 'Watercress'];
+    // *** Set Up - data_setup.js ****
 
-    var fruit_list = ['Apples', 'Apricots', 'Avocados', 'Bananas', 'Cherries', 'Chestnuts', 'Citrus- Other', 
-                      'Dates', 'Figs', 'Grapefruit', 'Grapes', 'Guavas', 'Hazelnuts', 'Kiwifruit', 'Kumquats', 
-                      'Lemons', 'Limes', 'Mangoes', 'Non-Citrus- Other', 'Olives', 'Oranges', 'Papayas', 
-                      'Passion Fruit', 'Peaches', 'Pears', 'Pecans', 'Persimmons', 'Plum-Apricot Hybrids', 
-                      'Plums', 'Pomegranates', 'Prunes', 'Tangelos', 'Tangerines', 'Temples'];
+    var veggie_list = get_veggie_list()
+    var fruit_list = get_fruit_list()
+    var nut_list = get_nut_list()
+    var totals_list = get_totals_list()
 
-    var nut_list = ['Almonds', 'Macadamias', 'Pistachios', 'Tree Nuts, Other', 'Walnuts'];
+    var all_counties = make_county_objects(food)
 
-    var totals_list = ['Vegetable Totals', 'Citrus Totals', 'Non-Citrus Totals', 'Tree Nut Totals'];
+    console.log(all_counties)
 
+    var top_counties = getTop(all_counties, 'food_quant')
 
-    var current_selection = 'Avocados';
+  // Append top counties to DOM - interactions.js
+    top_counties.forEach(function(county) {
+      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.county +", " + county.state + plus_icon() + "</li>");
+    });
 
-
-    // Remove County names from Dock
-    $('#county-holder').on('click', '.removeable', function(){
+    // Add top counties to dock - interactions.js
+    $('#top-list').on('click', '.holdable', function(){
       id = county_id($(this).attr('id'));
-      county = find_county_obj(food, id);
-      remove_county(county);
-
-      // Change list
+      county = find_county_obj(all_counties, id);
+      hold_county(county);
+      
+      // Top list
       change_top_county_status(county);
       change_icon(county);
-
-      // Change map
+    
+      // Map
       change_map_county_status(county);
-      change_map_county_color(county).style ( "fill" , function (d) {return color (d[current_selection]);});
+      change_map_county_color(county).style('fill', 'blue');
     });
-
-  //  var med_current_selection = d3.median(data[current_selection]);
-
-  //  console.log(med_current_selection);
-    
-    //Get Top County Objects
-    var top_list = _.chain(food)
-      .sortBy(function(d){return -1 * _.values(food[current_selection][d.id]);})
-      .first(10)
-      .value(); 
-
-    console.log(top_list);
-
-    // Append top counties to DOM
-    top_list.forEach(function(county) {
-      $('#top-list ul').append("<li class='holdable' id='county-" + county.id + "'>" + county.County +", " + county.State + plus_icon() + "</li>");
-    });
-
-   //  $('#top-list').on('click', '.holdable', function(){
-   //    id = county_id($(this).attr('id'));
-   //    county = find_county_obj(food, id);
-   //    hold_county(county);
-      
-   //    // Top list
-   //    change_top_county_status(county);
-   //    change_icon(county);
-    
-   //    // Map
-   //    change_map_county_status(county);
-   //    change_map_county_color(county).style('fill', 'blue');
-   //  });
 
    //  $('#top-list').on('mouseover', '.holdable', function(){
    //    id = county_id($(this).attr('id'));
@@ -117,21 +83,35 @@ $(document).ready(function() {
    //  $('#top-list').on('mouseout', '.holdable', function(){
    //    id = county_id($(this).attr('id'));
    //    county = find_county_obj(food, id);
-   //    change_map_county_color(county).style ( "fill" , function (d) {return color (d[current_selection]);});
+   //    change_map_county_color(county).style ( "fill" , function (d) {return color (d[food_selection]);});
    //  });
 
-   // console.log("median " + med_current_selection + " farms");
+
+    // Remove County names from Dock
+    $('#county-holder').on('click', '.removeable', function(){
+      id = county_id($(this).attr('id'));
+      county = find_county_obj(all_counties, id);
+      remove_county(county);
+
+      // Change list
+      change_top_county_status(county);
+      change_icon(county);
+
+      // Change map
+      change_map_county_status(county);
+      change_map_county_color(county)
+        .style ( "fill" , function (d) {return color (county.food_quant);});
+    });
 
   //Drawing Choropleth
 
-  console.log(food)
   svg.append("g")
   .attr("class", "counties")
   .selectAll("path")
     .data(topojson.feature(us, us.objects.counties).features)
     .enter().append("path")
     .attr("d", path)
-    .style ( "fill" , function (d) {return color (food[current_selection][d.id]);})
+    .style ( "fill" , function (d) {return color (colorRating(all_counties, d.id))}) // colorRating function is from data_setup.js
     .style("opacity", 0.8)
     .attr("stroke-dasharray", "round")
     .attr("stroke", "black")
@@ -141,13 +121,11 @@ $(document).ready(function() {
         return 'county-' + d.id;
     })
 
-
-
   // Add county from map
 
   .on('click', function(){
     id = county_id($(this).attr('id'));
-    county = find_county_obj(food, id);
+    county = find_county_obj(all_counties, id);
     
     el_html = '#map #county-'+county.id;
     el = $(el_html);
@@ -168,13 +146,15 @@ $(document).ready(function() {
 
   //Tooltip + mousevents
   .on("mouseover", function(d) {
+    id = county_id($(this).attr('id'))
+    county = find_county_obj(all_counties, id)
     d3.select(this)
       .transition().duration(300)
       .style("opacity", 1);
 
     div.transition().duration(300)
     .style("opacity", 1);
-    div.text(food['County'][d.id] + " County, " + food['State'][d.id] + "Farms: " + food[current_selection][d.id])
+    div.text(county.id + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
     .style("background-color", "#deebf7")
     .style("left", (d3.event.pageX + 10) + "px")
     .style("top", (d3.event.pageY -30) + "px");
