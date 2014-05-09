@@ -1,6 +1,6 @@
 
 // Setting color domains(intervals of values) for our map
-var color_domain = [0, 1, 100, 500, 1000, 3000, 5000, 9000, 18000];
+var color_domain = [0, 1, 5, 10, 30, 50, 100, 500, 800];
 var color = d3.scale.threshold()
 .domain(color_domain)
 // .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
