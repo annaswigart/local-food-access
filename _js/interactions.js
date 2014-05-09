@@ -11,15 +11,15 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 })
 
 // Data toggle
-$('#food-search').hide()
-$('.radio').on('click', function(){
-  if ($(this).attr('id') == 'direct-farm'){
-    $('#food-search').slideUp(300)
-  }
-  else if($(this).attr('id') == 'food-switch'){
-    $('#food-search').slideDown(300)
-  }
-})
+
+// $('.radio').on('click', function(){
+//   if ($(this).attr('id') == 'direct-farm'){
+    
+//   }
+//   else if($(this).attr('id') == 'food-switch'){
+    
+//   }
+// })
 
 // Search
 $('input[type=search]').on('focusin', function(){
