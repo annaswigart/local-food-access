@@ -32,7 +32,17 @@ $(document).ready(function() {
     draw_map(us, all_counties)
     top_list(all_counties, food_selection)
   
+    $('#switch-data').on('mousedown', '.radio', function(){
+      food_selection = ''
+      var toggle = $(this).attr('id')
+      if(toggle == 'direct-farm'){
 
+        food_selection = 'DIRSALES_FARMS07'
+        var all_counties = make_county_objects(food, food_selection)
+        draw_map(us, all_counties)
+        top_list(all_counties, food_selection)
+      }
+    })
 
     $('#food-search-box').on('keyup',function(e) {
       if (e.which == 13){
