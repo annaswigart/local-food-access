@@ -19,6 +19,10 @@ $('input[type=search]').on('focusout', function(){
 	$(this).next().fadeIn(100)
 })
 
+$('#county-drilldown input[type=search]').focus(function(){
+	$(this).removeAttr('placeholder')
+});
+
 
 // Autocomplete
 $(function(){
