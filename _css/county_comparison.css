@@ -68,3 +68,27 @@
 .removeable:hover{
 	background-color: #ec7063;
 }
+
+/*Drag and drop*/
+
+.or-drag{
+	height: auto;
+	min-height: 500px;
+}
+
+.drop-active {
+	border-color: #3498DB;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
+	transition: border .1 linear, color .1 linear, background-color .1 linear;
+}
+.drop-hover{
+		border-color: #3498DB;
+	outline: 0;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
+	transition: border .1 linear, color .1 linear, background-color .1 linear;
+}

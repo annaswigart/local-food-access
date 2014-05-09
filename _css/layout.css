@@ -21,6 +21,7 @@ body {
 .content-container {
 	width: 96%;
 	max-width: 92.3em;
+	height: 100%;
 	margin: 0 auto;
 	padding:0 0 .725em 0;
 	vertical-align: baseline;
@@ -46,4 +47,9 @@ body {
 
 #middle-county-compare h2 {
 	text-align: center;
+}
+
+#county-holder{
+	height: auto;
+	min-height: 500px;
 }

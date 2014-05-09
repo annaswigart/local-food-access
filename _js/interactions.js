@@ -10,8 +10,7 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 	tooltip.fadeOut(100)
 })
 
-// Forms
-
+// Search
 $('input[type=search]').on('focusin', function(){
 	$($(this).next()).fadeOut(100)
 })
@@ -20,6 +19,12 @@ $('input[type=search]').on('focusout', function(){
 	$(this).next().fadeIn(100)
 })
 
+$('#county-drilldown input[type=search]').focus(function(){
+	$(this).removeAttr('placeholder')
+});
+
+
+// Autocomplete
 $(function(){
 	var foods = (get_veggie_list() + get_fruit_list() + get_nut_list() + get_totals_list()).split(',');
 	$( "#food-search-box" ).autocomplete({
@@ -28,34 +33,45 @@ $(function(){
 })
 
 
-// $.widget( "custom.catcomplete", $.ui.autocomplete, {
-//     _renderMenu: function( ul, items ) {
-//       var self = this,
-//         currentCategory = "";
-//       $.each( items, function( index, item ) {
-//         if ( item.category != currentCategory ) {
-//           ul.append( "<li>" + item.category + "</li>" );
-//           currentCategory = item.category;
-//         }
-//         self._renderItem( ul, item );
-//       });
-//     }
-// });
+// Drag and Drop
 
-// $(function() {
-//   $( "#search" ).catcomplete({
-//     delay: 0,
-//     source: get_food_search_obj(),
-//     minLength: 1,
+var make_draggable = function(){
+	$(".draggable").draggable({ 
+	  revert: 'invalid',
+	  // helper:"clone",
+	  drag: function(event, ui){
+	    
+	  }
+	});
+	$(".county-wrapper .or-drag").droppable({
+	  drop: function( event, ui ) {
+	    var dragged = ui.draggable.detach()
+	    dragged.appendTo($(this))
+	    el_id = $( this ).find( "span" ).attr('id')
+	    id = county_id(el_id)
 
-//     select: function(event, ui) {
-//       // $("#search").val(ui.item.label);
-//       // console.log($(event.target).val())
-//     }
-//   });
-// }); 
+	    // county = // Find county object
 
-// background-color: #3498DB;
+
+	    //remove search box place holder 
+	    input_form = $(this).parent().children('.form-group').children()
+	    new_placeholder = dragged.text()
+	    console.log(new_placeholder)
+	    input_form.attr('placeholder', new_placeholder)
+
+
+	    // Fill in county name, state
+
+	    $(this).find('h4').fadeOut(200)
+	    dragged.fadeOut(200)
+
+	    // Render chart here.
+
+	    
+	  }
+	})
+}
+
 //Zoom
 function zoomed() {
 	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
@@ -93,7 +109,7 @@ var holdable_county = function(county){
 }
 
 var removeable_county = function(county) {
-	el = $($(county_tag(county)).addClass('removeable').append(remove_icon()))
+	el = $($(county_tag(county)).addClass('removeable').addClass('draggable').addClass('ui-widget-content draggable').append(remove_icon()))
 	return el
 }
 
@@ -105,6 +121,7 @@ var hold_county = function(county){
 	county_el = removeable_county(county)
 	$('#held-counties').append(county_el)
 }
+
 
 var remove_county = function(county){
 	$('#held-counties #county-'+county.id).remove()
