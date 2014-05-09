@@ -125,41 +125,6 @@ var draw_map = function(us, all_counties){
     .attr("stroke-linejoin", "round")
     .attr("d", path);
   }
-// $.widget( "custom.catcomplete", $.ui.autocomplete, {
-//     _renderMenu: function( ul, items ) {
-//       var self = this,
-//         currentCategory = "";
-//       $.each( items, function( index, item ) {
-//         if ( item.category != currentCategory ) {
-//           ul.append( "<li class='ui-autocomplete-category'>" + item.category + "</li>" );
-//           currentCategory = item.category;
-//         }
-//         self._renderItem( ul, item );
-//       });
-//     }
-// });
-
-// $(function() {
-//   $( "#search" ).catcomplete({
-//     delay: 0,
-//     source: get_food_search_obj(),
-//     minLength: 1,
-
-//     select: function(event, ui) {
-//       console.log(ui)
-//       // $("#search").val(ui.item.label);
-//     }
-
-//   });
-// }); 
- 
-
-  // $('#autocomplete').autocomplete({
-  //   lookup: counties,
-  //   onSelect: function (suggestion) {
-  // // some function here
-  //   }
-  // });
 
 var top_list = function(all_counties, food_selection){
    // Append top counties to DOM - interactions.js
@@ -183,7 +148,8 @@ var top_list = function(all_counties, food_selection){
     })
 
     // Remove County names from Dock
-    $('#county-holder').on('click', '.remove-county', function(){
+    $('#county-holder').on('click', '.remove-county', function(event){
+      event.stopPropagation();
       id = county_id($(this).parent().attr('id'));
       county = find_county_obj(all_counties, id);
       remove_county(county);

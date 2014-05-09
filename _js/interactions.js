@@ -10,17 +10,6 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 	tooltip.fadeOut(100)
 })
 
-// Data toggle
-
-// $('.radio').on('click', function(){
-//   if ($(this).attr('id') == 'direct-farm'){
-    
-//   }
-//   else if($(this).attr('id') == 'food-switch'){
-    
-//   }
-// })
-
 // Search
 $('input[type=search]').on('focusin', function(){
 	$($(this).next()).fadeOut(100)
@@ -105,7 +94,7 @@ var holdable_county = function(county){
 }
 
 var removeable_county = function(county) {
-	el = $($(county_tag(county)).addClass('removeable').append(remove_icon()))
+	el = $($(county_tag(county)).addClass('removeable').addClass('draggable').addClass('ui-widget-content draggable').append(remove_icon()))
 	return el
 }
 
@@ -117,6 +106,13 @@ var hold_county = function(county){
 	county_el = removeable_county(county)
 	$('#held-counties').append(county_el)
 }
+
+
+
+$('#county-holder').on('mousedown', 'removeable', function(){
+	$( ".draggable" ).draggable();
+})
+
 
 var remove_county = function(county){
 	$('#held-counties #county-'+county.id).remove()
