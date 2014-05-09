@@ -10,8 +10,18 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 	tooltip.fadeOut(100)
 })
 
-// Forms
+// Data toggle
+$('#food-search').hide()
+$('.radio').on('click', function(){
+  if ($(this).attr('id') == 'direct-farm'){
+    $('#food-search').slideUp(300)
+  }
+  else if($(this).attr('id') == 'food-switch'){
+    $('#food-search').slideDown(300)
+  }
+})
 
+// Search
 $('input[type=search]').on('focusin', function(){
 	$($(this).next()).fadeOut(100)
 })
@@ -20,6 +30,8 @@ $('input[type=search]').on('focusout', function(){
 	$(this).next().fadeIn(100)
 })
 
+
+// Autocomplete
 $(function(){
 	var foods = (get_veggie_list() + get_fruit_list() + get_nut_list() + get_totals_list()).split(',');
 	$( "#food-search-box" ).autocomplete({
