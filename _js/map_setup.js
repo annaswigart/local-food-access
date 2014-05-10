@@ -53,18 +53,16 @@ var top_list = function(all_counties, food_selection, food){
       $('#top-list').append(holdable_county(county));
     });
 
-    $('#top-list').on('click', '.hold-county', function(){
-      id = county_id($(this).parent().attr('id'))
+    $('#top-list').on('click', '.holdable', function(){
+      id = county_id($(this).attr('id'))
       county = find_county_obj(all_counties, id)
       hold_county(county)
 
-
-      // Make elements draggable
-      on_drag(food)
-
+      // Make docked elements draggable
+      make_drag('removeable')
 
       // Top list
-      change_top_county_status(county);
+      change_top_county_to_held(county);
       change_icon(county);
     
       // Map
@@ -72,14 +70,18 @@ var top_list = function(all_counties, food_selection, food){
       change_map_county_color(county).style('fill', '#3498DB')
     })
 
+    // $('#top-list').on('mousedown', '.held', function(){
+      // $(".held").draggable({ disabled: true });
+    // });
+
     // Remove County names from Dock
-    $('#county-holder').on('click', '.remove-county', function(event){
-      id = county_id($(this).parent().attr('id'));
+    $('#county-holder').on('click', '.removeable', function(event){
+      id = county_id($(this).attr('id'));
       county = find_county_obj(all_counties, id);
       remove_county(county);
 
       // Change list
-      change_top_county_status(county);
+      change_top_county_to_holdable(county);
       change_icon(county);
 
       // Change map

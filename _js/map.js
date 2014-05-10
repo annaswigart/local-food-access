@@ -43,7 +43,7 @@ var zoom = d3.behavior.zoom()
 
 
 //Drawing Choropleth + map interactions
-var draw_map = function(us, all_counties){
+var draw_map = function(us, all_counties, food){
   svg.append("g")
   .attr("class", "counties")
   .selectAll("path")
@@ -73,8 +73,8 @@ var draw_map = function(us, all_counties){
     if (el.attr('class') == 'holdable') {
       hold_county(county);
 
-      // Make elements draggable
-      make_draggable()
+      // Make held elements draggable
+      on_drag(food)
       
       // Map
       change_map_county_status(county);

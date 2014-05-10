@@ -22,27 +22,11 @@
 
 .move-county {
 	color: #ffffff;
-/*	bottom: 0;
-	font-size: 12px;
-	opacity: 0;
-	padding: 7px 7px 5px 0;
-	position: absolute;
-	right: 0;
-	text-align: right;
-	text-decoration: none;
-	top: 0;
-	width: 100%;
-	z-index: 2;*/
-	/*display: none\9;*/
-}
-
-.fa-plus-circle, .fa-times-circle {
 	cursor: pointer;
 }
 
 .holdable{
 	background-color: #1abc9c;
-	cursor: default;
 }
 
 	.holdable:hover{
@@ -60,7 +44,7 @@
 
 .removeable{
 	background-color: #e74c3c;
-	cursor: move;
+	cursor: grab;
 }
 .removeable:active{
 	background-color: #C0392B;
@@ -70,11 +54,6 @@
 }
 
 /*Drag and drop*/
-
-.or-drag{
-	height: auto;
-	min-height: 500px;
-}
 
 .drop-active {
 	border-color: #3498DB;
@@ -92,3 +71,19 @@
 		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
 	transition: border .1 linear, color .1 linear, background-color .1 linear;
 }
+
+/*Bar charts*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+

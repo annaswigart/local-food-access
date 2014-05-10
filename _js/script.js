@@ -16,10 +16,13 @@ $(document).ready(function() {
     var all_counties = make_county_objects(food, food_selection)
 
     // *** map.js ****
-    draw_map(us, all_counties)
+    draw_map(us, all_counties, food)
     top_list(all_counties, food_selection, food)
 
     // ##### CORE OF THE PAGE #####
+
+    // make county tags draggable from the start
+    make_drag('holdable')
 
     // Toggle map
     $('#switch-data').on('mousedown', '.radio', function(){
@@ -30,7 +33,7 @@ $(document).ready(function() {
         var all_counties = make_county_objects(food, food_selection)
         $('#food-search').slideUp(200)
         clear_top_list()
-        draw_map(us, all_counties)
+        draw_map(us, all_counties, food)
         top_list(all_counties, food_selection, food)
       }
       else if(toggle == 'food-switch'){
@@ -45,7 +48,7 @@ $(document).ready(function() {
 
 
           var all_counties = make_county_objects(food, food_selection)
-          draw_map(us, all_counties)
+          draw_map(us, all_counties, food)
 
           clear_top_list()
           top_list(all_counties, food_selection, food)
