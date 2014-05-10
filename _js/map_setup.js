@@ -1,43 +1,95 @@
-var get_veggie_list = function(){
-	// list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 
- //                      'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 
- //                      'Eggplant', 'Escarole & Endive', 'Garlic', 'Ginseng', 'Greens', 'Herbs', 'Horseradish',
- //                      'Lettuce', 'Melons', 'Okra', 'Onions', 'Parsley', 'Peas', 'Peppers', 'Potatoes', 
- //                      'Pumpkins', 'Radishes', 'Rhubarb', 'Spinach', 'Squash', 'Sweet Corn', 'Sweet Potatoes', 
- //                      'Tomatoes', 'Turnips', 'Vegetables- Other', 'Watercress'];
-  list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 
-                      'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 
-                      'Eggplant', 'Escarole & Endive', 'Garlic', 'Ginseng', 'Greens', 'Herbs', 'Horseradish',
-                      'Lettuce', 'Melons', 'Okra', 'Onions', 'Parsley', 'Peas', 'Peppers', 'Potatoes', 
-                      'Pumpkins', 'Radishes', 'Rhubarb', 'Spinach', 'Squash', 'Sweet Corn', 'Sweet Potatoes', 
-                      'Tomatoes', 'Turnips', 'Watercress'];
-  return list
+// ########### GENERAL CODE ###########
+
+// Get county object from id
+var county_id = function(el_id){
+  id = parseInt(el_id.split('-')[1])
+  return id
 }
 
-var get_fruit_list = function(){
-	// list = ['Apples', 'Apricots', 'Avocados', 'Bananas', 'Cherries', 'Chestnuts', 'Citrus- Other', 
- //                      'Dates', 'Figs', 'Grapefruit', 'Grapes', 'Guavas', 'Hazelnuts', 'Kiwifruit', 'Kumquats', 
- //                      'Lemons', 'Limes', 'Mangoes', 'Non-Citrus- Other', 'Olives', 'Oranges', 'Papayas', 
- //                      'Passion Fruit', 'Peaches', 'Pears', 'Pecans', 'Persimmons', 'Plum-Apricot Hybrids', 
- //                      'Plums', 'Pomegranates', 'Prunes', 'Tangelos', 'Tangerines', 'Temples'];
-  list = ['Apples', 'Apricots', 'Avocados', 'Bananas', 'Cherries', 'Chestnuts', 
-                      'Dates', 'Figs', 'Grapefruit', 'Grapes', 'Guavas', 'Hazelnuts', 'Kiwifruit', 'Kumquats', 
-                      'Lemons', 'Limes', 'Mangoes', 'Olives', 'Oranges', 'Papayas', 
-                      'Passion Fruit', 'Peaches', 'Pears', 'Pecans', 'Persimmons', 'Plum-Apricot Hybrids', 
-                      'Plums', 'Pomegranates', 'Prunes', 'Tangelos', 'Tangerines', 'Temples'];                    
-  return list
+var find_county_obj = function(all_counties, id) {
+  wanted = {}
+  $.each(all_counties, function(index, county) {
+    if(county.id == id){
+      wanted = county
+    }
+  });
+  return wanted
 }
 
-var get_nut_list = function(){
-//	list = ['Almonds', 'Macadamias', 'Pistachios', 'Tree Nuts, Other', 'Walnuts'];
-  list = ['Almonds', 'Macadamias', 'Pistachios', 'Walnuts'];
-  return list
+// Get color rating
+var colorRating = function(all_counties, id){
+  county = find_county_obj(all_counties, id)
+  rating = county.food_quant
+  return rating
 }
 
-var get_totals_list = function(){
-	list = ['Vegetable Totals', 'Citrus Totals', 'Non-Citrus Totals', 'Tree Nut Totals'];
-  return list
+
+// ########### Top 10 List ###########
+
+var sortDesc = function(all_counties, key) {
+    return all_counties.sort(function(a, b) {
+        var x = a[key]; var y = b[key];
+        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
+    });
 }
+
+var getTop = function(all_counties, key){
+  top_counties = sortDesc(all_counties, key).slice(0,10);
+  return top_counties
+}
+
+
+var clear_top_list = function(){
+  $('#top-list span').remove()
+}
+
+// Renders top list and contains interactions
+
+var top_list = function(all_counties, food_selection, food){
+   // Append top counties to DOM - interactions.js
+    var top_counties = getTop(all_counties, 'food_quant')
+    
+    top_counties.forEach(function(county) {
+      $('#top-list').append(holdable_county(county));
+    });
+
+    $('#top-list').on('click', '.hold-county', function(){
+      id = county_id($(this).parent().attr('id'))
+      county = find_county_obj(all_counties, id)
+      hold_county(county)
+
+
+      // Make elements draggable
+      on_drag(food)
+
+
+      // Top list
+      change_top_county_status(county);
+      change_icon(county);
+    
+      // Map
+      change_map_county_status(county);
+      change_map_county_color(county).style('fill', '#3498DB')
+    })
+
+    // Remove County names from Dock
+    $('#county-holder').on('click', '.remove-county', function(event){
+      id = county_id($(this).parent().attr('id'));
+      county = find_county_obj(all_counties, id);
+      remove_county(county);
+
+      // Change list
+      change_top_county_status(county);
+      change_icon(county);
+
+      // Change map
+      change_map_county_status(county);
+      change_map_county_color(county)
+        .style ( "fill" , function (d) {return color (county.food_quant);});
+    }); 
+}
+
+// ########### FOOD DATA ###########
 
 var get_food_search_obj = function(){ 
   obj = [
@@ -101,45 +153,4 @@ var make_county_objects = function(food, food_selection){
     })
 
     return county_objects
-}
-
-// Top List
-var sortDesc = function(all_counties, key) {
-    return all_counties.sort(function(a, b) {
-        var x = a[key]; var y = b[key];
-        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-    });
-}
-
-var getTop = function(all_counties, key){
-  top_counties = sortDesc(all_counties, key).slice(0,10);
-  return top_counties
-}
-
-
-var clear_top_list = function(){
-  $('#top-list span').remove()
-}
-
-// Get county object from id
-var county_id = function(el_id){
-  id = parseInt(el_id.split('-')[1])
-  return id
-}
-
-var find_county_obj = function(all_counties, id) {
-  wanted = {}
-  $.each(all_counties, function(index, county) {
-    if(county.id == id){
-      wanted = county
-    }
-  });
-  return wanted
-}
-
-// Get color rating
-var colorRating = function(all_counties, id){
-  county = find_county_obj(all_counties, id)
-  rating = county.food_quant
-  return rating
 }

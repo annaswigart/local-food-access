@@ -1,12 +1,13 @@
+// ########### MAP DRAWING - D3 ###########
+
 
 // Setting color domains(intervals of values) for our map
-var color_domain = [0, 1, 5, 10, 30, 50, 100, 500, 800];
+var color_domain = [0, 1, 5, 10, 30, 50, 100, 300, 500];
 var color = d3.scale.threshold()
 .domain(color_domain)
-// .range(["#dcdcdc", "#d0d6cd", "#bdc9be", "#97b0a0", "#4b7e64", "#256546", "#125937", "#004d28"]);
 .range(['#F1F9F7', '#BAE2DA', '#83CCBE', '#4CB6A1', '#16A085', '#127A66', '#0F5447', '#0C2F28'])
 
-// Map
+// Map parameters
 var width = $('#map-container').width();
 var height = 490;
 
@@ -40,9 +41,9 @@ var zoom = d3.behavior.zoom()
   .scaleExtent([1, 8])
   .on("zoom", zoomed);
 
-var draw_map = function(us, all_counties){
-  //Drawing Choropleth + map interactions
 
+//Drawing Choropleth + map interactions
+var draw_map = function(us, all_counties){
   svg.append("g")
   .attr("class", "counties")
   .selectAll("path")
@@ -111,18 +112,9 @@ var draw_map = function(us, all_counties){
     .style("opacity", 0.8);
     tooltip.transition().duration(300)
     .style("opacity", 0);
-
-    // Un-highlight top list
-    // id = county_id($(this).attr('id'))
-    // top_county = $('#top-list #county-' + id)
-    // if(top_county.hasClass('held')){
-    //   // top_county.css('background-color', '#3498db')
-    // }
-    // else if{
-    //   top_county.css('background-color', '#1abc9c')
-    // }
   })
 
+  // State Lines
   svg.append("g")
     .attr("class", "states")
     .selectAll("path")
@@ -133,48 +125,4 @@ var draw_map = function(us, all_counties){
     .attr("stroke-linejoin", "round")
     .attr("d", path);
   }
-
-var top_list = function(all_counties, food_selection){
-   // Append top counties to DOM - interactions.js
-    var top_counties = getTop(all_counties, 'food_quant')
-    
-    top_counties.forEach(function(county) {
-      $('#top-list').append(holdable_county(county));
-    });
-
-    $('#top-list').on('click', '.hold-county', function(){
-      id = county_id($(this).parent().attr('id'))
-      county = find_county_obj(all_counties, id)
-      hold_county(county)
-
-
-      // Make elements draggable
-      make_draggable()
-
-
-      // Top list
-      change_top_county_status(county);
-      change_icon(county);
-    
-      // Map
-      change_map_county_status(county);
-      change_map_county_color(county).style('fill', '#3498DB')
-    })
-
-    // Remove County names from Dock
-    $('#county-holder').on('click', '.remove-county', function(event){
-      id = county_id($(this).parent().attr('id'));
-      county = find_county_obj(all_counties, id);
-      remove_county(county);
-
-      // Change list
-      change_top_county_status(county);
-      change_icon(county);
-
-      // Change map
-      change_map_county_status(county);
-      change_map_county_color(county)
-        .style ( "fill" , function (d) {return color (county.food_quant);});
-    }); 
-}
  

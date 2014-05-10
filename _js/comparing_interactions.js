@@ -19,6 +19,8 @@ $('input[type=search]').on('focusout', function(){
 	$(this).next().fadeIn(100)
 })
 
+$('#food-search').hide()
+
 $('#county-drilldown input[type=search]').focus(function(){
 	$(this).removeAttr('placeholder')
 });
@@ -26,60 +28,13 @@ $('#county-drilldown input[type=search]').focus(function(){
 
 // Autocomplete
 $(function(){
-	var foods = (get_veggie_list() + get_fruit_list() + get_nut_list() + get_totals_list()).split(',');
+	var foods = get_food_list()
 	$( "#food-search-box" ).autocomplete({
       source: foods
     });
 })
 
-
-// Drag and Drop
-
-var make_draggable = function(){
-	$(".draggable").draggable({ 
-	  revert: 'invalid',
-	  // helper:"clone",
-	  drag: function(event, ui){
-	    
-	  }
-	});
-	$(".county-wrapper .or-drag").droppable({
-	  drop: function( event, ui ) {
-	    var dragged = ui.draggable.detach()
-	    dragged.appendTo($(this))
-	    el_id = $( this ).find( "span" ).attr('id')
-	    id = county_id(el_id);
-	    set_current_bar_fips(id);
-
-	    // county = // Find county object
-
-
-	    //remove search box place holder 
-	    input_form = $(this).parent().children('.form-group').children()
-	    new_placeholder = dragged.text()
-	    console.log(new_placeholder)
-	    input_form.attr('placeholder', new_placeholder)
-
-
-	    // Fill in county name, state
-
-	    $(this).find('h4').fadeOut(200)
-	    dragged.fadeOut(200)
-
-	    // Render chart here.
-
-	    // please(id)
-	    
-	  }
-	})
-}
-
-//Zoom
-function zoomed() {
-	svg.attr("transform", "translate(" + d3.event.translate + ")scale(" + d3.event.scale + ")");
-	svg.select(".state-border").style("stroke-width", 1.5 / d3.event.scale + "px");
-	svg.select(".county-border").style("stroke-width", .5 / d3.event.scale + "px");
-}
+// ########### ADD AND REMOVE COUNTIES TO COMPARE ###########
 
 // Create icons in top list
 var check_icon = function(){
@@ -96,8 +51,6 @@ var remove_icon = function(){
 	var icon = "<i class='fa fa-times-circle remove-county move-county'></i>"
 	return icon
 }
-
-// Add county from top list
 
 // Create and move county names as nodes
 var county_tag = function(county){
@@ -182,4 +135,45 @@ var change_icon = function(county){
 		icon.remove()
 		el.append(plus_icon())
 	}
+}
+
+// Drag and Drop
+
+var on_drag = function(food){
+	$(".draggable").draggable({ 
+	  revert: 'invalid',
+	  // helper:"clone",
+	  drag: function(event, ui){
+	    
+	  }
+	});
+	$(".county-wrapper").droppable({
+	  drop: function( event, ui ) {
+	    var dragged = ui.draggable.detach()
+	    
+	    var drop_zone = $(this)
+
+	    dragged.appendTo(drop_zone)
+	    dragged_id = drop_zone.find( "span" ).attr('id')
+
+	    id = county_id(dragged_id);
+	    console.log(id)
+
+
+	    //remove search box place holder 
+	    input_form = $(this).parent().children('.form-group').children()
+	    new_placeholder = dragged.text()
+	    input_form.attr('placeholder', new_placeholder)
+
+	    // Fill in county name, state
+
+	    $(this).find('h4').fadeOut(200)
+	    dragged.fadeOut(200)
+
+	    // Render chart here.
+	    create_bar_chart(food, id)
+	    // please(id)
+	    
+	  }
+	})
 }
