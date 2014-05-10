@@ -135,6 +135,17 @@ var county_in_top = function(county){
 	return check
 }
 
+var county_not_in_dock = function(county){
+	top_list_id = 'county-'+county.id
+	var check = true
+	$('#held-counties span').each(function(index, item){
+		if ($(item).attr('id') == top_list_id){
+			check = false
+		}
+	})
+	return check
+}
+
 // Drag and Drop
 
 var drag_and_drop = function(class_name, food){

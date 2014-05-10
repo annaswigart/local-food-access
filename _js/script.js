@@ -22,9 +22,11 @@ $(document).ready(function() {
     // ##### CORE OF THE PAGE #####
 
     // *** map_interactions.js ***
-    
-    // make county tags draggable from the start
+
+    // make counties into holdable tags
     make_holdable(all_counties, food)
+
+    // make county tags draggable from the start   
     drag_and_drop('holdable', food)
 
     // Make counties removeable

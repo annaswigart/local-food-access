@@ -58,13 +58,18 @@ var make_holdable = function(all_counties, food){
     el_id = county_id($(this).attr('id'))
     county = find_county_obj(all_counties, id)
 
-    hold_county(county)
+    console.log(county_not_in_dock(county))
+    
+    if(county_not_in_dock(county)){
+      
+      hold_county(county)
+      
+      // Make docked elements draggable
+      drag_and_drop('removeable', food)
 
-    // Make docked elements draggable
-    drag_and_drop('removeable', food)
-
-    // Indiate held
-    held_status(county);
+      // Indiate held
+      held_status(county);
+    }
   })
 }
 
@@ -88,25 +93,6 @@ var top_list = function(all_counties, food_selection, food){
       $('#top-list').append(holdable_county(county));
     });
 }
-
-
-
-    // // Remove County names from Dock
-    // $('#county-holder').on('click', '.removeable', function(event){
-    //   id = county_id($(this).attr('id'));
-    //   county = find_county_obj(all_counties, id);
-    //   remove_county(county);
-
-    //   // Change list
-    //   change_top_county_to_holdable(county);
-    //   change_icon(county);
-
-    //   // Change map
-    //   change_map_county_to_held(county);
-    //   change_map_county_color(county)
-    //     .style ( "fill" , function (d) {return color (county.food_quant);});
-    // }); 
-// }
 
 // Tooltip + mousevents
 
