@@ -157,22 +157,26 @@ var on_drag = function(food){
 	    dragged_id = drop_zone.find( "span" ).attr('id')
 
 	    id = county_id(dragged_id);
-	    console.log(id)
-
 
 	    //remove search box place holder 
-	    input_form = $(this).parent().children('.form-group').children()
+	    input_form = drop_zone.find('input')
 	    new_placeholder = dragged.text()
 	    input_form.attr('placeholder', new_placeholder)
 
 	    // Fill in county name, state
 
-	    $(this).find('h4').fadeOut(200)
+	    drop_zone.find('h4').fadeOut(200)
 	    dragged.fadeOut(200)
 
-	    // Render chart here.
-	    create_bar_chart(food, id)
-	    // please(id)
+	    // Find dragged county's foods
+	    dragged_foods = find_county_foods(food, id)
+	    dragged_food_names = get_food_names_list(id, dragged_foods)
+	    dragged_food_values = get_food_values_list(id, dragged_foods)
+	    
+	    // Render chart based on id
+	    draw_chart(dragged_food_names, dragged_food_values, drop_zone)
+
+	    console.log(dragged_foods)
 	    
 	  }
 	})

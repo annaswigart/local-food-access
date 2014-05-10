@@ -1,5 +1,7 @@
 // ######### FIND FOOD DATA BASED ON ID
 
+
+// Set up methods that rearrange the data
 var get_food_list = function(){
   var food_list = ['Artichokes', 'Asparagus', 'Beans', 'Beets', 'Broccoli', 'Brussels Sprouts', 'Cabbage', 'Carrots', 'Cauliflower', 'Celery', 'Chicory', 'Cucumbers', 'Daikon', 'Eggplant', 'Escarole & Endive', 'Garlic', 'Ginseng', 'Greens', 'Herbs', 'Horseradish','Lettuce', 'Melons', 'Okra', 'Onions', 'Parsley', 'Peas', 'Peppers', 'Potatoes', 'Pumpkins', 'Radishes', 'Rhubarb', 'Spinach', 'Squash', 'Sweet Corn', 'Sweet Potatoes', 'Tomatoes', 'Turnips', 'Watercress', 'Apples', 'Apricots', 'Avocados', 'Bananas', 'Cherries', 'Chestnuts', 'Dates', 'Figs', 'Grapefruit', 'Grapes', 'Guavas', 'Hazelnuts', 'Kiwifruit', 'Kumquats', 'Lemons', 'Limes', 'Mangoes', 'Olives', 'Oranges', 'Papayas', 'Passion Fruit', 'Peaches', 'Pears', 'Pecans', 'Persimmons', 'Plum-Apricot Hybrids', 'Plums', 'Pomegranates', 'Prunes', 'Tangelos', 'Tangerines', 'Temples', 'Almonds', 'Macadamias', 'Pistachios', 'Walnuts']
   return food_list
@@ -26,7 +28,8 @@ var sort_foods = function(foods_by_county) {
   return sorted;
 }
 
-var get_names_list = function(fips, sorted_foods) {
+// Methods that use the setup methods. Retrieve data to be used by chart.
+var get_food_names_list = function(fips, sorted_foods) {
   names = []
   food_array = sorted_foods;
   for (var i=0; i < food_array.length; i++){
@@ -35,7 +38,7 @@ var get_names_list = function(fips, sorted_foods) {
   return names;
 }
 
-var get_values_list = function(fips, sorted_foods) {
+var get_food_values_list = function(fips, sorted_foods) {
   values = []
   food_array = sorted_foods;
   for (var i=0; i < food_array.length; i++){
@@ -44,8 +47,17 @@ var get_values_list = function(fips, sorted_foods) {
   return values;
 }
 
-var draw_chart = function(food_names, food_values){
-  $(".bar-chart").highcharts({
+// Methods used by the page: on_drag() - comparing_interactions.js
+var find_county_foods = function(food, id){
+  var food_list = get_food_list()
+  var food_by_county = get_food_by_county(id, food, food_list)
+  var sorted_foods = sort_foods(food_by_county) 
+  return sorted_foods
+}
+
+
+var draw_chart = function(food_names, food_values, where){
+  where.highcharts({
     chart: {
       type: 'bar'
     },
@@ -74,20 +86,3 @@ var draw_chart = function(food_names, food_values){
   });
 }
 
-
-var create_bar_chart = function(food, id){
-  var food_list = get_food_list()
-  var food_by_county = get_food_by_county(id, food, food_list)
-  var sorted_foods = sort_foods(food_by_county) 
-  
-  var food_names = get_names_list(id, sorted_foods)
-  var food_values = get_values_list(id, sorted_foods)
-
-
-  draw_chart(food_names, food_values)
-  // console.log(food_list)
-  // console.log(food_by_county)
-  // console.log(sorted_foods)
-  // console.log(food_names)
-  // console.log(food_values)
-}
