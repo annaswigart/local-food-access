@@ -24,26 +24,6 @@ var colorRating = function(all_counties, id){
 }
 
 
-// ########### Top 10 List ###########
-
-var sortDesc = function(all_counties, key) {
-    return all_counties.sort(function(a, b) {
-        var x = a[key]; var y = b[key];
-        return ((x > y) ? -1 : ((x < y) ? 1 : 0));
-    });
-}
-
-var getTop = function(all_counties, key){
-  top_counties = sortDesc(all_counties, key).slice(0,10);
-  return top_counties
-}
-
-
-var clear_top_list = function(){
-  $('#top-list span').remove()
-}
-
-
 // ########### FOOD DATA ###########
 
 var get_food_search_obj = function(){ 
