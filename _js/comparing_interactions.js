@@ -68,7 +68,7 @@ var change_icon = function(county){
 
 // Create and move county names as nodes
 var county_tag = function(county){
-	var el = "<span id='county-" + county.id + "'class='tag move-county'><span>" + county.county + ", " + county.state + "</span>" + "</span>"
+	var el = "<span id='county-" + county.id + "'class='tag county move-county'><span>" + county.county + ", " + county.state + "</span>" + "</span>"
 	return el
 }
 
@@ -88,10 +88,6 @@ var fade = 300
 
 var hold_county = function(county){
 	held_counties = $('#held-counties').children()
-	console.log(held_counties)
-	$.each(held_counties, function(i, el){
-		console.log(el)
-	})
 	county_el = removeable_county(county)
 	$('#held-counties').append(county_el)
 }
@@ -100,39 +96,32 @@ var remove_county = function(county){
 	$('#held-counties #county-'+county.id).remove()
 }
 
-var change_top_county_to_held = function(county){
-	el_id = "#county-"+county.id
-	el = $('#top-list '+el_id)
-	el.removeClass('holdable', fade)
-	el.addClass('held', fade)
-
-	console.log(el)
-}
-
-var change_top_county_to_holdable = function(county){
-	el_id = "#county-"+county.id
-	el = $('#top-list '+el_id)
-	if (el.hasClass('held')){
-		el.removeClass('held', fade)
-		el.addClass('holdable', fade)
-
-	}
-}
-
 // Signal holding and removing county
 
-var change_map_county_to_held = function(county){
-	el = $('#map #county-'+county.id)
-	if (el.attr('class') == 'holdable') {
-		el.attr('class', 'held')
-	}
+var held_status = function(county){
+	top_el = $('#top-list #county-'+county.id)
+	top_el.removeClass('holdable').addClass('held')
+	change_icon(county)
+
+	map_html = '#map #county-'+county.id
+	map_el = d3.select(map_html)
+	map_el.classed({'holdable': false, 'held': true})
+	map_el.style('fill', '#3498DB')
+
 	$(".held").draggable({ disabled: true });
 }
 
-var change_map_county_color = function(county){
-      el_html = '#map #county-'+county.id
-      el = $(el_html)
-      return d3.select(el_html)
+var holdable_status = function(county){
+	top_el = $('#top-list #county-'+county.id)
+	top_el.removeClass('held').addClass('holdable')
+	change_icon(county)
+
+	map_html = '#map #county-'+county.id
+	map_el = d3.select(map_html)
+	map_el.classed({'held': false, 'holdable': true})
+	map_el.style ( "fill" , function (d) {return color (county.food_quant);});
+
+	$(".held").draggable({ disabled: true });
 }
 
 var county_in_top = function(county){
@@ -188,44 +177,44 @@ var drag_and_drop = function(class_name, food){
 
 // Renders top list and contains interactions
 
-var top_list = function(all_counties, food_selection, food){
-   // Append top counties to DOM - interactions.js
-    var top_counties = getTop(all_counties, 'food_quant')
+// var top_list = function(all_counties, food_selection, food){
+//    // Append top counties to DOM - interactions.js
+//     var top_counties = getTop(all_counties, 'food_quant')
     
-    top_counties.forEach(function(county) {
-      $('#top-list').append(holdable_county(county));
-    });
+//     top_counties.forEach(function(county) {
+//       $('#top-list').append(holdable_county(county));
+//     });
 
-    $('#top-list').on('click', '.holdable', function(){
-      id = county_id($(this).attr('id'))
-      county = find_county_obj(all_counties, id)
-      hold_county(county)
+//     $('#top-list').on('click', '.holdable', function(){
+//       id = county_id($(this).attr('id'))
+//       county = find_county_obj(all_counties, id)
+//       hold_county(county)
 
-      // Make docked elements draggable
-      drag_and_drop('removeable', food)
+//       // Make docked elements draggable
+//       drag_and_drop('removeable', food)
 
-      // Top list
-      change_top_county_to_held(county);
-      change_icon(county);
+//       // Top list
+//       change_top_county_to_held(county);
+//       change_icon(county);
     
-      // Map
-      change_map_county_to_held(county);
-      change_map_county_color(county).style('fill', '#3498DB')
-    })
+//       // Map
+//       change_map_county_to_held(county);
+//       change_map_county_color(county).style('fill', '#3498DB')
+//     })
 
-    // Remove County names from Dock
-    $('#county-holder').on('click', '.removeable', function(event){
-      id = county_id($(this).attr('id'));
-      county = find_county_obj(all_counties, id);
-      remove_county(county);
+//     // Remove County names from Dock
+//     $('#county-holder').on('click', '.removeable', function(event){
+//       id = county_id($(this).attr('id'));
+//       county = find_county_obj(all_counties, id);
+//       remove_county(county);
 
-      // Change list
-      change_top_county_to_holdable(county);
-      change_icon(county);
+//       // Change list
+//       change_top_county_to_holdable(county);
+//       change_icon(county);
 
-      // Change map
-      change_map_county_to_held(county);
-      change_map_county_color(county)
-        .style ( "fill" , function (d) {return color (county.food_quant);});
-    }); 
-}
+//       // Change map
+//       change_map_county_to_held(county);
+//       change_map_county_color(county)
+//         .style ( "fill" , function (d) {return color (county.food_quant);});
+//     }); 
+// }

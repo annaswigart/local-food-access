@@ -21,8 +21,14 @@ $(document).ready(function() {
 
     // ##### CORE OF THE PAGE #####
 
+    // *** map_interactions.js ***
+    
     // make county tags draggable from the start
+    make_holdable(all_counties, food)
     drag_and_drop('holdable', food)
+
+    // Make counties removeable
+    make_removeable(all_counties, food)
 
     // Toggle map
     $('#switch-data').on('mousedown', '.radio', function(){
@@ -46,7 +52,6 @@ $(document).ready(function() {
       if (e.which == 13){
           food_selection = $(this).val()
 
-
           var all_counties = make_county_objects(food, food_selection)
           draw_map(us, all_counties, food)
 
@@ -54,8 +59,5 @@ $(document).ready(function() {
           top_list(all_counties, food_selection, food)
       }
     });
-
-    
-
   } 
 });

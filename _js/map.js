@@ -71,5 +71,6 @@ var draw_map = function(us, all_counties, food){
     .attr("stroke", "#fff")
     .attr("stroke-linejoin", "round")
     .attr("d", path);
+
 }
  
