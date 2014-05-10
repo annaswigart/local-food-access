@@ -73,20 +73,23 @@ var draw_map = function(us, all_counties, food){
     if (el.attr('class') == 'holdable') {
       hold_county(county);
 
-      // Make held elements draggable
-      on_drag(food)
+      // Make removeable elements draggable
+      drag_and_drop('removeable', food)
       
       // Map
-      change_map_county_status(county);
+      change_map_county_to_held(county);
+
+      console.log(change_map_county_color(county))
       change_map_county_color(county).style('fill', '#3498DB');
-    }
 
-    // Change top list if the county clicked on is in it
-    if(county_in_top(county)){
-      change_top_county_status(county);
-      change_icon(county);
+      // Change top list if the county clicked on is in it
+      if(county_in_top(county)){
+        
+        // Top list
+        change_top_county_to_held(county);
+        change_icon(county);
+      }
     }
-
 
   })
 

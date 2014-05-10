@@ -22,7 +22,7 @@ $(document).ready(function() {
     // ##### CORE OF THE PAGE #####
 
     // make county tags draggable from the start
-    make_drag('holdable')
+    drag_and_drop('holdable', food)
 
     // Toggle map
     $('#switch-data').on('mousedown', '.radio', function(){
