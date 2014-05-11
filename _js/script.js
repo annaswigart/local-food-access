@@ -7,8 +7,8 @@ $(document).ready(function() {
   .defer(d3.json, "_data/master_data.json")
   .await(ready);
 
-  function ready(error, us, food) {
-   
+  function ready(error, us, food_data) {
+   food = food_data
     // ##### Initial View #####
 
     // *** map_setup.js ****
@@ -21,16 +21,11 @@ $(document).ready(function() {
 
     // ##### CORE OF THE PAGE #####
 
-    // *** map_interactions.js ***
-
-    // make counties into holdable tags
-    make_holdable(all_counties, food)
-
     // make county tags draggable from the start   
-    drag_and_drop('holdable', all_counties, food)
+    drag_and_drop(all_counties, food)
 
     // Make counties removeable
-    make_removeable(all_counties, food)
+    // make_removeable(all_counties, food)
 
     // Toggle map
     $('#switch-data').on('mousedown', '.radio', function(){
@@ -61,5 +56,37 @@ $(document).ready(function() {
           top_list(all_counties, food_selection, food)
       }
     });
+
+    // Make counties holdable
+    $('.holdable').on('click', function(){
+      el = d3.select(this)
+      
+      el_id = county_id($(this).attr('id'))
+      county = find_county_obj(all_counties, id)
+      
+      if(county_not_in_dock(county)){
+        
+        hold_county(county)
+        
+        // Make docked elements draggable
+        drag_and_drop(all_counties, food)
+
+        // Indiate held
+        held_status(county);
+      }
+    })
+    // Make counties removeable
+    $('#held-counties').on('click', '.removeable', function(){
+      id = county_id($(this).attr('id'));
+      county = find_county_obj(all_counties, id);
+      
+      remove_county(county);
+
+      // Indiate holdable again
+      holdable_status(county);
+      drag_and_drop(all_counties, food)
+    })// end removeable
+
+
   } 
 });

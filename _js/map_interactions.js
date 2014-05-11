@@ -17,37 +17,6 @@ var clear_top_list = function(){
   $('#top-list span').remove()
 }
 
-var make_holdable = function(all_counties, food){
-  $('.holdable').on('click', function(){
-    el = d3.select(this)
-    
-    el_id = county_id($(this).attr('id'))
-    county = find_county_obj(all_counties, id)
-    
-    if(county_not_in_dock(county)){
-      
-      hold_county(county)
-      
-      // Make docked elements draggable
-      drag_and_drop('removeable', food)
-
-      // Indiate held
-      held_status(county);
-    }
-  })
-}
-
-var make_removeable = function(all_counties, food){
-  $('#held-counties').on('click', '.removeable', function(){
-    id = county_id($(this).attr('id'));
-    county = find_county_obj(all_counties, id);
-    
-    remove_county(county);
-
-    // Indiate holdable again
-    holdable_status(county);
-  })
-}
 
 var top_list = function(all_counties, food_selection, food){
    // Append top counties to DOM - interactions.js
