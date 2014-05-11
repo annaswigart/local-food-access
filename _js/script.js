@@ -28,9 +28,6 @@ $(document).ready(function() {
     // make county tags draggable from the start   
     drag_and_drop(all_counties, food)
 
-    // Make counties removeable
-    // make_removeable(all_counties, food)
-
     // Toggle map
     $('#switch-data').on('mousedown', '.radio', function(){
       food_selection = ''
@@ -39,9 +36,6 @@ $(document).ready(function() {
         food_selection = 'DIRSALES_FARMS07'
         var all_counties = make_county_objects(food, food_selection)
         $('#food-search').slideUp(200)
-        clear_top_list()
-        draw_map(us, all_counties, food)
-        top_list(all_counties, food_selection, food)
       }
       else if(toggle == 'food-switch'){
         $('#food-search').slideDown(200)
@@ -80,7 +74,7 @@ $(document).ready(function() {
       top_tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
       .style("background-color", "#2C3E50")
       .style("left", (d.pageX + -30) + "px")
-      .style("top", (d.pageY + -80) + "px");
+      .style("top", (d.pageY + 20) + "px");
     })
 
     $('#top-list').on('mouseout', '.tag', function(d){
@@ -93,7 +87,7 @@ $(document).ready(function() {
     .attr("class", "tooltip")               
     .style("opacity", 0);
 
-    $('#county-drilldown').on('mouseover', '.tag', function(d){)
+    $('#county-drilldown').on('mouseover', '.tag', function(d){
       id = county_id($(this).attr('id'))
       county = find_county_obj(all_counties, id)
 
@@ -122,31 +116,55 @@ $(document).ready(function() {
 
       id = county_id(el_id)
       county = find_county_obj(all_counties, id)
-      
-      make_holdable(county, all_counties)
+      if(county_not_in_dock(county)){
+        hold_county(county)
 
+        // Indiate held
+        held_status(county);
+        $(".held").draggable({ disabled: true, stack: '.draggable' });
+
+        // Change Map color
+        map_html = '#map #county-'+county.id
+        map_el = d3.select(map_html)
+        map_el.classed({'holdable': false, 'held': true})
+        map_el.style('fill', '#3498DB')
+
+        // Make docked elements draggable
+        $(".draggable").draggable({ disabled: false, stack: '.draggable'});
+      }
     })
+
     $('#map-container').on('click', '.holdable', function(){
       el_id = $(this).attr('id')
       el = d3.select('#'+el_id)
 
       id = county_id(el_id)
       county = find_county_obj(all_counties, id)
-      
-      make_holdable(county, all_counties)
+      if(county_not_in_dock(county)){
+        hold_county(county)
 
+        // Indiate held
+        held_status(county);
+        $(".held").draggable({ disabled: true, stack: '.draggable' });
+
+        // Change Map color
+        map_html = '#map #county-'+county.id
+        map_el = d3.select(map_html)
+        map_el.classed({'holdable': false, 'held': true})
+        map_el.style('fill', '#3498DB')
+
+        // Make docked elements draggable
+        $(".draggable").draggable({ disabled: false, stack: '.draggable'});
+      }
     })
     // Make counties removeable
     $('#held-counties').on('click', '.removeable', function(){
       id = county_id($(this).attr('id'));
       county = find_county_obj(all_counties, id);
       
+      // Remove county
       remove_county(county);
       $('#held-counties').find('.tooltip').remove()
-
-      // Indiate holdable again
-      holdable_status(county);
-      drag_and_drop(all_counties, food)
 
       // clear chart box
       chart_area = $('.drag-here#county-'+county.id)
@@ -155,6 +173,16 @@ $(document).ready(function() {
       clear_chart_area($(chart_area))
       reset_chart_area($(chart_area))
 
+      // Indiate holdable and draggable again
+      holdable_status(county);
+      $(".holdable").draggable({ disabled: false, stack: '.draggable'});
+
+      // Change map color and status
+      map_html = '#map #county-'+county.id
+      map_el = d3.select(map_html)
+      map_el.classed({'held': false, 'holdable': true})
+      map_el.style ( "fill" , function (d) {return colorRating (all_counties, county.food_quant);});
+
     })// end removeable
 
     // Search interactions
@@ -162,12 +190,13 @@ $(document).ready(function() {
     $('#food-search').hide() // hide on load
 
     $('#food-search-box').on('keyup',function(e) {
-
-
       if (e.which == 13){
           food_selection = $(this).val()
 
           var all_counties = make_county_objects(food, food_selection)
+          
+          clear_map()
+
           draw_map(us, all_counties, food)
 
           clear_top_list()
@@ -179,15 +208,6 @@ $(document).ready(function() {
     var foods = get_food_list()
     $( "#food-search-box" ).autocomplete({
         source: foods
-        // select: function(event, ui){
-        //   food_selection = $(event.target).val()
-
-        //   console.log(all_counties)
-        //   draw_map(us, all_counties, food)
-
-        //   clear_top_list()
-        //   top_list(all_counties, food_selection, food)
-        // }
       });
 
     $('input[type=search]').on('focusin', function(){
@@ -227,14 +247,19 @@ $(document).ready(function() {
       icon = $(this)
       icon.removeClass('fa-times-circle').addClass('fa-search')
       
+      // Clear chart area and reset area
       clear_chart_area($(chart_area))
       reset_chart_area($(chart_area))
 
-      tag_id = $(this).parent().parent().next().attr('id')
-      $('#held-counties #'+tag_id).removeClass('disabled').addClass('draggable')
-      $('#top-list #'+tag_id).removeClass('disabled').addClass('draggable')
-
+      var tag_id = $(this).parent().parent().next().attr('id')
+      console.log(tag_id)
+      // Remove county from dock
+      $('#held-counties #'+tag_id).remove()
+      
+      // Indicate holdable and draggable in top list
+      $('#top-list #'+tag_id).removeClass('disabled').removeClass('held').addClass('draggable').addClass('holdable')
       $(".draggable").draggable({ disabled: false, stack: '.draggable'});
+
     })
 
   } 
