@@ -1,15 +1,3 @@
-// Tooltip
-
-$('#switch-data').on('mouseover', '.more-info', function(){
-	var tooltip = $(this).children('.tooltip')
-	tooltip.fadeIn(100)
-})
-
-$('#switch-data').on('mouseout', '.more-info', function(){
-	var tooltip = $(this).children('.tooltip')
-	tooltip.fadeOut(100)
-})
-
 // ########### ADD AND REMOVE COUNTIES TO COMPARE ###########
 
 // Create icons in top list

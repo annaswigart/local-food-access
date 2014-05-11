@@ -21,12 +21,12 @@ i {
 	height: auto;
 	min-height: 25px;
 	padding: .725em;         
-	font-size: 0.8em;
 	border: 1px;      
 	border-radius: 6px;           
 	pointer-events: none;
 	color: #ffffff;    
 	z-index: 9999; 
+	font-size: 0.8em;
 }
 
 .more-info{
