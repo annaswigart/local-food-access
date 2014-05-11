@@ -92,8 +92,11 @@ $(document).ready(function() {
       drag_and_drop(all_counties, food)
 
       // clear chart box
-      clear_search_box(id)
-      $('.drag-here #county-'+county.id).removeClass('over-drop', 100)
+      chart_area = $('.drag-here#county-'+county.id)
+      input_form = chart_area.prev().children('input')
+      reset_search_box(input_form)
+      clear_chart_area($(chart_area))
+      reset_chart_area($(chart_area))
 
     })// end removeable
 
@@ -114,8 +117,6 @@ $(document).ready(function() {
           county = find_county_obj(all_counties, id)
           new_placeholder = county.county + ', ' + county.state
           input_form.attr('placeholder', new_placeholder)
-
-          console.log(input_form)
         }
         else{
           input_form.attr('placeholder', 'Search by county')
@@ -126,6 +127,26 @@ $(document).ready(function() {
       }
       input_form.next().fadeIn(100)
     }) // end focusout
+
+    $('.input-icon i').on('click', function(){
+      $(this).removeClass('fa-times-circle').addClass('fa-search')
+      chart_area = $(this).parent().parent().next()
+      
+      input_form = $(this).parent().prev()
+      reset_search_box(input_form)
+
+      icon = $(this)
+      icon.removeClass('fa-times-circle').addClass('fa-search')
+      
+      clear_chart_area($(chart_area))
+      reset_chart_area($(chart_area))
+
+      tag_id = $(this).parent().parent().next().attr('id')
+      $('#held-counties #'+tag_id).removeClass('disabled').addClass('draggable')
+      $('#top-list #'+tag_id).removeClass('disabled').addClass('draggable')
+
+      $(".draggable").draggable({ disabled: false, stack: '.draggable'});
+    })
 
   } 
 });

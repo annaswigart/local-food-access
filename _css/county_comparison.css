@@ -63,12 +63,17 @@
 	cursor: pointer;
 }
 
+.fa-times-circle{
+	cursor: pointer;
+}
+
 
 /*Drag and drop*/
 .county-content{
 	padding: 2px;
 }
 .drag-here{
+	padding: 2px;
 	border:2px solid #fff;
 }
 .drop-zone {

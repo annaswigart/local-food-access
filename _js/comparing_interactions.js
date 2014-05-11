@@ -195,7 +195,10 @@ var drag_and_drop = function(all_counties, food){
 
 	    //remove search box place holder 
 	    input_form = drop_zone.find('input')
-	    
+	    icon = input_form.next().children('i')
+
+	    icon.removeClass('fa-search').addClass('fa-times-circle')
+
 	    new_placeholder = dragged.text()
 	    input_form.attr('placeholder', new_placeholder)
 
@@ -211,6 +214,7 @@ var drag_and_drop = function(all_counties, food){
 	    render_zone = drop_zone.find('.drag-here')
 	    render_zone.attr('id', 'county-'+id)
 	    draw_chart(dragged_food_names, dragged_food_values, render_zone)
+
 	    $('.drag-here').removeClass('over-drop', 100)
 	  }
 	})
@@ -218,12 +222,20 @@ var drag_and_drop = function(all_counties, food){
 
 // Search
 
-var clear_search_box = function(id){
-	el = $('.drag-here#county-'+id)
+var clear_search_box = function(el){
 	el.removeAttr('id')
+	el.removeAttr('placeholder')
+}
+
+var reset_search_box = function(el){
+	el.attr('placeholder', 'Search by county')
+}
+
+var clear_chart_area = function(el){
 	el.children().remove()
-	el.prev().children('input').attr('placeholder', 'Search by county')
-	el.append($('<h4>Or drag county from the left</h4>'))
+}
+var reset_chart_area = function(el){
+	el.append($('<h4>Drag county here for more info.</h4>'))
 }
 
 // Autocomplete
