@@ -85,6 +85,10 @@ $(document).ready(function() {
       // Indiate holdable again
       holdable_status(county);
       drag_and_drop(all_counties, food)
+
+      // clear chart box
+      clear_search_box(id)
+
     })// end removeable
 
 
