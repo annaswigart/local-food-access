@@ -106,7 +106,6 @@ input{
 	border-bottom-right-radius: 6px;
 		-webkit-transition: background-color 0.1 linear;
 	transition: background-color 0.1 linear;
-	cursor: pointer;
 }
 
 .input-icon i {

@@ -17,48 +17,12 @@ var clear_top_list = function(){
   $('#top-list span').remove()
 }
 
-  // Add county from map
-
-  // .on('click', function(){
-  //   id = county_id($(this).attr('id'));
-  //   county = find_county_obj(all_counties, id);
-    
-  //   el_html = '#map #county-'+county.id;
-  //   el = $(el_html);
-
-
-  //   if (el.attr('class') == 'holdable') {
-  //     hold_county(county);
-
-  //     // Make removeable elements draggable
-  //     drag_and_drop('removeable', food)
-      
-  //     // Map
-  //     change_map_county_to_held(county);
-
-  //     console.log(change_map_county_color(county))
-  //     change_map_county_color(county).style('fill', '#3498DB');
-
-  //     // Change top list if the county clicked on is in it
-  //     if(county_in_top(county)){
-        
-  //       // Top list
-  //       change_top_county_to_held(county);
-  //       change_icon(county);
-  //     }
-  //   }
-
-  // })
-
-
 var make_holdable = function(all_counties, food){
   $('.holdable').on('click', function(){
     el = d3.select(this)
     
     el_id = county_id($(this).attr('id'))
     county = find_county_obj(all_counties, id)
-
-    console.log(county_not_in_dock(county))
     
     if(county_not_in_dock(county)){
       

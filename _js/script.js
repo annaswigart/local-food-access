@@ -27,7 +27,7 @@ $(document).ready(function() {
     make_holdable(all_counties, food)
 
     // make county tags draggable from the start   
-    drag_and_drop('holdable', food)
+    drag_and_drop('holdable', all_counties, food)
 
     // Make counties removeable
     make_removeable(all_counties, food)

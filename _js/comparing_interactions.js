@@ -12,19 +12,21 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 
 // Search
 $('input[type=search]').on('focusin', function(){
+	$(this).attr('placeholder', '')
 	$($(this).next()).fadeOut(100)
 })
 
 $('input[type=search]').on('focusout', function(){
+	if($(this).attr('name') == 'county-search'){
+		$(this).attr('placeholder', 'Search by county')
+	}
+	else{
+		$(this).attr('placeholder', 'Search by food')
+	}
 	$(this).next().fadeIn(100)
 })
 
 $('#food-search').hide()
-
-$('#county-drilldown input[type=search]').focus(function(){
-	$(this).removeAttr('placeholder')
-});
-
 
 // Autocomplete
 $(function(){
@@ -148,30 +150,44 @@ var county_not_in_dock = function(county){
 
 // Drag and Drop
 
-var drag_and_drop = function(class_name, food){
+var drag_and_drop = function(class_name, all_counties, food){
 	$('.'+class_name).draggable({ 
 	  revert: 'invalid',
+	  opacity: 0.7,
 	  helper:"clone",
 	  drag: function(event, ui){ 
 	  }
 	});
 	$(".county-wrapper").droppable({
 	  drop: function( event, ui ) {
-	    var dragged = ui.draggable.detach()
+	    var dragged = ui.draggable
+	    var next = dragged.next()
+
+	    var id = county_id(dragged.attr('id'))
+	    var county = find_county_obj(all_counties, id)
+
 	    var drop_zone = $(this)
 
+	    copy = ''
+	    if(dragged.hasClass('holdable')){
+	    	var copy = $($(county_tag(county)).addClass('held').addClass('disabled').append(check_icon()))	
+	    	next.before(copy)
+	    }
+	    else if (dragged.hasClass('removeable')){
+	    	var copy = $($(county_tag(county)).addClass('removeable').addClass('disabled').append(remove_icon()))
+	    }
+
 	    dragged.appendTo(drop_zone)
-	    dragged_id = drop_zone.find( "span" ).attr('id')
-	    id = county_id(dragged_id);
+	    dragged.remove()
 
 	    //remove search box place holder 
 	    input_form = drop_zone.find('input')
+	    
 	    new_placeholder = dragged.text()
 	    input_form.attr('placeholder', new_placeholder)
 
 	    // Fill in county name, state
 	    drop_zone.find('h4').fadeOut(200)
-	    dragged.remove()
 
 	    // Find dragged county's foods
 	    dragged_foods = find_county_foods(food, id)

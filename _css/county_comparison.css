@@ -27,14 +27,11 @@
 
 .holdable{
 	background-color: #1abc9c;
+	cursor: pointer;
 }
 
 	.holdable:hover{
 		background-color: #48c9b0;
-	}
-
-	#map .holdable{
-		cursor: pointer;
 	}
 
 .held{
@@ -51,6 +48,11 @@
 }
 .removeable:hover{
 	background-color: #ec7063;
+}
+
+.disabled{
+	opacity: 0.7;
+	cursor: default;
 }
 
 /*Drag and drop*/
