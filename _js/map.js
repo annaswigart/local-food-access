@@ -13,11 +13,7 @@ var zoom = d3.behavior.zoom()
   .scaleExtent([1, 8])
   .on("zoom", zoomed);
 
-
-//Drawing Choropleth + map interactions
-var draw_map = function(us, all_counties, food){
-
-  // Setting color domains(intervals of values) for our map
+// Setting color domains(intervals of values) for our map
   var color_domain = [0, 1, 5, 10, 30, 50, 100, 300, 500];
   var color = d3.scale.threshold()
   .domain(color_domain)
@@ -37,6 +33,9 @@ var draw_map = function(us, all_counties, food){
   .attr("viewBox", "110 10 " + viewBoxX + " " + viewBoxY)
 
   var path = d3.geo.path();
+
+//Drawing Choropleth + map interactions
+var draw_map = function(us, all_counties, food){
 
   // Tooltip
 

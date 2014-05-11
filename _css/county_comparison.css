@@ -15,10 +15,10 @@
 	overflow: hidden;
 	line-height: 15px;
 	padding: 6px 13px 8px 19px;
-	/*position: relative;*/
-	/*vertical-align: middle;*/
-	-webkit-transition: 0.1s linear;
-	transition: 0.1s linear;
+	position: relative;
+	vertical-align: middle;
+	-webkit-transition: 0.3s linear;
+	transition: 0.3s linear;
 }
 
 .tag:hover{

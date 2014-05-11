@@ -36,6 +36,10 @@ $(document).ready(function() {
         food_selection = 'DIRSALES_FARMS07'
         var all_counties = make_county_objects(food, food_selection)
         $('#food-search').slideUp(200)
+        clear_top_list()
+        draw_map(us, all_counties, food)
+        top_list(all_counties, food_selection, food)
+        $(".draggable").draggable({ disabled: false, stack: '.draggable'});
       }
       else if(toggle == 'food-switch'){
         $('#food-search').slideDown(200)
@@ -194,13 +198,12 @@ $(document).ready(function() {
           food_selection = $(this).val()
 
           var all_counties = make_county_objects(food, food_selection)
-          
-          clear_map()
-
-          draw_map(us, all_counties, food)
 
           clear_top_list()
           top_list(all_counties, food_selection, food)
+
+          draw_map(us, all_counties, food)
+          $(".draggable").draggable({ disabled: false, stack: '.draggable'});
       }
     });
 

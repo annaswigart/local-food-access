@@ -24,7 +24,7 @@ var colorRating = function(all_counties, id){
 }
 
 var clear_map = function(){
-  $('#map-container').children().remove()
+  $('#map-container').children().fadeOut(100, function() { $(this).remove(); });  
 }
 // ########### Top 10 List ###########
 
@@ -45,7 +45,6 @@ var getTop = function(all_counties){
   top_counties = all_counties.slice(0,10);
   return top_counties
 }
-
 
 var clear_top_list = function(){
   $('#top-list span').remove()
