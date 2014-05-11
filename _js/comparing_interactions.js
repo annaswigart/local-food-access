@@ -184,7 +184,8 @@ var drag_and_drop = function(all_counties, food){
 	    icon.removeClass('fa-search').addClass('fa-times-circle')
 
 	    new_placeholder = dragged.text()
-	    input_form.attr('placeholder', new_placeholder)
+	    input_form.val(new_placeholder)
+	    // input_form.attr('placeholder', new_placeholder)
 
 	    // Fill in county name, state
 	    drop_zone.find('h4').fadeOut(100)

@@ -173,6 +173,7 @@ $(document).ready(function() {
       // clear chart box
       chart_area = $('.drag-here#county-'+county.id)
       input_form = chart_area.prev().children('input')
+      input_form.val('')
       reset_search_box(input_form)
       clear_chart_area($(chart_area))
       reset_chart_area($(chart_area))
@@ -206,15 +207,69 @@ $(document).ready(function() {
           $(".draggable").draggable({ disabled: false, stack: '.draggable'});
       }
     });
+    $('.county-wrapper').on('keyup','input[type=search]',function(e) {
+      if (e.which == 13){
+        var chart_area = $(this).parent().next()
 
-    // Autocomplete
+        // //remove search box place holder 
+        input_form = $(this)
+
+        // Change icon
+        icon = input_form.next().children('i')
+        icon.removeClass('fa-search').addClass('fa-times-circle')
+
+        // Take out message in chart area
+        chart_area.find('h4').fadeOut(100)
+
+        // Put county name in search box
+        new_placeholder = input_form.val()
+        input_form.attr('placeholder', new_placeholder)
+
+        wanted = {}
+        all_counties.forEach(function(county){
+          if(county.county + ', ' + county.state == new_placeholder){
+            wanted = county
+          }
+          return wanted
+        })
+        // Find dragged county's foods
+        dragged_foods = find_county_foods(food, wanted.id)
+        dragged_food_names = get_food_names_list(wanted.id, dragged_foods)
+        dragged_food_values = get_food_values_list(wanted.id, dragged_foods)
+
+        // // Render chart based on id
+        chart_area.attr('id', 'county-'+wanted.id)
+        draw_chart(dragged_food_names, dragged_food_values, chart_area)
+
+        // indicate held county
+        docked = $(removeable_county(wanted).addClass('disabled').removeClass('draggable'))
+        $('#held-counties').append(docked)
+        $(".disabled").draggable({ disabled: true, stack: '.draggable' });
+      }
+    });
+
+    // Food Autocomplete
     var foods = get_food_list()
     $( "#food-search-box" ).autocomplete({
         source: foods
       });
 
+    // County Autocomplete
+    var county_search = []
+    all_counties.forEach(function(county){
+      county_search.push(county.county + ", " + county.state)
+    }); 
+    $( "#left-search-box" ).autocomplete({
+        source: county_search
+    });
+
+    $( "#right-search-box" ).autocomplete({
+        source: county_search
+    });
+    // Search Interactions
     $('input[type=search]').on('focusin', function(){
       $(this).attr('placeholder', '')
+      $(this).attr('value', '')
       $($(this).next()).fadeOut(100)
     }) // end focusin
 
@@ -245,6 +300,7 @@ $(document).ready(function() {
       chart_area = $(this).parent().parent().next()
       
       input_form = $(this).parent().prev()
+      input_form.val('')
       reset_search_box(input_form)
 
       icon = $(this)

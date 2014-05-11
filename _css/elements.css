@@ -2,6 +2,14 @@
 i {
 	margin: 0 0 0 .5em;
 }
+a {
+	color: #2980B9;
+	text-decoration: none;
+}
+a:hover {
+	color: #3498DB;
+}
+
 
 /*.loader {*/
 /*	position: fixed;
