@@ -96,7 +96,7 @@ var holdable_status = function(county){
 	map_el = d3.select(map_html)
 	map_el.classed({'held': false, 'holdable': true})
 	map_el.style ( "fill" , function (d) {return color (county.food_quant);});
-	$(".holdable").draggable({ disabled: false });
+	$(".holdable").draggable({ disabled: false, stack: '.draggable'});
 
 }
 
@@ -157,7 +157,7 @@ var drag_and_drop = function(all_counties, food){
 
 	    var drop_zone = $(this)
 
-	    var top_copy = $($(county_tag(county)).addClass('held').addClass('disabled').append(check_icon()))	
+	    var top_copy = $($(county_tag(county)).addClass('held').addClass('disabled').removeClass('draggable').addClass('un-draggable').append(check_icon()))	
 	    
 	    if(origin == 'top-list'){
 	    	next.before(top_copy) // keep in top list
@@ -166,9 +166,22 @@ var drag_and_drop = function(all_counties, food){
 	    }
 	    else if(origin == 'held-counties'){
 	    	$('#top-list #county-'+county.id).addClass('disabled')
-	    	var dock_copy = $($(county_tag(county)).addClass('removeable').addClass('disabled').append(remove_icon()))	
+	    	var dock_copy = $($(county_tag(county)).removeClass('draggable').addClass('removeable').addClass('disabled').append(remove_icon()))	
+	    	$(".disabled").draggable({ disabled: true });
 	    	next.before(dock_copy) // put copy in dock
 	    }
+
+    	chart_area = drop_zone.children().children('.drag-here')
+    	if(chart_area.has('.highcharts-container').length > 0){
+    		already_there_id = chart_area.attr('id')
+
+    		$('#top-list #'+already_there_id).removeClass('disabled')
+    		$('#held-counties #'+already_there_id).removeClass('disabled').addClass('draggable')
+    		$(".draggable").draggable({ disabled: false, stack: '.draggable' });
+
+
+    		console.log(already_there_id)
+    	}
 
 	    dragged.appendTo(drop_zone)
 	    dragged.remove()
