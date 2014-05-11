@@ -25,15 +25,15 @@ var top_list = function(all_counties, food_selection, food){
     top_counties.forEach(function(county) {
       if($('#held-counties').has('#county-'+county.id).length > 0){
         
-        a = $(county_tag(county)).addClass('held').append(check_icon())
+        a = $(county_tag(county)).addClass('held').removeClass('draggable').append(check_icon())
         $('#top-list').append(a)
         $(".draggable").draggable({ disabled: false });
 
-        if($('.drag-here#county-'+county.id) == 'county-'+county.id){
-          $('#top-list').append(county_tag(county).addClass('held').addClass('disabled').removeClass('draggable'))
-          $('#held-counties').append(county_tag(county).addClass('held').addClass('disabled').removeClass('draggable'))
+        if($('.drag-here').attr('id') == 'county-'+county.id){
+          $('#top-list #county-'+county.id).addClass('disabled')
           $(".disabled").draggable({ disabled: true });
         }
+
       }
       else{
         $('#top-list').append(holdable_county(county));
