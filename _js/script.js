@@ -45,6 +45,8 @@ $(document).ready(function() {
     })
 
     // Search for food
+    $('#food-search').hide() // hide on load
+
     $('#food-search-box').on('keyup',function(e) {
       if (e.which == 13){
           food_selection = $(this).val()
@@ -91,6 +93,35 @@ $(document).ready(function() {
 
     })// end removeable
 
+    // Search interactions
+    $('input[type=search]').on('focusin', function(){
+      $(this).attr('placeholder', '')
+      $($(this).next()).fadeOut(100)
+    }) // end focusin
+
+    $('input[type=search]').on('focusout', function(){
+      input_form = $(this)
+      current_placeholder = input_form.attr('placeholder')
+      if(input_form.attr('name') == 'county-search'){
+        
+        drag_here = input_form.parent().next()
+        if(drag_here.has('.highcharts-container').length > 0){
+          id = county_id(drag_here.attr('id'))
+          county = find_county_obj(all_counties, id)
+          new_placeholder = county.county + ', ' + county.state
+          input_form.attr('placeholder', new_placeholder)
+
+          console.log(input_form)
+        }
+        else{
+          input_form.attr('placeholder', 'Search by county')
+        }
+      }
+      else{
+        input_form.attr('placeholder', 'Search by food')
+      }
+      input_form.next().fadeIn(100)
+    }) // end focusout
 
   } 
 });

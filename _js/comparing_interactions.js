@@ -10,32 +10,6 @@ $('#switch-data').on('mouseout', '.more-info', function(){
 	tooltip.fadeOut(100)
 })
 
-// Search
-$('input[type=search]').on('focusin', function(){
-	$(this).attr('placeholder', '')
-	$($(this).next()).fadeOut(100)
-})
-
-$('input[type=search]').on('focusout', function(){
-	if($(this).attr('name') == 'county-search'){
-		$(this).attr('placeholder', 'Search by county')
-	}
-	else{
-		$(this).attr('placeholder', 'Search by food')
-	}
-	$(this).next().fadeIn(100)
-})
-
-$('#food-search').hide()
-
-// Autocomplete
-$(function(){
-	var foods = get_food_list()
-	$( "#food-search-box" ).autocomplete({
-      source: foods
-    });
-})
-
 // ########### ADD AND REMOVE COUNTIES TO COMPARE ###########
 
 // Create icons in top list
@@ -208,7 +182,7 @@ var drag_and_drop = function(all_counties, food){
 	})
 }
 
-// After drag_and_drop
+// Search
 
 var clear_search_box = function(id){
 	el = $('.drag-here#county-'+id)
@@ -217,6 +191,16 @@ var clear_search_box = function(id){
 	el.prev().children('input').attr('placeholder', 'Search by county')
 	el.append($('<h4>Or drag county from the left</h4>'))
 }
+
+// Autocomplete
+$(function(){
+	var foods = get_food_list()
+	$( "#food-search-box" ).autocomplete({
+      source: foods
+    });
+})
+
+
 
 
 
