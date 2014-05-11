@@ -44,7 +44,13 @@ var change_icon = function(county){
 
 // Create and move county names as nodes
 var county_tag = function(county){
-	var el = "<span id='county-" + county.id + "'class='tag county move-county draggable'><span>" + county.county + ", " + county.state + "</span>" + "</span>"
+	if (county.rank > 10){
+		console.log(county.rank)
+		var el = "<span id='county-" + county.id + "'class='tag county move-county draggable'><span>" + county.county + ", " + county.state + "</span>" + "</span>"	
+	}
+	else if (county.rank <= 10){
+		var el = "<span id='county-" + county.id + "'class='tag county move-county draggable'><span>" + county.rank + ') ' + county.county + ", " + county.state + "</span>" + "</span>"	
+	}
 	return el
 }
 
@@ -63,7 +69,7 @@ var removeable_county = function(county) {
 var fade = 300
 
 var hold_county = function(county){
-	held_counties = $('#held-counties').children()
+	held_counties = $('#held-counties')
 	county_el = removeable_county(county)
 	$('#held-counties').append(county_el)
 }
@@ -76,7 +82,7 @@ var remove_county = function(county){
 
 var held_status = function(county){
 	top_el = $('#top-list #county-'+county.id)
-	top_el.removeClass('holdable').removeClass('draggable').addClass('held').addClass('un-draggable')
+	top_el.removeClass('holdable').removeClass('draggable').addClass('held')
 	change_icon(county)
 
 	map_html = '#map #county-'+county.id
@@ -84,7 +90,7 @@ var held_status = function(county){
 	map_el.classed({'holdable': false, 'held': true})
 	map_el.style('fill', '#3498DB')
 
-	$(".un-draggable").draggable({ disabled: true });
+	$(".held").draggable({ disabled: true, stack: '.draggable' });
 }
 
 var holdable_status = function(county){
@@ -132,6 +138,7 @@ var make_holdable = function(county, all_counties){
 
 		// Indiate held
 		held_status(county);
+		console.log(county)
 	}
 }
 
@@ -174,7 +181,7 @@ var drag_and_drop = function(all_counties, food){
 	    else if(origin == 'held-counties'){
 	    	$('#top-list #county-'+county.id).addClass('disabled')
 	    	var dock_copy = $($(county_tag(county)).removeClass('draggable').addClass('removeable').addClass('disabled').append(remove_icon()))	
-	    	$(".disabled").draggable({ disabled: true });
+	    	$(".disabled").draggable({ disabled: true, stack: '.draggable' });
 	    	next.before(dock_copy) // put copy in dock
 	    }
 
@@ -216,6 +223,7 @@ var drag_and_drop = function(all_counties, food){
 	    draw_chart(dragged_food_names, dragged_food_values, render_zone)
 
 	    $('.drag-here').removeClass('over-drop', 100)
+	    $('.drag-here').removeClass('drop-zone', 100)
 	  }
 	})
 }
@@ -237,14 +245,6 @@ var clear_chart_area = function(el){
 var reset_chart_area = function(el){
 	el.append($('<h4>Drag county here for more info.</h4>'))
 }
-
-// Autocomplete
-$(function(){
-	var foods = get_food_list()
-	$( "#food-search-box" ).autocomplete({
-      source: foods
-    });
-})
 
 
 

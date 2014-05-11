@@ -1,14 +1,21 @@
 // ########### Top 10 List ###########
 
 var sortDesc = function(all_counties, key) {
-    return all_counties.sort(function(a, b) {
+    all_counties.sort(function(a, b) {
         var x = a[key]; var y = b[key];
         return ((x > y) ? -1 : ((x < y) ? 1 : 0));
     });
+    rank = 1
+    all_counties.forEach(function(county){
+      county['rank'] = rank
+      rank += 1
+    });
+    console.log(all_counties)
+    return all_counties
 }
 
-var getTop = function(all_counties, key){
-  top_counties = sortDesc(all_counties, key).slice(0,10);
+var getTop = function(all_counties){
+  top_counties = all_counties.slice(0,10);
   return top_counties
 }
 
@@ -20,8 +27,8 @@ var clear_top_list = function(){
 
 var top_list = function(all_counties, food_selection, food){
    // Append top counties to DOM - interactions.js
-    var top_counties = getTop(all_counties, 'food_quant')
-    
+    sorted = sortDesc(all_counties, 'food_quant')
+    var top_counties = getTop(all_counties)
     top_counties.forEach(function(county) {
       if($('#held-counties').has('#county-'+county.id).length > 0){
         

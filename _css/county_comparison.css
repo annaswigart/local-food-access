@@ -34,6 +34,7 @@
 .holdable{
 	background-color: #1abc9c;
 	cursor: pointer;
+	padding-left: 13px;
 }
 
 	.holdable:hover{
@@ -73,7 +74,7 @@
 	padding: 2px;
 }
 .drag-here{
-	padding: 2px;
+	padding: 0 0 0 .6em;
 	border:2px solid #fff;
 }
 .drop-zone {

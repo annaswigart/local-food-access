@@ -1,3 +1,7 @@
+// $(window).load(function() {
+//   $(".loader").fadeOut("slow");
+// })
+
 $(document).ready(function() {
 
   //Reading map file and data
@@ -44,21 +48,6 @@ $(document).ready(function() {
       }
     })
 
-    // Search for food
-    $('#food-search').hide() // hide on load
-
-    $('#food-search-box').on('keyup',function(e) {
-      if (e.which == 13){
-          food_selection = $(this).val()
-
-          var all_counties = make_county_objects(food, food_selection)
-          draw_map(us, all_counties, food)
-
-          clear_top_list()
-          top_list(all_counties, food_selection, food)
-      }
-    });
-
     // Make counties holdable
     $('#top-list').on('click', '.holdable', function(){
       el_id = $(this).attr('id')
@@ -101,6 +90,38 @@ $(document).ready(function() {
     })// end removeable
 
     // Search interactions
+
+    $('#food-search').hide() // hide on load
+
+    $('#food-search-box').on('keyup',function(e) {
+
+
+      if (e.which == 13){
+          food_selection = $(this).val()
+
+          var all_counties = make_county_objects(food, food_selection)
+          draw_map(us, all_counties, food)
+
+          clear_top_list()
+          top_list(all_counties, food_selection, food)
+      }
+    });
+
+    // Autocomplete
+    var foods = get_food_list()
+    $( "#food-search-box" ).autocomplete({
+        source: foods
+        // select: function(event, ui){
+        //   food_selection = $(event.target).val()
+
+        //   console.log(all_counties)
+        //   draw_map(us, all_counties, food)
+
+        //   clear_top_list()
+        //   top_list(all_counties, food_selection, food)
+        // }
+      });
+
     $('input[type=search]').on('focusin', function(){
       $(this).attr('placeholder', '')
       $($(this).next()).fadeOut(100)
