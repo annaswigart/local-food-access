@@ -49,7 +49,7 @@ var county_tag = function(county){
 		var el = "<span id='county-" + county.id + "'class='tag county move-county draggable'><span>" + county.county + ", " + county.state + "</span>" + "</span>"	
 	}
 	else if (county.rank <= 10){
-		var el = "<span id='county-" + county.id + "'class='tag county move-county draggable'><span>" + county.rank + ') ' + county.county + ", " + county.state + "</span>" + "</span>"	
+		var el = "<span id='county-" + county.id + "'class='tag top county move-county draggable'><span>" + county.rank + ') ' + county.county + ", " + county.state + "</span>" + "</span>"	
 	}
 	return el
 }
@@ -138,7 +138,6 @@ var make_holdable = function(county, all_counties){
 
 		// Indiate held
 		held_status(county);
-		console.log(county)
 	}
 }
 

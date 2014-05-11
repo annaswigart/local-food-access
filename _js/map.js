@@ -60,6 +60,30 @@ var draw_map = function(us, all_counties, food){
         return 'county-' + d.id;
     })
 
+    .on('mouseover', function(d){
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(all_counties, id)
+
+      d3.select(this)
+        .transition().duration(200)
+        .style("opacity", 1);
+
+      tooltip.transition().duration(200)
+      .style("opacity", 1);
+      tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
+      .style("background-color", "#2C3E50")
+      .style("left", (d3.event.pageX + 15) + "px")
+      .style("top", (d3.event.pageY -25) + "px");
+    })
+
+    .on('mouseout', function(d){
+      d3.select(this)
+        .transition().duration(300)
+        .style("opacity", 0.8);
+        tooltip.transition().duration(300)
+        .style("opacity", 0);
+    })
+
 
   // State Lines
   svg.append("g")

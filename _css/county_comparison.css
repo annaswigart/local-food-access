@@ -26,6 +26,10 @@
 	padding-right: 20px;*/
 }
 
+.top{
+	padding-left: 13px;
+}
+
 .move-county {
 	color: #ffffff;
 	cursor: pointer;
@@ -34,7 +38,6 @@
 .holdable{
 	background-color: #1abc9c;
 	cursor: pointer;
-	padding-left: 13px;
 }
 
 	.holdable:hover{

@@ -48,6 +48,34 @@ $(document).ready(function() {
       }
     })
 
+    // Tooltip + mousevents
+
+    $('#map').on("mouseover", '.county', function(d, event) {
+      
+      id = county_id($(this).attr('id'))
+      county = find_county_obj(all_counties, id)
+
+    //   d3.select(this)
+    //     .transition().duration(200)
+    //     .style("opacity", 1);
+
+    //   tooltip.transition().duration(200)
+    //   .style("opacity", 1);
+    //   tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
+    //   .style("background-color", "#2C3E50")
+    //   .style("left", (d3.event.pageX + 10) + "px")
+    //   .style("top", (d3.event.pageY -30) + "px");
+    })
+
+    // $('#map').on("mouseout", 'holdable', function() {
+    //   d3.select(this)
+    //   .transition().duration(300)
+    //   .style("opacity", 0.8);
+    //   tooltip.transition().duration(300)
+    //   .style("opacity", 0);
+    // })
+
+
     // Make counties holdable
     $('#top-list').on('click', '.holdable', function(){
       el_id = $(this).attr('id')
