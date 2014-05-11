@@ -121,14 +121,26 @@ var county_not_in_dock = function(county){
 	})
 	return check
 }
+// Hold and remove county
+var make_holdable = function(county, all_counties){
+	if(county_not_in_dock(county)){
 
+		hold_county(county)
+
+		// Make docked elements draggable
+		drag_and_drop(all_counties, food)
+
+		// Indiate held
+		held_status(county);
+	}
+}
 
 // Drag and Drop
 
 var drag_and_drop = function(all_counties, food){
-	// $(".holdable").draggable({ disabled: false });
 	$('.draggable').draggable({ 
 	  revert: 'invalid',
+	  stack: '.draggable',
 	  opacity: 0.7,
 	  helper:"clone",
 	  drag: function(event, ui){ 
@@ -146,13 +158,15 @@ var drag_and_drop = function(all_counties, food){
 	    var drop_zone = $(this)
 
 	    var top_copy = $($(county_tag(county)).addClass('held').addClass('disabled').append(check_icon()))	
-	    var dock_copy = $($(county_tag(county)).addClass('removeable').addClass('disabled').append(remove_icon()))	
+	    
 	    if(origin == 'top-list'){
 	    	next.before(top_copy) // keep in top list
+	    	var dock_copy = $($(county_tag(county)).addClass('removeable').addClass('disabled').append(remove_icon()))	
 	    	$('#held-counties').append(dock_copy) // put copy in dock
 	    }
 	    else if(origin == 'held-counties'){
 	    	$('#top-list #county-'+county.id).addClass('disabled')
+	    	var dock_copy = $($(county_tag(county)).addClass('removeable').addClass('disabled').append(remove_icon()))	
 	    	next.before(dock_copy) // put copy in dock
 	    }
 

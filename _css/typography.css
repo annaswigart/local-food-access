@@ -52,4 +52,5 @@ small, .font_small {font-size: 0.8em;}
 .drag-here{
   font-size: 0.8em;
   color: #BDC3C7;
+  min-height: 500px;
 }

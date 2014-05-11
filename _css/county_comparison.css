@@ -1,3 +1,9 @@
+/*County holder*/
+
+.county-wrapepr {
+	min-height: 500px;
+}
+
 /*Hold counties*/
 .tag {
 	border-radius: 4px;

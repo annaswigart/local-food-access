@@ -60,22 +60,25 @@ $(document).ready(function() {
     });
 
     // Make counties holdable
-    $('.holdable').on('click', function(){
-      el = d3.select(this)
-      
-      el_id = county_id($(this).attr('id'))
+    $('#top-list').on('click', '.holdable', function(){
+      el_id = $(this).attr('id')
+      el = d3.select('#'+el_id)
+
+      id = county_id(el_id)
       county = find_county_obj(all_counties, id)
       
-      if(county_not_in_dock(county)){
-        
-        hold_county(county)
-        
-        // Make docked elements draggable
-        drag_and_drop(all_counties, food)
+      make_holdable(county, all_counties)
 
-        // Indiate held
-        held_status(county);
-      }
+    })
+    $('#map-container').on('click', '.holdable', function(){
+      el_id = $(this).attr('id')
+      el = d3.select('#'+el_id)
+
+      id = county_id(el_id)
+      county = find_county_obj(all_counties, id)
+      
+      make_holdable(county, all_counties)
+
     })
     // Make counties removeable
     $('#held-counties').on('click', '.removeable', function(){
