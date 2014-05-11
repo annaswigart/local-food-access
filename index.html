@@ -23,20 +23,21 @@
 
 
 <body>
+	<div class="loader"></div>
 	<div id='wrapper'>
 		<!-- any kind of menu here -->
 		<div class='container'>
 			<section id='direct-farm-sales' class='font_small'>
 					<div class='content-container'>
-						<h1>Local Food Access in the U.S.</h1>
+						<h1>Produce Availability in the U.S.</h1>
 					</div>
 					<div id='map-wrapper' class='content-container'>
 	 					<div class='section group'>
-							<div id='map-container' class='col span_9_of_12'>
+							<div id='map-container' class='col span_8_of_12'>
 								<!-- D3 Map -->
 								<!-- Move it up or down with margins based on svg#map -->
 							</div>
-							<div id='map-interaction' class='col span_3_of_12'>
+							<div id='map-interaction' class='col span_4_of_12'>
 								<div class='content-container'>
 									<div id='switch-data'>
 										<h2>Indicators</h2>
@@ -47,9 +48,9 @@
 												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
 											</span>
 											<input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" data-toggle="radio"  checked="">
-											Direct Farm Sales
+											Farms with Direct Sales
 											<span class='more-info'>
-												<div class='tooltip'>Number of farms who sell directly to consumers</div>
+												<div class='tooltip'>This includes farmers who sell directly to farmer's markets, CSA's, and road-side stands.</div>
 												<i class="fa fa-info-circle">
 												</i>
 											</span>
@@ -60,12 +61,13 @@
 												<i class="second-icon radio-checked fa fa-dot-circle-o"></i>
 											</span>
 											<input type="radio" name="optionsRadios" id="optionsRadios2" value="option1" data-toggle="radio">
-											Food
+											Food Production
 											<span class='more-info'>
-												<div class='tooltip'>Number of farms</div>
+												<div class='tooltip'>Number of farms who produce each food.</div>
 												<i class="fa fa-info-circle"></i>
 											</span>
 										</label>
+										<p class='font_small'>Data Sources: <a href='http://www.agcensus.usda.gov/' target='_blank'>USDA AgCensus</a>, <a href='http://www.ers.usda.gov/data-products/food-environment-atlas.aspx' target='_blank'>USDA ERS</a></p>
 									</div>
 									<div id='food-search'>
 										<div class='form-group'>
@@ -74,7 +76,7 @@
 										</div>
 									</div>
 									<div id='top-list'>
-										<h2>Top 10 Counties</h2>
+										<h2>Highest Producing Counties</h2>
 									</div>
 								</div>
 							</div>
@@ -91,7 +93,7 @@
 						<div id='left-county-wrapper' class='col span_4_of_12 county-wrapper'>
 							<div id='left-county-content county-content'>
 								<div class='form-group'>
-									<input type="search" class='form-control' name="county-search" placeholder='Search by county'>
+									<input type="search" class='form-control' name="county-search" placeholder='Search by county' id='left-search-box'>
 									<div class='input-icon'><i class="fa fa-search"></i></div>
 								</div>
 								<div class='drag-here'>
@@ -103,7 +105,7 @@
 								
 							</div>
 						</div>
-						<div id='middle-county-compare' class='col span_2_of_12 county-wrapper'>
+						<div id='middle-county-compare' class='col span_2_of_12'>
 							<div id='middle-county-content'>
 								<h2>vs.</h2>
 							</div>
@@ -111,7 +113,7 @@
 						<div id='right-county-wrapper' class='col span_4_of_12 county-wrapper'>
 							<div id='right-county-content county-content'>
 								<div class='form-group'>
-									<input type="search" class='form-control' name="county-search" placeholder='Search by county'>
+									<input type="search" class='form-control' name="county-search" placeholder='Search by county' id='right-search-box'>
 									<div class='input-icon'><i class="fa fa-search"></i></div>
 								</div>
 								<div class='drag-here'>
@@ -131,7 +133,6 @@
 </body>
 <script src="/_js/map_setup.js"></script>
 <script src="/_js/map.js"></script>
-<script src="/_js/map_interactions.js"></script>
 <script src="/_js/comparing_setup.js"></script>
 <script src="/_js/comparing_interactions.js"></script>
 <script src="/_js/radio.js"></script>
