@@ -65,22 +65,19 @@
 
 
 /*Drag and drop*/
-
-.drop-active {
-	border-color: #3498DB;
-	outline: 0;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
-	transition: border .1 linear, color .1 linear, background-color .1 linear;
+.county-content{
+	padding: 2px;
 }
-.drop-hover{
-		border-color: #3498DB;
-	outline: 0;
-	-webkit-box-shadow: none;
-	box-shadow: none;
-		-webkit-transition: border .1 linear, color .1 linear, background-color .1 linear;
-	transition: border .1 linear, color .1 linear, background-color .1 linear;
+.drag-here{
+	border:2px solid #fff;
+}
+.drop-zone {
+	border: 2px solid #2980B9;
+	border-radius: 6px;
+}
+.over-drop{
+	border: 2px solid #2980B9;
+	border-radius: 6px;
 }
 
 /*Bar charts*/

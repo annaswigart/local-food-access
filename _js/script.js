@@ -93,6 +93,7 @@ $(document).ready(function() {
 
       // clear chart box
       clear_search_box(id)
+      $('.drag-here #county-'+county.id).removeClass('over-drop', 100)
 
     })// end removeable
 

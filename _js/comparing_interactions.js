@@ -143,10 +143,17 @@ var drag_and_drop = function(all_counties, food){
 	  stack: '.draggable',
 	  opacity: 0.7,
 	  helper:"clone",
-	  drag: function(event, ui){ 
+	  start: function(event, ui){ 
+	  	$('.drag-here').addClass('drop-zone', 100)
+	  },
+	  stop: function(event, ui){
+	  	$('.drag-here').removeClass('drop-zone', 100)
 	  }
 	});
 	$(".county-wrapper").droppable({
+		over: function(event, ui){
+			$('.drag-here').addClass('over-drop', 100)
+		},
 	  drop: function( event, ui ) {
 	    var dragged = ui.draggable
 	    var origin = dragged.parent().attr('id')
@@ -204,7 +211,7 @@ var drag_and_drop = function(all_counties, food){
 	    render_zone = drop_zone.find('.drag-here')
 	    render_zone.attr('id', 'county-'+id)
 	    draw_chart(dragged_food_names, dragged_food_values, render_zone)
-
+	    $('.drag-here').removeClass('over-drop', 100)
 	  }
 	})
 }

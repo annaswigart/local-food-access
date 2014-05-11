@@ -63,7 +63,7 @@ input{
 
 .form-control{
 	display: block;
-	width: 100%;
+	width: 92%;
 	background-color: #fff;
 	background-image: none;
 	border: 2px solid #bdc3c7;
@@ -96,7 +96,7 @@ input{
 	vertical-align: middle;
 	right: 0;
 	top: 0;
-	left:83%;
+	left:80%;
 	width: 20%;
 	height: auto;
 	min-height: 49px;
