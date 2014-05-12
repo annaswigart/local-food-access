@@ -276,6 +276,7 @@ $(document).ready(function() {
     $('input[type=search]').on('focusout', function(){
       input_form = $(this)
       current_placeholder = input_form.attr('placeholder')
+      $('#food-search').slideUp(200)
       if(input_form.attr('name') == 'county-search'){
         
         drag_here = input_form.parent().next()
