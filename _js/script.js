@@ -245,6 +245,11 @@ $(document).ready(function() {
         docked = $(removeable_county(wanted).addClass('disabled').removeClass('draggable'))
         $('#held-counties').append(docked)
         $(".disabled").draggable({ disabled: true, stack: '.draggable' });
+                // Change Map color
+        map_html = '#map #county-'+wanted.id
+        map_el = d3.select(map_html)
+        map_el.classed({'holdable': false, 'held': true})
+        map_el.style('fill', '#3498DB')
       }
     });
 
