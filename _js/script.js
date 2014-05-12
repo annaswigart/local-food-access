@@ -16,7 +16,7 @@ $(document).ready(function() {
     // ##### Initial View #####
 
     // *** map_setup.js ****
-    food_selection = 'DIRSALES_FARMS07'
+    food_selection = 'Direct Sale Farms'
     var all_counties = make_county_objects(food, food_selection)
 
     // *** map.js ****
@@ -33,7 +33,7 @@ $(document).ready(function() {
       food_selection = ''
       var toggle = $(this).attr('id')
       if(toggle == 'direct-farm'){
-        food_selection = 'DIRSALES_FARMS07'
+        food_selection = 'Direct Sale Farms'
         var all_counties = make_county_objects(food, food_selection)
         $('#food-search').slideUp(200)
         clear_top_list()
