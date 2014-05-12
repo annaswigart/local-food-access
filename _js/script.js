@@ -61,56 +61,56 @@ $(document).ready(function() {
 
     // County tag tooltips
 
-    var top_tooltip = d3.select("#top-list").append("div")   
-    .attr("class", "tooltip")               
-    .style("opacity", 0);
+    // var top_tooltip = d3.select("#top-list").append("div")   
+    // .attr("class", "tooltip")               
+    // .style("opacity", 0);
 
-    $('#top-list').on('mouseover', '.tag', function(d){
-      id = county_id($(this).attr('id'))
-      county = find_county_obj(all_counties, id)
+    // $('#top-list').on('mouseover', '.tag', function(d){
+    //   id = county_id($(this).attr('id'))
+    //   county = find_county_obj(all_counties, id)
 
-      d3.select(this)
-        .transition().duration(200)
-        .style("opacity", 1);
+    //   d3.select(this)
+    //     .transition().duration(200)
+    //     .style("opacity", 1);
 
-      top_tooltip.transition().duration(200)
-      .style("opacity", 1);
-      top_tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
-      .style("background-color", "#2C3E50")
-      .style("left", (d.pageX + -30) + "px")
-      .style("top", (d.pageY + 20) + "px");
-    })
+    //   top_tooltip.transition().duration(200)
+    //   .style("opacity", 1);
+    //   top_tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
+    //   .style("background-color", "#2C3E50")
+    //   .style("left", (d.pageX + -30) + "px")
+    //   .style("top", (d.pageY + 20) + "px");
+    // })
 
-    $('#top-list').on('mouseout', '.tag', function(d){
-        top_tooltip.transition().duration(300)
-        .style("opacity", 0);
-    })
+    // $('#top-list').on('mouseout', '.tag', function(d){
+    //     top_tooltip.transition().duration(300)
+    //     .style("opacity", 0);
+    // })
 
     // Dock tooltips
-    var dock_tooltip = d3.select("#held-counties").append("div")   
-    .attr("class", "tooltip")               
-    .style("opacity", 0);
+    // var dock_tooltip = d3.select("#held-counties").append("div")   
+    // .attr("class", "tooltip")               
+    // .style("opacity", 0);
 
-    $('#county-drilldown').on('mouseover', '.tag', function(d){
-      id = county_id($(this).attr('id'))
-      county = find_county_obj(all_counties, id)
+    // $('#county-drilldown').on('mouseover', '.tag', function(d){
+    //   id = county_id($(this).attr('id'))
+    //   county = find_county_obj(all_counties, id)
 
-      d3.select(this)
-        .transition().duration(200)
-        .style("opacity", 1);
+    //   d3.select(this)
+    //     .transition().duration(200)
+    //     .style("opacity", 1);
 
-      dock_tooltip.transition().duration(200)
-      .style("opacity", 1);
-      dock_tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
-      .style("background-color", "#2C3E50")
-      .style("left", (d.pageX + -30) + "px")
-      .style("top", (d.pageY + -60) + "px");
-    })
+    //   dock_tooltip.transition().duration(200)
+    //   .style("opacity", 1);
+    //   dock_tooltip.text(county.county + " County, " + county.state + "                 " + county.food + ": " + county.food_quant)
+    //   .style("background-color", "#2C3E50")
+    //   .style("left", (d.pageX + -30) + "px")
+    //   .style("top", (d.pageY + -60) + "px");
+    // })
 
-    $('#county-drilldown').on('mouseout', '.tag', function(d){
-        dock_tooltip.transition().duration(300)
-        .style("opacity", 0);
-    })
+    // $('#county-drilldown').on('mouseout', '.tag', function(d){
+    //     dock_tooltip.transition().duration(300)
+    //     .style("opacity", 0);
+    // })
 
 
     // Make counties holdable
